@@ -73,9 +73,9 @@
                 pointer.style.transform = 'rotate(' + degrees + 'deg)';
             }
 
-            window.addEventListener('mousemove', rotatePointer);
-            window.addEventListener('touchmove', rotatePointer);
-            window.addEventListener('touchstart', rotatePointer);
+            pointer.addEventListener('mousemove', rotatePointer);
+            pointer.addEventListener('touchmove', rotatePointer);
+            pointer.addEventListener('touchstart', rotatePointer);
         })
     </script>
 </body>
