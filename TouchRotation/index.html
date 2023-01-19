@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>LAB</title>
+    <style>
+        html {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .test-circle {
+            width: 240px;
+            height: 240px;
+            border-radius: 50%;
+            background: #090;
+            position: relative;
+        }
+
+        .test-circle:after {
+            content: '';
+            display: block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0c0;
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    </style>
+</head>
+<body>
+    <div id="pointer" class="test-circle"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var pointer = document.getElementById("pointer"),
+                pointerBox = pointer.getBoundingClientRect(),
+                centerPoint = window.getComputedStyle(pointer).transformOrigin,
+                centers = centerPoint.split(" ");
+
+            function rotatePointer(e) {
+                var pointerEvent = e;
+                if (e.targetTouches && e.targetTouches[0]) {
+                    e.preventDefault();
+                    pointerEvent = e.targetTouches[0];
+                    mouseX = pointerEvent.pageX;
+                    mouseY = pointerEvent.pageY;
+                } else {
+                    mouseX = e.clientX,
+                        mouseY = e.clientY;
+                }
+
+                var centerY = pointerBox.top + parseInt(centers[1]) - window.pageYOffset,
+                    centerX = pointerBox.left + parseInt(centers[0]) - window.pageXOffset,
+                    radians = Math.atan2(mouseX - centerX, mouseY - centerY),
+                    degrees = (radians * (180 / Math.PI) * -1) + 180;
+                pointer.style.transform = 'rotate(' + degrees + 'deg)';
+            }
+
+            window.addEventListener('mousemove', rotatePointer);
+            window.addEventListener('touchmove', rotatePointer);
+            window.addEventListener('touchstart', rotatePointer);
+        })
+    </script>
+</body>
+</html>
