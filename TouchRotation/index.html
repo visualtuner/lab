@@ -57,15 +57,16 @@
             var centerY = pointerBox.top + parseInt(centers[1]) - window.pageYOffset,
                 centerX = pointerBox.left + parseInt(centers[0]) - window.pageXOffset;
 
-            var degrees = 0;
+            //var degrees = 0;
+            var totalDegrees = 0;
             var startDegrees = 0;
+            var lastDegrees = 0;
             var currentDegrees = 0;
             var target = null;
             var dragging = false;
             var startTime = 0;
             var endTime = 0;
             var targetDegrees = 0;
-            var screenX = 0;
             var lastVelocity = 0;
 
             requestAnimationFrame(update);
@@ -83,7 +84,7 @@
                 }
 
                 var radians = Math.atan2(mouseX - centerX, mouseY - centerY);
-                degrees = (radians * (180 / Math.PI) * -1) + 180;
+                var degrees = (radians * (180 / Math.PI) * -1) + 180;
                 return degrees;
             }
 
@@ -100,7 +101,7 @@
                 }
 
                 var radians = Math.atan2(mouseX - centerX, mouseY - centerY);
-                degrees = (radians * (180 / Math.PI) * -1) + 180;
+                var degrees = (radians * (180 / Math.PI) * -1) + 180;
                 return degrees;
             }
 
@@ -132,6 +133,7 @@
 
                 target = e.target;
                 startDegrees = calcDegrees(e);
+                lastDegrees = startDegrees;
                 
                 startTime = Date.now() / 1000;
                 currentDegrees = startDegrees;
@@ -140,6 +142,7 @@
                 target.style.willChange = 'transform';
 
                 //e.preventDefault();
+                console.log( startDegrees );
             }
 
             function onMove(e) {
@@ -147,18 +150,18 @@
                 //     return;
 
                 currentDegrees = calcDegrees(e);
+                console.log( currentDegrees - startDegrees );
             }
 
             function onEnd(e) {
                 // if (!target)
                 //     return;
-
                 targetDegrees = 0;
                 endTime = Date.now() / 1000;
-                /*let screenX = currentDegrees - startDegrees;
+                /*let totalDegrees = currentDegrees - startDegrees;
                 const threshold = this.targetBCR.width * 0.35;
-                if (Math.abs(screenX) > threshold) {
-                    targetDegrees = (screenX > 0) ?
+                if (Math.abs(totalDegrees) > threshold) {
+                    targetDegrees = (totalDegrees > 0) ?
                         this.targetBCR.width :
                         -this.targetBCR.width;
                 }*/
@@ -180,41 +183,20 @@
                     return;
 
                 if (dragging) {
-                    screenX = currentDegrees - startDegrees;
+                    totalDegrees = lastDegrees + (currentDegrees - startDegrees);
                 } else {
-                    screenX += lastVelocity / 20; // change the number 20 to change the velocity applied to animation
+                    totalDegrees += lastVelocity / 60; // change the number 20 to change the velocity applied to animation
                 }
 
 
-                //target.style.transform = `translateX(${this.screenX}px)`;
-                target.style.transform = 'rotate(' + screenX + 'deg)';
-                console.log( screenX );
+                //target.style.transform = `translateX(${this.totalDegrees}px)`;
+                target.style.transform = 'rotate(' + totalDegrees + 'deg)';
+                console.log( totalDegrees );
 
                 // User has finished dragging.
                 if (dragging)
                     return;
 
-                // const isNearlyAtStart = (Math.abs(this.screenX) < 0.1);
-                // const isNearlyInvisible = (opacity < 0.01);
-
-                // If the card is nearly gone.
-                // if (isNearlyInvisible) {
-
-                //     // Bail if there's no target or it's not attached to a parent anymore.
-                //     if (!this.target || !this.target.parentNode)
-                //         return;
-
-                //     this.target.parentNode.removeChild(this.target);
-
-                //     const targetIndex = this.cards.indexOf(this.target);
-                //     this.cards.splice(targetIndex, 1);
-
-                //     // Slide all the other cards.
-                //     this.animateOtherCardsIntoPosition(targetIndex);
-
-                // } else if (isNearlyAtStart) {
-                //     this.resetTarget();
-                // }
             }
 
             //pointer.addEventListener('mousemove', rotatePointer);
