@@ -30,22 +30,45 @@
             position: relative;
         }
 
-        .test-circle:after {
-            content: '';
-            display: block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #fff;
+        .test-circle .piece {
+            width: 2px;
+            height: 100px;
             position: absolute;
-            top: 12px;
             left: 50%;
-            transform: translateX(-50%);
+            bottom: 50%;
+            transform-origin: 50% 100%;
+            background: #000;
         }
+
+        .test-circle .piece:nth-of-type(1) { transform: rotate(0deg);}
+        .test-circle .piece:nth-of-type(2) { transform: rotate(60deg);}
+        .test-circle .piece:nth-of-type(3) { transform: rotate(120deg);}
+        .test-circle .piece:nth-of-type(4) { transform: rotate(180deg);}
+        .test-circle .piece:nth-of-type(5) { transform: rotate(240deg);}
+        .test-circle .piece:nth-of-type(6) { transform: rotate(300deg);}
     </style>
 </head>
 <body>
-    <div id="pointer" class="test-circle"></div>
+    <div id="pointer" class="test-circle">
+        <div class="piece">
+            <div class="btn"></div>
+        </div>
+        <div class="piece">
+            <div class="btn"></div>
+        </div>
+        <div class="piece">
+            <div class="btn"></div>
+        </div>
+        <div class="piece">
+            <div class="btn"></div>
+        </div>
+        <div class="piece">
+            <div class="btn"></div>
+        </div>
+        <div class="piece">
+            <div class="btn"></div>
+        </div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -132,7 +155,7 @@
                 //     return;
                 dragging = true;
 
-                target = e.target;
+                target = e.currentTarget;
                 
                 //lastDegrees = startDegrees;
                 
