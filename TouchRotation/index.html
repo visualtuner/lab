@@ -130,17 +130,21 @@
                 
                 // if (target)
                 //     return;
+                dragging = true;
 
                 target = e.target;
-                startDegrees = calcDegrees(e);
+                
                 //lastDegrees = startDegrees;
                 
                 startTime = Date.now() / 1000;
-                //currentDegrees = startDegrees;
 
-                dragging = true;
+                startDegrees = calcDegrees(e);
+                currentDegrees = startDegrees;
+
+                
                 target.style.willChange = 'transform';
 
+                
                 //e.preventDefault();
                 console.log( startDegrees );
             }
@@ -154,7 +158,7 @@
             }
 
             function onEnd(e) {
-                lastDegrees = totalDegrees % 360;
+                
                 // if (!target)
                 //     return;
                 targetDegrees = 0;
@@ -169,7 +173,7 @@
 
                 dragging = false;
 
-                
+                lastDegrees = totalDegrees % 360;
                 
                 // calculate velocity
                 lastVelocity = ( calcEndDegrees(e) - startDegrees) / (endTime - startTime);
@@ -186,20 +190,22 @@
                     return;
 
                 if (dragging) {
+                    //totalDegrees = (currentDegrees - startDegrees);
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
+                    //totalDegrees = currentDegrees;
+                    console.log(totalDegrees);
                 } else {
                     //totalDegrees += lastVelocity / 60; // change the number 20 to change the velocity applied to animation
                 }
 
 
-                //target.style.transform = `translateX(${this.totalDegrees}px)`;
                 target.style.transform = 'rotate(' + totalDegrees + 'deg)';
-                console.log( totalDegrees );
-                //lastDegrees = totalDegrees;
 
                 // User has finished dragging.
                 if (dragging)
                     return;
+
+                lastDegrees = totalDegrees % 360;
 
             }
 
