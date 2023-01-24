@@ -133,10 +133,10 @@
 
                 target = e.target;
                 startDegrees = calcDegrees(e);
-                lastDegrees = startDegrees;
+                //lastDegrees = startDegrees;
                 
                 startTime = Date.now() / 1000;
-                currentDegrees = startDegrees;
+                //currentDegrees = startDegrees;
 
                 dragging = true;
                 target.style.willChange = 'transform';
@@ -150,10 +150,11 @@
                 //     return;
 
                 currentDegrees = calcDegrees(e);
-                console.log( currentDegrees - startDegrees );
+                //console.log( currentDegrees - startDegrees );
             }
 
             function onEnd(e) {
+                lastDegrees = totalDegrees % 360;
                 // if (!target)
                 //     return;
                 targetDegrees = 0;
@@ -167,6 +168,8 @@
                 }*/
 
                 dragging = false;
+
+                
                 
                 // calculate velocity
                 lastVelocity = ( calcEndDegrees(e) - startDegrees) / (endTime - startTime);
@@ -183,7 +186,7 @@
                     return;
 
                 if (dragging) {
-                    totalDegrees = (currentDegrees - startDegrees);
+                    totalDegrees = lastDegrees + (currentDegrees - startDegrees);
                 } else {
                     //totalDegrees += lastVelocity / 60; // change the number 20 to change the velocity applied to animation
                 }
@@ -192,6 +195,7 @@
                 //target.style.transform = `translateX(${this.totalDegrees}px)`;
                 target.style.transform = 'rotate(' + totalDegrees + 'deg)';
                 console.log( totalDegrees );
+                //lastDegrees = totalDegrees;
 
                 // User has finished dragging.
                 if (dragging)
