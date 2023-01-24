@@ -56,6 +56,7 @@
             position: absolute;
             top: 0;
             left: 50%;
+            transform-origin: 50%;
             transform: translateX(-50%) translateY(-50%);
             border-radius: 8px;
             display: flex;
@@ -105,6 +106,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             var pointer = document.getElementById("pointer"),
+                pieces = pointer.querySelectorAll(".piece"),
                 pointerBox = pointer.getBoundingClientRect(),
                 centerPoint = window.getComputedStyle(pointer).transformOrigin,
                 centers = centerPoint.split(" ");
@@ -112,7 +114,8 @@
             var centerY = pointerBox.top + parseInt(centers[1]) - window.pageYOffset,
                 centerX = pointerBox.left + parseInt(centers[0]) - window.pageXOffset;
 
-            //var degrees = 0;
+            console.log(pieces[0]);
+            
             var totalDegrees = 0;
             var startDegrees = 0;
             var lastDegrees = 0;
@@ -247,19 +250,23 @@
                     return;
 
                 if (dragging) {
-                    //totalDegrees = (currentDegrees - startDegrees);
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
-                    //totalDegrees = currentDegrees;
-                    //console.log(totalDegrees);
-                    target.style.transform = 'rotate(' + totalDegrees + 'deg)';
                 } else {
                     totalDegrees = targetDegrees;
                     target.style.transition = "all 0.2s";
-                    target.style.transform = 'rotate(' + totalDegrees + 'deg)';
+
                     //totalDegrees += lastVelocity / 60; // change the number 20 to change the velocity applied to animation
                 }
 
-
+                target.style.transform = 'rotate(' + totalDegrees + 'deg)';
+                pieces[0].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees) + 'deg)';
+                pieces[1].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 45) + 'deg)';
+                pieces[2].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 90) + 'deg)';
+                pieces[3].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 135) + 'deg)';
+                pieces[4].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 180) + 'deg)';
+                pieces[5].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 225) + 'deg)';
+                pieces[6].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 270) + 'deg)';
+                pieces[7].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 315) + 'deg)';
                 
 
                 // User has finished dragging.
