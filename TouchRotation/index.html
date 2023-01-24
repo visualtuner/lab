@@ -23,33 +23,51 @@
         }
 
         .test-circle {
-            width: 240px;
-            height: 240px;
+            width: 288px;
+            height: 288px;
             border-radius: 50%;
             background: #c70;
             position: relative;
         }
 
         .test-circle .piece {
-            width: 2px;
-            height: 100px;
+            width: 0;
+            height: 92px;
             position: absolute;
             left: 50%;
             bottom: 50%;
             transform-origin: 50% 100%;
-            background: #000;
         }
 
         .test-circle .piece:nth-of-type(1) { transform: rotate(0deg);}
-        .test-circle .piece:nth-of-type(2) { transform: rotate(60deg);}
-        .test-circle .piece:nth-of-type(3) { transform: rotate(120deg);}
-        .test-circle .piece:nth-of-type(4) { transform: rotate(180deg);}
-        .test-circle .piece:nth-of-type(5) { transform: rotate(240deg);}
-        .test-circle .piece:nth-of-type(6) { transform: rotate(300deg);}
+        .test-circle .piece:nth-of-type(2) { transform: rotate(45deg);}
+        .test-circle .piece:nth-of-type(3) { transform: rotate(90deg);}
+        .test-circle .piece:nth-of-type(4) { transform: rotate(135deg);}
+        .test-circle .piece:nth-of-type(5) { transform: rotate(180deg);}
+        .test-circle .piece:nth-of-type(6) { transform: rotate(225deg);}
+        .test-circle .piece:nth-of-type(7) { transform: rotate(270deg);}
+        .test-circle .piece:nth-of-type(8) { transform: rotate(315deg);}
+
+        .test-circle .piece .btn {
+            width: 56px;
+            height: 56px;
+            background: rgba(0,0,0,0.4);
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
     <div id="pointer" class="test-circle">
+        <div class="piece">
+            <div class="btn"></div>
+        </div>
+        <div class="piece">
+            <div class="btn"></div>
+        </div>
         <div class="piece">
             <div class="btn"></div>
         </div>
@@ -164,12 +182,12 @@
                 startDegrees = calcDegrees(e);
                 currentDegrees = startDegrees;
 
-                
+                target.style.transition = 'none';
                 target.style.willChange = 'transform';
 
                 
                 //e.preventDefault();
-                console.log( startDegrees );
+                //console.log( startDegrees );
             }
 
             function onMove(e) {
@@ -196,7 +214,9 @@
 
                 dragging = false;
 
-                lastDegrees = totalDegrees % 360;
+                //lastDegrees = totalDegrees % 360;
+                targetDegrees = Math.round( Math.round(totalDegrees % 360) / 45 ) * 45;
+                console.log( targetDegrees );
                 
                 // calculate velocity
                 lastVelocity = ( calcEndDegrees(e) - startDegrees) / (endTime - startTime);
@@ -216,13 +236,17 @@
                     //totalDegrees = (currentDegrees - startDegrees);
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
                     //totalDegrees = currentDegrees;
-                    console.log(totalDegrees);
+                    //console.log(totalDegrees);
+                    target.style.transform = 'rotate(' + totalDegrees + 'deg)';
                 } else {
+                    totalDegrees = targetDegrees;
+                    target.style.transition = "all 0.4s";
+                    target.style.transform = 'rotate(' + totalDegrees + 'deg)';
                     //totalDegrees += lastVelocity / 60; // change the number 20 to change the velocity applied to animation
                 }
 
 
-                target.style.transform = 'rotate(' + totalDegrees + 'deg)';
+                
 
                 // User has finished dragging.
                 if (dragging)
