@@ -31,6 +31,19 @@
             position: relative;
         }
 
+        .test-circle:after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            background: #fff;
+        }
+
         .test-circle .piece {
             width: 0;
             height: 92px;
