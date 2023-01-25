@@ -170,8 +170,6 @@
             var centerY = pointerBox.top + parseInt(centers[1]) - window.pageYOffset,
                 centerX = pointerBox.left + parseInt(centers[0]) - window.pageXOffset;
 
-            console.log(pieces[0]);
-            
             var totalDegrees = 0;
             var startDegrees = 0;
             var lastDegrees = 0;
@@ -221,14 +219,11 @@
 
 
             function onStart(e) {
-                
                 // if (target)
                 //     return;
                 dragging = true;
 
                 target = e.currentTarget;
-                
-                //lastDegrees = startDegrees;
                 
                 startTime = Date.now() / 1000;
 
@@ -237,18 +232,12 @@
 
                 target.style.transition = 'none';
                 target.style.willChange = 'transform';
-
-                
-                //e.preventDefault();
-                //console.log( startDegrees );
             }
 
             function onMove(e) {
                 // if (!target)
                 //     return;
-
                 currentDegrees = calcDegrees(e);
-                //console.log( currentDegrees - startDegrees );
             }
 
             function onEnd(e) {
@@ -257,22 +246,10 @@
                 //     return;
                 targetDegrees = 0;
                 endTime = Date.now() / 1000;
-                /*let totalDegrees = currentDegrees - startDegrees;
-                const threshold = this.targetBCR.width * 0.35;
-                if (Math.abs(totalDegrees) > threshold) {
-                    targetDegrees = (totalDegrees > 0) ?
-                        this.targetBCR.width :
-                        -this.targetBCR.width;
-                }*/
-
+ 
                 dragging = false;
 
-                //lastDegrees = totalDegrees % 360;
                 targetDegrees = Math.round( Math.round(totalDegrees % 360) / 45 ) * 45;
-                console.log( targetDegrees );
-                
-                // calculate velocity
-                lastVelocity = ( calcEndDegrees(e) - startDegrees) / (endTime - startTime);
             }
 
 
@@ -288,13 +265,13 @@
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
                 } else {
-                    totalDegrees = targetDegrees;
-                    target.style.transition = "all 0.2s";
-
-                    //totalDegrees += lastVelocity / 60; // change the number 20 to change the velocity applied to animation
+                    //totalDegrees = targetDegrees;
+                    //target.style.transition = "all 0.2s";
+                    totalDegrees = easeOutCubic(endTime, totalDegree, targetDegrees, 0.2)
                 }
 
                 target.style.transform = 'rotate(' + totalDegrees + 'deg)';
+
                 pieces[0].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees) + 'deg)';
                 pieces[1].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 45) + 'deg)';
                 pieces[2].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 90) + 'deg)';
@@ -318,13 +295,6 @@
             pointer.addEventListener('touchmove', onMove);
             pointer.addEventListener('touchstart', onStart);
         })
-
-
-
-
-
-
-
 
 
         function easeOutCubic(currTime, beginningValue, change, duration) {
