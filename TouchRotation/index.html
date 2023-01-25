@@ -267,7 +267,8 @@
                 } else {
                     //totalDegrees = targetDegrees;
                     //target.style.transition = "all 0.2s";
-                    totalDegrees = easeOutCubic(endTime, totalDegree, targetDegrees, 0.2)
+                    var easingStartDegree = totalDegrees;
+                    totalDegrees = easeOutCubic(endTime, easingStartDegree, targetDegrees, 0.2);
                 }
 
                 target.style.transform = 'rotate(' + totalDegrees + 'deg)';
