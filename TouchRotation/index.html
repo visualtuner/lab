@@ -180,8 +180,12 @@
             var endTime = 0;
             var targetDegrees = 0;
             var lastVelocity = 0;
+            var easingStartDegree = 0;
+            
+            var animationId = null;
 
-            requestAnimationFrame(update);
+            animationId = requestAnimationFrame(update);
+            //cancelAnimationFrame(animationId);
 
             function calcDegrees(e) {
                 var pointerEvent = e;
@@ -232,6 +236,8 @@
 
                 target.style.transition = 'none';
                 target.style.willChange = 'transform';
+
+                animationId = requestAnimationFrame(update);
             }
 
             function onMove(e) {
@@ -246,6 +252,7 @@
                 //     return;
                 targetDegrees = 0;
                 endTime = Date.now() / 1000;
+                //console.log(endTime);
  
                 dragging = false;
 
@@ -253,11 +260,12 @@
             }
 
 
+            var start = null;
+            var animationDuration = 400;
 
+            function update(timestamp) {
 
-            function update() {
-
-                requestAnimationFrame(update);
+                animationId = requestAnimationFrame(update);
 
                 if (!target)
                     return;
@@ -265,10 +273,24 @@
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
                 } else {
-                    //totalDegrees = targetDegrees;
-                    //target.style.transition = "all 0.2s";
-                    var easingStartDegree = totalDegrees;
-                    totalDegrees = easeOutCubic(endTime, easingStartDegree, targetDegrees, 0.2);
+                    
+                    easingStartDegree = lastDegrees + (currentDegrees - startDegrees);
+                    targetDegrees = Math.round( Math.round(easingStartDegree) / 45 ) * 45;
+
+                    if (!start) {
+                        start = timestamp;
+                    }
+
+                    var progress = Math.round( (timestamp - start) / animationDuration) * animationDuration;
+                    totalDegrees = easeOutCubic(progress, easingStartDegree, targetDegrees, animationDuration);
+                    console.log(progress);
+
+
+                    if (progress >= animationDuration) {
+                        cancelAnimationFrame(animationId);
+                        start = null;
+                        //animationId = requestAnimationFrame(update);
+                    }
                 }
 
                 target.style.transform = 'rotate(' + totalDegrees + 'deg)';
