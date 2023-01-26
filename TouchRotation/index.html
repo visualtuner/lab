@@ -251,6 +251,7 @@
                 // if (!target)
                 //     return;
                 currentDegrees = calcDegrees(e);
+                window.navigator.vibrate(10000);
             }
 
             function onEnd(e) {
@@ -281,7 +282,7 @@
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
                     //navigator.vibrate(100);
-                    window.navigator.vibrate(10000);
+                    
                 } else {
                     //navigator.vibrate(0);
                     window.navigator.vibrate(0);
@@ -350,6 +351,12 @@
             pointer.addEventListener('touchmove', onMove);
             pointer.addEventListener('touchstart', onStart);
         })
+
+
+
+        function initBtnDegrees() {
+
+        }
 
 
         function easeOutCubic(currTime, beginningValue, change, duration) {
