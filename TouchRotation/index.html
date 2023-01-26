@@ -161,6 +161,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
             var pointer = document.getElementById("pointer"),
                 pieces = pointer.querySelectorAll(".piece"),
                 pointerBox = pointer.getBoundingClientRect(),
@@ -279,9 +280,11 @@
 
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
-                    navigator.vibrate(100);
+                    //navigator.vibrate(100);
+                    window.navigator.vibrate(100);
                 } else {
-                    navigator.vibrate(0);
+                    //navigator.vibrate(0);
+                    window.navigator.vibrate(0);
                     //easingStartDegree = lastDegrees + (currentDegrees - startDegrees);
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees);
 
