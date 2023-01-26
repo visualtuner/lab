@@ -181,6 +181,7 @@
             var targetDegrees = 0;
             var lastVelocity = 0;
             var easingStartDegree = 0;
+            var direction;
             
             var animationId = null;
 
@@ -256,7 +257,8 @@
  
                 dragging = false;
 
-                targetDegrees = Math.round( Math.round(totalDegrees % 360) / 45 ) * 45;
+                //targetDegrees = Math.round( Math.round(totalDegrees % 360) / 45 ) * 45;
+                targetDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
             }
 
 
@@ -274,10 +276,23 @@
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
                 } else {
                     
-                    easingStartDegree = lastDegrees + (currentDegrees - startDegrees);
-                    targetDegrees = Math.round( Math.round(easingStartDegree) / 45 ) * 45;
+                    //easingStartDegree = lastDegrees + (currentDegrees - startDegrees);
+                    relativeDegrees = Math.abs(totalDegrees - targetDegrees);
 
-                    totalDegrees += (targetDegrees - totalDegrees) * 0.1;
+                    if(totalDegrees > targetDegrees) {
+                        direction = -1;
+                        totalDegrees = totalDegrees + (direction * relativeDegrees);
+                    }else{
+                        direction = 1;
+                        totalDegrees = totalDegrees + (direction * relativeDegrees);
+                    }
+
+                    target.style.transition = "all 0.3s";
+
+                    console.log(relativeDegrees);
+                    //targetDegrees = Math.round( Math.round(easingStartDegree) / 45 ) * 45;
+
+                    //totalDegrees += (targetDegrees - totalDegrees) * 0.1;
 
                     // if (!start) {
                     //     start = timestamp;
@@ -409,8 +424,8 @@
                 this.draggingCard = false;
 
                 // calculate velocity
-                this.lastVelocity = (evt.pageX - this.startX) / (this.endTime - this.startTime);
-                console.log(this.lastVelocity);
+                //this.lastVelocity = (evt.pageX - this.startX) / (this.endTime - this.startTime);
+                //console.log(this.lastVelocity);
             }
 
             update() {
