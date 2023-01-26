@@ -293,6 +293,9 @@
                     }
 
                     target.style.transition = "all 0.2s";
+                    target.ontransitionend = function() {
+                        cancelAnimationFrame(animationId);
+                    };
 
                     for(var i = 0; i < pieces.length; i++){
                         pieces[i].querySelector(".btn").style.transition = "all 0.2s";
