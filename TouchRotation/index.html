@@ -327,15 +327,9 @@
                 }
 
                 target.style.transform = 'rotate(' + totalDegrees + 'deg)';
+                initBtnDegrees(totalDegrees);
 
-                pieces[0].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees) + 'deg)';
-                pieces[1].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 45) + 'deg)';
-                pieces[2].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 90) + 'deg)';
-                pieces[3].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 135) + 'deg)';
-                pieces[4].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 180) + 'deg)';
-                pieces[5].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 225) + 'deg)';
-                pieces[6].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 270) + 'deg)';
-                pieces[7].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 315) + 'deg)';
+                
                 
 
                 // User has finished dragging.
@@ -350,13 +344,28 @@
             pointer.addEventListener('touchend', onEnd);
             pointer.addEventListener('touchmove', onMove);
             pointer.addEventListener('touchstart', onStart);
+
+            initBtnDegrees(0);
+
+            function initBtnDegrees(parentDegrees) {
+                // pieces[0].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees) + 'deg)';
+                // pieces[1].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 45) + 'deg)';
+                // pieces[2].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 90) + 'deg)';
+                // pieces[3].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 135) + 'deg)';
+                // pieces[4].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 180) + 'deg)';
+                // pieces[5].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 225) + 'deg)';
+                // pieces[6].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 270) + 'deg)';
+                // pieces[7].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (totalDegrees + 315) + 'deg)';
+
+                for (var i = 0; i < pieces.length; i++) {
+                    pieces[i].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (parentDegrees + (i * 45)) + 'deg)';
+                }
+            }
         })
 
 
 
-        function initBtnDegrees() {
-
-        }
+        
 
 
         function easeOutCubic(currTime, beginningValue, change, duration) {
