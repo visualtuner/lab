@@ -279,8 +279,9 @@
 
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
+                    navigator.vibrate(100);
                 } else {
-                    
+                    navigator.vibrate(0);
                     //easingStartDegree = lastDegrees + (currentDegrees - startDegrees);
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees);
 
