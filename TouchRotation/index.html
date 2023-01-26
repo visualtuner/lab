@@ -238,6 +238,11 @@
                 target.style.transition = 'none';
                 target.style.willChange = 'transform';
 
+                for(var i = 0; i < pieces.length; i++){
+                    pieces[i].querySelector(".btn").style.transition = "none";
+                    pieces[i].querySelector(".btn").style.willChange = 'transform';
+                }
+
                 animationId = requestAnimationFrame(update);
             }
 
@@ -288,6 +293,10 @@
                     }
 
                     target.style.transition = "all 0.2s";
+
+                    for(var i = 0; i < pieces.length; i++){
+                        pieces[i].querySelector(".btn").style.transition = "all 0.2s";
+                    }
 
                     console.log(relativeDegrees);
                     //targetDegrees = Math.round( Math.round(easingStartDegree) / 45 ) * 45;
