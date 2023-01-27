@@ -162,6 +162,8 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
+            navigator.vibrate(0);
+            
             var pointer = document.getElementById("pointer"),
                 pieces = pointer.querySelectorAll(".piece"),
                 pointerBox = pointer.getBoundingClientRect(),
