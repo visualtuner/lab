@@ -271,7 +271,6 @@
 
 
             var start = null;
-            var animationDuration = 400;
             var frameCount = 0;
             var justBeforeDegrees = 0;
 
@@ -343,17 +342,6 @@
 
                     //totalDegrees += (targetDegrees - totalDegrees) * 0.1;
 
-                    
-
-                    // var progress = Math.round( (timestamp - start) / animationDuration) * animationDuration;
-                    // totalDegrees = easeOutCubic(progress, easingStartDegree, targetDegrees, animationDuration);
-                    // console.log(progress);
-
-
-                    // if (progress >= animationDuration) {
-                    //     cancelAnimationFrame(animationId);
-                    //     start = null;
-                    // }
                 }
 
                 target.style.transform = 'rotate(' + totalDegrees + 'deg)';
