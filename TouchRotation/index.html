@@ -251,7 +251,6 @@
                 // if (!target)
                 //     return;
                 currentDegrees = calcDegrees(e);
-                window.navigator.vibrate(10000);
             }
 
             function onEnd(e) {
@@ -271,6 +270,7 @@
 
             var start = null;
             var animationDuration = 400;
+            var frameCount = 0;
 
             function update(timestamp) {
 
@@ -281,18 +281,32 @@
 
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
-                    //navigator.vibrate(100);
+                    navigator.vibrate(10000);
                     
                 } else {
-                    //navigator.vibrate(0);
                     window.navigator.vibrate(0);
                     //easingStartDegree = lastDegrees + (currentDegrees - startDegrees);
-                    if (!start) {
+
+                    
+
+                    if(!start) {
                         start = timestamp;
                     }
 
-                    var elapsed = timestamp - start;
-                    console.log(elapsed);
+                    
+                    if(frameCount < 6){
+                        frameCount++;
+                    }
+
+                    if(frameCount == 6){
+                        cancelAnimationFrame(animationId);
+
+                        //var elapsed = timestamp - start;
+                    }
+
+                    console.log(frameCount);
+
+                    
 
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees);
 
