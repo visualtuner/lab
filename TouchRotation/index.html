@@ -163,7 +163,7 @@
         document.addEventListener("DOMContentLoaded", function () {
             navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
             navigator.vibrate(0);
-            
+
             var pointer = document.getElementById("pointer"),
                 pieces = pointer.querySelectorAll(".piece"),
                 pointerBox = pointer.getBoundingClientRect(),
@@ -273,6 +273,7 @@
             var start = null;
             var animationDuration = 400;
             var frameCount = 0;
+            var justBeforeDegrees = 0;
 
             function update(timestamp) {
 
@@ -283,11 +284,17 @@
 
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
-                    if(Math.abs(totalDegrees - lastDegrees) > 2){
+
+                    
+
+
+                    if(Math.abs(justBeforeDegrees - currentDegrees) > 2){
                         navigator.vibrate(10000);
                     }else{
                         navigator.vibrate(0);
                     }
+
+                    justBeforeDegrees = currentDegrees;
                     
                 } else {
                     navigator.vibrate(0);
