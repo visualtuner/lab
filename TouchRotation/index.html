@@ -281,10 +281,14 @@
 
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
-                    navigator.vibrate(10000);
+                    if(Math.abs(totalDegrees - lastDegrees) > 2){
+                        navigator.vibrate(10000);
+                    }else{
+                        navigator.vibrate(0);
+                    }
                     
                 } else {
-                    window.navigator.vibrate(0);
+                    navigator.vibrate(0);
                     //easingStartDegree = lastDegrees + (currentDegrees - startDegrees);
 
                     
