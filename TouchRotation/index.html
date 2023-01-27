@@ -286,7 +286,7 @@
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
 
                     
-                    if(Math.abs(justBeforeDegrees - currentDegrees) > 1){
+                    if(Math.abs(justBeforeDegrees - currentDegrees) > 0.5){
                         navigator.vibrate(10000);
                     }else{
                         navigator.vibrate(0);
