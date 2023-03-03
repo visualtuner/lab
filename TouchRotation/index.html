@@ -292,7 +292,6 @@
                         navigator.vibrate(10000);
                     }else{
                         navigator.vibrate(0);
-                        inactiveBtn();
                     }
 
                     justBeforeDegrees = currentDegrees;
@@ -374,6 +373,8 @@
             }
 
             function activeBtn(targetDegrees) {
+                inactiveBtn();
+
                 var trackingNumber = (targetDegrees/45) % 8;
                 console.log(trackingNumber);
                 if(trackingNumber == 0 || trackingNumber == -0){pieces[0].querySelector(".btn").classList.add("act");}
