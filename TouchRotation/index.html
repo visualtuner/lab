@@ -256,7 +256,6 @@
                 //     return;
                 dragging = true;
                 currentDegrees = calcDegrees(e);
-                inactiveBtn();
             }
 
             function onEnd(e) {
@@ -291,6 +290,7 @@
                     
                     if(Math.abs(justBeforeDegrees - currentDegrees) > 0.5){
                         navigator.vibrate(10000);
+                        inactiveBtn();
                     }else{
                         navigator.vibrate(0);
                     }
