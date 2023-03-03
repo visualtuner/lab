@@ -28,9 +28,10 @@
             width: 288px;
             height: 288px;
             border-radius: 50%;
-            background: #c70;
+            background: #fff;
             position: relative;
             margin-bottom: 16px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .test-circle:after {
@@ -44,6 +45,7 @@
             left: 50%;
             transform: translateX(-50%) translateY(-50%);
             background: #fff;
+            box-shadow: inset 0 4px 8px rgba(0,0,0,0.3);
         }
 
         .test-circle .piece {
@@ -86,14 +88,14 @@
             font-size: 11px;
             font-weight: 700;
             line-height: 20px;
-            color: #fff;
+            color: #2a3138;
             transition: all 0.2s;
         }
 
         .test-circle .piece .btn svg { width: 32px; height: 32px;}
-        .test-circle .piece .btn svg path { fill: #fff; transition: all 0.2s; }
-        .test-circle .piece .btn.act svg path { fill: #000; }
-        .test-circle .piece .btn.act p { color: #000; }
+        .test-circle .piece .btn svg path { fill: #2a3138; transition: all 0.2s; }
+        .test-circle .piece .btn.act svg path { fill: #fe6a2b; }
+        .test-circle .piece .btn.act p { color: #fe6a2b; }
     </style>
 </head>
 <body>
