@@ -36,18 +36,23 @@
     <div class="swiper-slide">
         <style type="text/css">
             .kv-midnight-discount-link {
+                display: block;
+                width: 100%;
+                height: 100%;
+                font-size: 0;
+                color: transparent;
                 position: relative;
             }
     
-            .kv-midnight-discount-link .kv-midnight-discount {
+            .kv-midnight-discount {
                 background-color: #000;
                 position: relative;
                 width: 100%;
                 height: 100%;
             }
 
-            .kv-midnight-discount-link .kv-midnight-discount .layer1,
-            .kv-midnight-discount-link .kv-midnight-discount .layer2 {
+            .kv-midnight-discount .layer1,
+            .kv-midnight-discount .layer2 {
                 display: block;
                 width: 100%;
                 height: 100%;
@@ -56,11 +61,11 @@
                 background-position: center;
             }
 
-            .kv-midnight-discount-link .kv-midnight-discount .layer1 {
+            .kv-midnight-discount .layer1 {
                 position: relative;
             }
 
-            .kv-midnight-discount-link .kv-midnight-discount .layer2 {
+            .kv-midnight-discount .layer2 {
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -86,13 +91,18 @@
                 100% { opacity: 1; }
             }
         </style>
-        <a href="https://biz.tstation.com/deal" class="kv-midnight-discount-link" data-analytics-click="심야 할인 KV">
+        
+        <a href="/deal" class="kv-midnight-discount-link" data-analytics-click="심야 할인 KV">
             <div class="kv-midnight-discount">
                 <span class="blind">심야 할인</span>
-                <div class="layer1" style="background-image:url('https://po.tstation.com/upload/display/2023/20230207160758/kv_pc_biz_off.jpg');"></div>
-                <div class="layer2" style="background-image:url('https://po.tstation.com/upload/display/2023/20230207160823/kv_pc_biz_on.jpg');"></div>
+                <span class="layer1" style="background-image:url('https://po.tstation.com/upload/display/2023/20230207160758/kv_pc_biz_off.jpg');"></span>
+                <span class="layer2" style="background-image:url('https://po.tstation.com/upload/display/2023/20230207160823/kv_pc_biz_on.jpg');"></span>
             </div>
         </a>
     </div>
 </body>
 </html>
+
+
+
+<a data-analytics-click="keyvisual" href="/deal" style="background-image:url('https://po.tstation.com/upload/display/2023/20230207211356/심야할인_PC_BIZ.png')">심야할인 기획전</a>
