@@ -335,6 +335,7 @@
             var start = null;
             var frameCount = 0;
             var justBeforeDegrees = 0;
+            var acceleration = 0;
 
             function update(timestamp) {
 
@@ -357,7 +358,7 @@
                 } else {
                     navigator.vibrate(0);
 
-                    var acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
+                    acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
 
                     console.log(acceleration);
 
