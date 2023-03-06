@@ -370,13 +370,15 @@
                         frameCount++;
                     }
 
-                    if(frameCount == 6){
-                        cancelAnimationFrame(animationId);
-
+                    if(frameCount > 5){
                         acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
                         console.log(acceleration);
                         document.getElementById("trace").innerHTML = acceleration;
 
+                    }
+
+                    if(frameCount == 6){
+                        cancelAnimationFrame(animationId);
                     }
 
                     
