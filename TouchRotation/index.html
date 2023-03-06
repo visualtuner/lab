@@ -252,6 +252,10 @@
             var direction;
             
             var animationId = null;
+            var start = null;
+            var frameCount = 0;
+            var justBeforeDegrees = 0;
+            var acceleration = 0;
 
             animationId = requestAnimationFrame(update);
 
@@ -335,10 +339,7 @@
             }
 
 
-            var start = null;
-            var frameCount = 0;
-            var justBeforeDegrees = 0;
-            var acceleration = 0;
+            
 
             function update(timestamp) {
 
