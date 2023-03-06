@@ -346,7 +346,6 @@
                 if (dragging) {
                     totalDegrees = lastDegrees + (currentDegrees - startDegrees);
 
-                    
                     if(Math.abs(justBeforeDegrees - currentDegrees) > 0.5){
                         navigator.vibrate(10000);
                     }else{
@@ -357,6 +356,10 @@
                     
                 } else {
                     navigator.vibrate(0);
+
+                    var acceleration = Math.floor(Math.abs(justBeforeDegrees - currentDegrees));
+
+                    console.log(acceleration);
 
                     if(!start) {
                         start = timestamp;
@@ -371,7 +374,7 @@
                     }
 
 
-                    relativeDegrees = Math.abs(totalDegrees - targetDegrees);
+                    relativeDegrees = Math.abs(totalDegrees - targetDegrees) + (Math.abs(totalDegrees - targetDegrees) * acceleration);
 
                     if(totalDegrees > targetDegrees) {
                         direction = -1;
@@ -435,7 +438,7 @@
                 inactiveBtn();
 
                 var trackingNumber = (targetDegrees/45) % 8;
-                console.log(trackingNumber);
+
                 if(trackingNumber == 0 || trackingNumber == -0){pieces[0].querySelector(".btn").classList.add("act");}
                 else if(trackingNumber == 1 || trackingNumber == -7){pieces[7].querySelector(".btn").classList.add("act");}
                 else if(trackingNumber == 2 || trackingNumber == -6){pieces[6].querySelector(".btn").classList.add("act");}
