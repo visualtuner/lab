@@ -358,9 +358,7 @@
                 } else {
                     navigator.vibrate(0);
 
-                    acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
-
-                    console.log(acceleration);
+                    
 
                     if(!start) {
                         start = timestamp;
@@ -372,8 +370,12 @@
 
                     if(frameCount == 6){
                         cancelAnimationFrame(animationId);
+
+                        acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
+                        console.log(acceleration);
                     }
 
+                    
 
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees) + (45 * acceleration);
 
