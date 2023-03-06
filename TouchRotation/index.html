@@ -336,6 +336,10 @@
 
                 //targetDegrees = Math.round( Math.round(totalDegrees % 360) / 45 ) * 45;
                 targetDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
+
+                acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
+                console.log(acceleration);
+                document.getElementById("trace").innerHTML = acceleration;
             }
 
 
@@ -419,9 +423,7 @@
 
                 lastDegrees = totalDegrees % 360;
 
-                acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
-                console.log(acceleration);
-                document.getElementById("trace").innerHTML = acceleration;
+                
 
             }
 
