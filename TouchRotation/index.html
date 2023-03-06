@@ -105,9 +105,12 @@
         .test-circle .piece .btn svg path { fill: #2a3138; transition: all 0.2s; }
         .test-circle .piece .btn.act svg path { fill: #fe6a2b; }
         .test-circle .piece .btn.act p { color: #fe6a2b; }
+
+        #trace { position: absolute; top: 0; left: 0;}
     </style>
 </head>
 <body>
+    <span id="trace">0</span>
     <div class="wheel-item">
         <div id="pointer" class="test-circle">
             <div class="piece">
@@ -373,6 +376,8 @@
 
                         acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
                         console.log(acceleration);
+                        document.getElementById("trace").innerHTML = acceleration;
+
                     }
 
                     
