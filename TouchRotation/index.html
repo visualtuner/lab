@@ -386,7 +386,7 @@
                     }
 
                     acceleration = Math.min(Math.round(Math.abs(justBeforeDegrees - currentDegrees)),5);
-                    console.log(acceleration);
+                    
                     document.getElementById("trace").innerHTML = acceleration;
 
                     justBeforeDegrees = currentDegrees;
@@ -409,14 +409,16 @@
 
                     
 
-                    relativeDegrees = Math.abs(totalDegrees - targetDegrees) + (45 * acceleration);
+                    relativeDegrees = Math.abs(totalDegrees - targetDegrees);
 
                     if(totalDegrees > targetDegrees) {
                         direction = -1;
-                        totalDegrees = totalDegrees + (direction * relativeDegrees);
+                        totalDegrees = totalDegrees + (direction * relativeDegrees) - (45 * acceleration);
+                        console.log(direction);
                     }else{
                         direction = 1;
-                        totalDegrees = totalDegrees + (direction * relativeDegrees);
+                        totalDegrees = totalDegrees + (direction * relativeDegrees) + (45 * acceleration);
+                        console.log(direction);
                     }
 
                     
