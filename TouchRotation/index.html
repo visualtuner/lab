@@ -333,6 +333,7 @@
                 targetDegrees = 0;
                 endTime = Date.now() / 1000;
                 //console.log(endTime);
+                currentDegrees = calcEndDegrees(e);
  
                 dragging = false;
 
@@ -374,9 +375,7 @@
 
                     if(measureFrame == 6){
                         
-                        acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
-                        console.log(acceleration);
-                        document.getElementById("trace").innerHTML = acceleration;
+                        
                     }
 
                     if (measureStart !== timestamp) {
@@ -385,7 +384,6 @@
                     
                     
                 } else {
-                    document.getElementById("trace").innerHTML = justBeforeDegrees+'/'+currentDegrees;
                     navigator.vibrate(0);
 
                     if(!start) {
@@ -400,7 +398,9 @@
                         cancelAnimationFrame(animationId);
                     }
 
-                    
+                    acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
+                    console.log(acceleration);
+                    document.getElementById("trace").innerHTML = acceleration;
 
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees) + (45 * acceleration);
 
