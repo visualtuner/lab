@@ -351,7 +351,7 @@
 
                 animationId = requestAnimationFrame(update);
 
-                if(!measureStart) {
+                /*if(!measureStart) {
                     measureStart = timestamp;
                     
                 }
@@ -366,7 +366,7 @@
                     acceleration = Math.round(Math.abs(measureStartDegrees - currentDegrees));
                     console.log(acceleration);
                     document.getElementById("trace").innerHTML = acceleration;
-                }
+                }*/
 
                 // if(measureFrame == 6){
                     
@@ -384,6 +384,10 @@
                     }else{
                         navigator.vibrate(0);
                     }
+
+                    acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
+                    console.log(acceleration);
+                    document.getElementById("trace").innerHTML = acceleration;
 
                     justBeforeDegrees = currentDegrees;
                     
