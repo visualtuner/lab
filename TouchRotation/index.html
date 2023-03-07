@@ -353,18 +353,24 @@
 
                 if(!measureStart) {
                     measureStart = timestamp;
+                    
+                }
+
+                measureFrame++;
+
+                if(measureFrame % 2 == 0){
                     measureStartDegrees = currentDegrees;
                 }
 
-                if(measureFrame < 6){
-                    measureFrame++;
-                }
-
-                if(measureFrame == 6){
+                if(measureFrame % 2 == 1){
                     acceleration = Math.round(Math.abs(measureStartDegrees - currentDegrees));
                     console.log(acceleration);
                     document.getElementById("trace").innerHTML = acceleration;
                 }
+
+                // if(measureFrame == 6){
+                    
+                // }
 
 
                 if (!target)
