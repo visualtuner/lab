@@ -242,6 +242,7 @@
             var startDegrees = 0;
             var lastDegrees = 0;
             var currentDegrees = 0;
+            var endDegrees = 0;
             var target = null;
             var dragging = false;
             var startTime = 0;
@@ -333,7 +334,7 @@
                 targetDegrees = 0;
                 endTime = Date.now() / 1000;
                 //console.log(endTime);
-                currentDegrees = calcEndDegrees(e);
+                endDegrees = calcEndDegrees(e);
  
                 dragging = false;
 
@@ -396,10 +397,10 @@
 
                     if(frameCount == 6){
                         cancelAnimationFrame(animationId);
-                        acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
+                        
                     }
 
-                    
+                    acceleration = (Math.abs(justBeforeDegrees - endDegrees));
                     console.log(acceleration);
                     document.getElementById("trace").innerHTML = acceleration;
 
