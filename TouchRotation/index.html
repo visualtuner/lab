@@ -335,6 +335,9 @@
                 endTime = Date.now() / 1000;
                 //console.log(endTime);
                 endDegrees = calcEndDegrees(e);
+                acceleration = (Math.abs(justBeforeDegrees - endDegrees));
+                console.log(acceleration);
+                document.getElementById("trace").innerHTML = acceleration;
  
                 dragging = false;
 
@@ -400,9 +403,7 @@
                         
                     }
 
-                    acceleration = (Math.abs(justBeforeDegrees - endDegrees));
-                    console.log(acceleration);
-                    document.getElementById("trace").innerHTML = acceleration;
+                    
 
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees) + (45 * acceleration);
 
