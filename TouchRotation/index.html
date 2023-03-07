@@ -236,7 +236,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-            navigator.vibrate(0);
+            //navigator.vibrate(0);
 
             var wheelMenu = document.getElementById("wheelMenu"),
                 pieces = wheelMenu.querySelectorAll(".piece"),
@@ -352,19 +352,6 @@
                     navigator.vibrate(0);
 
                     cancelAnimationFrame(animationId);
-
-                    // frameCount = 0;
-                    // frameCount++;
-                    // console.log('time');
-
-                    // if(!start) {
-                    //     start = timestamp;
-                    // }
-
-                    // if(frameCount == 1){
-                    //     cancelAnimationFrame(animationId);
-                    // }
-
                     
                     totalDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees);
