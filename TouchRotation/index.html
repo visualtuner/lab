@@ -385,7 +385,7 @@
                         navigator.vibrate(0);
                     }
 
-                    acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
+                    acceleration = Math.min(Math.round(Math.abs(justBeforeDegrees - currentDegrees)),5);
                     console.log(acceleration);
                     document.getElementById("trace").innerHTML = acceleration;
 
