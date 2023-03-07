@@ -255,6 +255,7 @@
             var animationId = null;
             var start = null;
             var measureStart = null;
+            var measureStartDegrees = 0;
             var measureFrame = 0;
             var frameCount = 0;
             var justBeforeDegrees = 0;
@@ -352,19 +353,19 @@
 
                 if(!measureStart) {
                     measureStart = timestamp;
+                    measureStartDegrees = currentDegrees;
                 }
 
                 if(measureFrame < 6){
                     measureFrame++;
-                    
                 }
 
                 if(measureFrame == 6){
-                    acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
+                    acceleration = Math.round(Math.abs(measureStartDegrees - currentDegrees));
                     console.log(acceleration);
                     document.getElementById("trace").innerHTML = acceleration;
                 }
-                
+
 
                 if (!target)
                     return;
