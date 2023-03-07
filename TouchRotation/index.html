@@ -262,8 +262,6 @@
             var justBeforeDegrees = 0;
             var acceleration = 0;
 
-            animationId = requestAnimationFrame(update);
-
             function calcDegrees(e) {
                 var pointerEvent = e;
                 if (e.targetTouches && e.targetTouches[0]) {
@@ -352,18 +350,20 @@
 
                 } else {
                     navigator.vibrate(0);
-                    frameCount = 0;
-                    frameCount++;
 
-                    if(!start) {
-                        start = timestamp;
-                    }
-                    // if(frameCount < 1){
-                    //     frameCount++;
+                    cancelAnimationFrame(animationId);
+
+                    // frameCount = 0;
+                    // frameCount++;
+                    // console.log('time');
+
+                    // if(!start) {
+                    //     start = timestamp;
                     // }
-                    if(frameCount == 1){
-                        cancelAnimationFrame(animationId);
-                    }
+
+                    // if(frameCount == 1){
+                    //     cancelAnimationFrame(animationId);
+                    // }
 
                     
                     totalDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
@@ -375,7 +375,6 @@
 
                     target.addEventListener('transitionstart', function() {
                         cancelAnimationFrame(animationId);
-                        console.log('act');
                         activeBtn(totalDegrees);
                         target.removeEventListener('transitionstart', arguments.callee);
                     });
