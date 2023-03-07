@@ -332,12 +332,9 @@
                 // if (!target)
                 //     return;
                 targetDegrees = 0;
-                endTime = Date.now() / 1000;
-                //console.log(endTime);
-                endDegrees = calcEndDegrees(e);
-                acceleration = (Math.abs(justBeforeDegrees - endDegrees));
-                console.log(acceleration);
-                document.getElementById("trace").innerHTML = acceleration;
+                
+                //endDegrees = calcEndDegrees(e);
+                
  
                 dragging = false;
 
@@ -353,6 +350,22 @@
 
                 animationId = requestAnimationFrame(update);
 
+                if(!measureStart) {
+                    measureStart = timestamp;
+                }
+
+                if(measureFrame < 6){
+                    measureFrame++;
+                    
+                }
+
+                if(measureFrame == 6){
+                    acceleration = Math.round(Math.abs(justBeforeDegrees - currentDegrees));
+                    console.log(acceleration);
+                    document.getElementById("trace").innerHTML = acceleration;
+                }
+                
+
                 if (!target)
                     return;
 
@@ -366,26 +379,6 @@
                     }
 
                     justBeforeDegrees = currentDegrees;
-
-                    
-                    /*if(!measureStart) {
-                        measureStart = timestamp;
-                    }
-
-                    if(measureFrame < 6){
-                        measureFrame++;
-                        
-                    }
-
-                    if(measureFrame == 6){
-                        
-                        
-                    }
-
-                    if (measureStart !== timestamp) {
-                        
-                    }*/
-                    
                     
                 } else {
                     navigator.vibrate(0);
