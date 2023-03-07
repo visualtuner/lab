@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        .wheel-item {
+        .wheel-menu-wrap {
             width: 288px;
             height: 288px;
             border-radius: 50%;
@@ -34,7 +34,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .wheel-item:after {
+        .wheel-menu-wrap:after {
             content: '';
             display: block;
             width: 100px;
@@ -48,7 +48,7 @@
             box-shadow: inset 0 4px 12px rgba(0,0,0,0.3);
         }
 
-        .test-circle {
+        .wheel-menu {
             width: 288px;
             height: 288px;
             border-radius: 50%;
@@ -57,7 +57,7 @@
             margin-bottom: 16px;
         }
 
-        .test-circle .piece {
+        .wheel-menu .piece {
             width: 0;
             height: 96px;
             position: absolute;
@@ -66,16 +66,16 @@
             transform-origin: 50% 100%;
         }
 
-        .test-circle .piece:nth-of-type(1) { transform: rotate(0deg);}
-        .test-circle .piece:nth-of-type(2) { transform: rotate(45deg);}
-        .test-circle .piece:nth-of-type(3) { transform: rotate(90deg);}
-        .test-circle .piece:nth-of-type(4) { transform: rotate(135deg);}
-        .test-circle .piece:nth-of-type(5) { transform: rotate(180deg);}
-        .test-circle .piece:nth-of-type(6) { transform: rotate(225deg);}
-        .test-circle .piece:nth-of-type(7) { transform: rotate(270deg);}
-        .test-circle .piece:nth-of-type(8) { transform: rotate(315deg);}
+        .wheel-menu .piece:nth-of-type(1) { transform: rotate(0deg);}
+        .wheel-menu .piece:nth-of-type(2) { transform: rotate(45deg);}
+        .wheel-menu .piece:nth-of-type(3) { transform: rotate(90deg);}
+        .wheel-menu .piece:nth-of-type(4) { transform: rotate(135deg);}
+        .wheel-menu .piece:nth-of-type(5) { transform: rotate(180deg);}
+        .wheel-menu .piece:nth-of-type(6) { transform: rotate(225deg);}
+        .wheel-menu .piece:nth-of-type(7) { transform: rotate(270deg);}
+        .wheel-menu .piece:nth-of-type(8) { transform: rotate(315deg);}
 
-        .test-circle .piece .btn {
+        .wheel-menu .piece .btn {
             width: 56px;
             height: 56px;
             background: transparent;
@@ -91,7 +91,16 @@
             justify-content: center;
         }
 
-        .test-circle .piece .btn p {
+        .wheel-menu .piece:nth-of-type(1) .btn { transform: translateX(-50%) translateY(-50%) rotate(0deg); }
+        .wheel-menu .piece:nth-of-type(2) .btn { transform: translateX(-50%) translateY(-50%) rotate(-45deg); }
+        .wheel-menu .piece:nth-of-type(3) .btn { transform: translateX(-50%) translateY(-50%) rotate(-90deg); }
+        .wheel-menu .piece:nth-of-type(4) .btn { transform: translateX(-50%) translateY(-50%) rotate(-135deg); }
+        .wheel-menu .piece:nth-of-type(5) .btn { transform: translateX(-50%) translateY(-50%) rotate(-180deg); }
+        .wheel-menu .piece:nth-of-type(6) .btn { transform: translateX(-50%) translateY(-50%) rotate(-225deg); }
+        .wheel-menu .piece:nth-of-type(7) .btn { transform: translateX(-50%) translateY(-50%) rotate(-270deg); }
+        .wheel-menu .piece:nth-of-type(8) .btn { transform: translateX(-50%) translateY(-50%) rotate(-315deg); }
+
+        .wheel-menu .piece .btn p {
             margin: 0;
             text-align: center;
             font-size: 11px;
@@ -101,18 +110,18 @@
             transition: all 0.2s;
         }
 
-        .test-circle .piece .btn svg { width: 32px; height: 32px;}
-        .test-circle .piece .btn svg path { fill: #2a3138; transition: all 0.2s; }
-        .test-circle .piece .btn.act svg path { fill: #fe6a2b; }
-        .test-circle .piece .btn.act p { color: #fe6a2b; }
+        .wheel-menu .piece .btn svg { width: 32px; height: 32px;}
+        .wheel-menu .piece .btn svg path { fill: #2a3138; transition: all 0.2s; }
+        .wheel-menu .piece .btn.act svg path { fill: #fe6a2b; }
+        .wheel-menu .piece .btn.act p { color: #fe6a2b; }
 
         #trace { position: absolute; top: 0; left: 0;}
     </style>
 </head>
 <body>
-    <span id="trace">0</span>
-    <div class="wheel-item">
-        <div id="pointer" class="test-circle">
+    <span id="trace">2번째메뉴로</span>
+    <div class="wheel-menu-wrap">
+        <div id="wheelMenu" class="wheel-menu">
             <div class="piece">
                 <div class="btn">
                     <svg x="0px" y="0px" viewBox="0 0 60 60" style="enable-background:new 0 0 60 60;" xml:space="preserve">
@@ -229,14 +238,14 @@
             navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
             navigator.vibrate(0);
 
-            var pointer = document.getElementById("pointer"),
-                pieces = pointer.querySelectorAll(".piece"),
-                pointerBox = pointer.getBoundingClientRect(),
-                centerPoint = window.getComputedStyle(pointer).transformOrigin,
+            var wheelMenu = document.getElementById("wheelMenu"),
+                pieces = wheelMenu.querySelectorAll(".piece"),
+                wheelMenuBounding = wheelMenu.getBoundingClientRect(),
+                centerPoint = window.getComputedStyle(wheelMenu).transformOrigin,
                 centers = centerPoint.split(" ");
             
-            var centerY = pointerBox.top + parseInt(centers[1]) - window.pageYOffset,
-                centerX = pointerBox.left + parseInt(centers[0]) - window.pageXOffset;
+            var centerY = wheelMenuBounding.top + parseInt(centers[1]) - window.pageYOffset,
+                centerX = wheelMenuBounding.left + parseInt(centers[0]) - window.pageXOffset;
 
             var totalDegrees = 0;
             var startDegrees = 0;
@@ -271,24 +280,6 @@
                 var degrees = (radians * (180 / Math.PI) * -1) + 180;
                 return degrees;
             }
-
-            /*function calcEndDegrees(e) {
-                var pointerEvent = e;
-                if (e.changedTouches && e.changedTouches[e.changedTouches.length-1]) {
-                    e.preventDefault();
-                    pointerEvent = e.changedTouches[e.changedTouches.length-1];
-                    mouseX = pointerEvent.pageX;
-                    mouseY = pointerEvent.pageY;
-                } else {
-                    mouseX = e.clientX,
-                    mouseY = e.clientY;
-                }
-
-                var radians = Math.atan2(mouseX - centerX, mouseY - centerY);
-                var degrees = (radians * (180 / Math.PI) * -1) + 180;
-                return degrees;
-            }*/
-
 
             function onStart(e) {
                 // if (target)
@@ -361,16 +352,16 @@
 
                 } else {
                     navigator.vibrate(0);
+                    frameCount = 0;
+                    frameCount++;
 
                     if(!start) {
                         start = timestamp;
                     }
-                    
-                    if(frameCount < 6){
-                        frameCount++;
-                    }
-
-                    if(frameCount == 6){
+                    // if(frameCount < 1){
+                    //     frameCount++;
+                    // }
+                    if(frameCount == 1){
                         cancelAnimationFrame(animationId);
                     }
 
@@ -378,20 +369,19 @@
                     totalDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees);
                     totalDegrees = totalDegrees + (direction * relativeDegrees) + (direction * (45 * acceleration));
-
-
                     
 
                     target.style.transition = "all 0.2s";
 
                     target.addEventListener('transitionstart', function() {
+                        cancelAnimationFrame(animationId);
+                        console.log('act');
                         activeBtn(totalDegrees);
                         target.removeEventListener('transitionstart', arguments.callee);
                     });
 
                     target.addEventListener('transitionend', function() {
                         cancelAnimationFrame(animationId);
-                        //activeBtn(totalDegrees);
                         target.removeEventListener('transitionend', arguments.callee);
                     });
 
@@ -406,23 +396,19 @@
 
                 
                 
-
                 // User has finished dragging.
                 if (dragging)
                     return;
 
                 lastDegrees = totalDegrees % 360;
-
-                
-
             }
 
-            pointer.addEventListener('touchend', onEnd);
-            pointer.addEventListener('touchmove', onMove);
-            pointer.addEventListener('touchstart', onStart);
 
-            initBtnDegrees(0);
-            pieces[0].querySelector(".btn").classList.add("act");
+            wheelMenu.addEventListener('touchend', onEnd);
+            wheelMenu.addEventListener('touchmove', onMove);
+            wheelMenu.addEventListener('touchstart', onStart);
+
+            wheelTo(0);
 
             
             function initBtnDegrees(parentDegrees) {
@@ -433,6 +419,7 @@
             }
 
             function activeBtn(targetDegrees) {
+                
                 inactiveBtn();
 
                 var trackingNumber = (targetDegrees/45) % 8;
@@ -447,6 +434,8 @@
                 else if(trackingNumber == 6 || trackingNumber == -2){pieces[2].querySelector(".btn").classList.add("act"); activeIndex = 2; }
                 else if(trackingNumber == 7 || trackingNumber == -1){pieces[1].querySelector(".btn").classList.add("act"); activeIndex = 1; }
 
+                
+
                 return activeIndex;
             }
 
@@ -454,6 +443,28 @@
                 for (var i = 0; i < pieces.length; i++) {
                     pieces[i].querySelector(".btn").classList.remove("act");
                 }
+            }
+
+            function wheelTo(degrees){
+                wheelMenu.style.transition = "all 0.2s";
+                wheelMenu.style.transform = 'rotate(' + degrees + 'deg)';
+
+                pieces.forEach(function(currentElement) {
+                    currentElement.querySelector(".btn").style.transition = "all 0.2s";
+                    currentElement.querySelector(".btn").addEventListener('transitionend', function() {
+                        this.style.transition = 'none';
+                        this.removeEventListener('transitionend', arguments.callee);
+                    });
+                });
+
+                initBtnDegrees(degrees);
+                activeBtn(degrees);
+
+                lastDegrees = degrees % 360;
+            }
+
+            document.getElementById("trace").onclick = function() {
+                wheelTo(90);
             }
         })
 
