@@ -253,6 +253,8 @@
             
             var animationId = null;
             var start = null;
+            var measureStart = null;
+            var measureFrame = 0;
             var frameCount = 0;
             var justBeforeDegrees = 0;
             var acceleration = 0;
@@ -334,12 +336,9 @@
  
                 dragging = false;
 
-                //targetDegrees = Math.round( Math.round(totalDegrees % 360) / 45 ) * 45;
                 targetDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
 
-                acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
-                console.log(acceleration);
-                document.getElementById("trace").innerHTML = acceleration;
+                
             }
 
 
@@ -362,8 +361,31 @@
                     }
 
                     justBeforeDegrees = currentDegrees;
+
+                    
+                    /*if(!measureStart) {
+                        measureStart = timestamp;
+                    }
+
+                    if(measureFrame < 6){
+                        measureFrame++;
+                        
+                    }
+
+                    if(measureFrame == 6){
+                        
+                        acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
+                        console.log(acceleration);
+                        document.getElementById("trace").innerHTML = acceleration;
+                    }
+
+                    if (measureStart !== timestamp) {
+                        
+                    }*/
+                    
                     
                 } else {
+                    document.getElementById("trace").innerHTML = 'acceleration';
                     navigator.vibrate(0);
 
                     if(!start) {
