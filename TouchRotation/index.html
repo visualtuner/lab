@@ -396,9 +396,10 @@
 
                     if(frameCount == 6){
                         cancelAnimationFrame(animationId);
+                        acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
                     }
 
-                    acceleration = (Math.abs(justBeforeDegrees - currentDegrees));
+                    
                     console.log(acceleration);
                     document.getElementById("trace").innerHTML = acceleration;
 
