@@ -428,7 +428,7 @@
 
                     target.addEventListener('transitionend', function() {
                         cancelAnimationFrame(animationId);
-                        activeBtn(targetDegrees);
+                        activeBtn(totalDegrees);
                         target.removeEventListener('transitionend', arguments.callee);
                     });
 
