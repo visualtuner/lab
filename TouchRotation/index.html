@@ -389,7 +389,17 @@
                     
                     document.getElementById("trace").innerHTML = acceleration;
 
+                    if(justBeforeDegrees > currentDegrees){
+                        direction = -1;
+                    }else{
+                        direction = 1;
+                    }
+
                     justBeforeDegrees = currentDegrees;
+
+
+                    
+                    
                     
                 } else {
                     navigator.vibrate(0);
@@ -411,15 +421,8 @@
 
                     relativeDegrees = Math.abs(totalDegrees - targetDegrees);
 
-                    if(totalDegrees > targetDegrees) {
-                        direction = -1;
-                        totalDegrees = totalDegrees + (direction * relativeDegrees) + (direction * (45 * acceleration));
-                        console.log(direction);
-                    }else{
-                        direction = 1;
-                        totalDegrees = totalDegrees + (direction * relativeDegrees) + (direction * (45 * acceleration));
-                        console.log(direction);
-                    }
+                    totalDegrees = totalDegrees + (direction * relativeDegrees) + (direction * (45 * acceleration));
+                    console.log(direction);
 
                     
 
