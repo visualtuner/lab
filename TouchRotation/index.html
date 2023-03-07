@@ -413,11 +413,11 @@
 
                     if(totalDegrees > targetDegrees) {
                         direction = -1;
-                        totalDegrees = totalDegrees + (direction * relativeDegrees) - (45 * acceleration);
+                        totalDegrees = totalDegrees + (direction * relativeDegrees) + (direction * (45 * acceleration));
                         console.log(direction);
                     }else{
                         direction = 1;
-                        totalDegrees = totalDegrees + (direction * relativeDegrees) + (45 * acceleration);
+                        totalDegrees = totalDegrees + (direction * relativeDegrees) + (direction * (45 * acceleration));
                         console.log(direction);
                     }
 
