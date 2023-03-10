@@ -234,9 +234,7 @@
     </div>
 
     <script>
-        var wheel_menu;
-
-        function WheelMenu() {
+        var wheel_menu = (function () {
             navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
             let wheelMenu = document.getElementById("wheelMenu"),
@@ -252,18 +250,30 @@
             let startDegrees = 0;
             let lastDegrees = 0;
             let currentDegrees = 0;
+            let activeIndex = 0;
             let target = null;
             let dragging = false;
             let targetDegrees = 0;
             let direction;
-            
             let animationId = null;
             let start = null;
             let frameCount = 0;
             let justBeforeDegrees = 0;
             let acceleration = 0;
 
-            let calcDegrees = function(e) {
+            //함수
+            let calcDegrees;
+            let onStart;
+            let onMove;
+            let onEnd;
+            let update;
+            let setBtnDegrees;
+            let activeBtn;
+            let inactiveBtn;
+            let wheelTo;
+
+
+            calcDegrees = function(e) {
                 let pointerEvent = e;
                 if (e.targetTouches && e.targetTouches[0]) {
                     e.preventDefault();
@@ -280,7 +290,7 @@
                 return degrees;
             }
 
-            let onStart = function(e) {
+            onStart = function(e) {
                 dragging = true;
 
                 target = e.currentTarget;
@@ -300,13 +310,13 @@
                 navigator.vibrate(100);
             }
 
-            let onMove = function(e) {
+            onMove = function(e) {
                 dragging = true;
                 
                 currentDegrees = calcDegrees(e);
             }
 
-            let onEnd = function(e) {
+            onEnd = function(e) {
                 targetDegrees = 0;
                 
                 dragging = false;
@@ -314,7 +324,7 @@
                 targetDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
             }
 
-            let update = function(timestamp) {
+            update = function(timestamp) {
 
                 animationId = requestAnimationFrame(update);
 
@@ -380,19 +390,18 @@
                 lastDegrees = totalDegrees % 360;
             }
             
-            let setBtnDegrees = function(parentDegrees) {
+            setBtnDegrees = function(parentDegrees) {
                 for (let i = 0; i < pieces.length; i++) {
                     pieces[i].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (parentDegrees + (i * 45)) + 'deg)';
                 }
             }
 
-            let activeBtn = function(targetDegrees) {
+            activeBtn = function(targetDegrees) {
                 inactiveBtn();
 
                 let trackingNumber = (targetDegrees/45) % 8;
-                let activeIndex;
 
-                if(trackingNumber == 0 || trackingNumber == -0){pieces[0].querySelector(".btn").classList.add("act"); activeIndex = 0; }
+                if(trackingNumber == 0){pieces[0].querySelector(".btn").classList.add("act"); activeIndex = 0; }
                 else if(trackingNumber == 1 || trackingNumber == -7){pieces[7].querySelector(".btn").classList.add("act"); activeIndex = 7; }
                 else if(trackingNumber == 2 || trackingNumber == -6){pieces[6].querySelector(".btn").classList.add("act"); activeIndex = 6; }
                 else if(trackingNumber == 3 || trackingNumber == -5){pieces[5].querySelector(".btn").classList.add("act"); activeIndex = 5; }
@@ -404,13 +413,13 @@
                 return activeIndex;
             }
 
-            let inactiveBtn = function() {
+            inactiveBtn = function() {
                 for (let i = 0; i < pieces.length; i++) {
                     pieces[i].querySelector(".btn").classList.remove("act");
                 }
             }
 
-            let wheelTo = function(degrees){
+            wheelTo = function(degrees){
                 wheelMenu.style.transition = "all 0.2s";
                 wheelMenu.style.transform = 'rotate(' + degrees + 'deg)';
 
@@ -435,23 +444,25 @@
             wheelTo(0);
 
             return {
+                activeIndex: activeIndex,
                 wheelTo: wheelTo,
             };
-            
-        }
+        }())
+
+
+
 
         document.addEventListener("DOMContentLoaded", function(){
-            wheel_menu = WheelMenu();
-            console.log('loaded');
+            //wheel_menu = new WheelMenu();
         });
 
         window.addEventListener("resize", function(){
-            wheel_menu = WheelMenu();
-            console.log('resize');
+            //wheel_menu = WheelMenu();
         });
 
         document.getElementById("trace").onclick = function() {
-            wheel_menu.wheelTo(135);
+            wheel_menu.wheelTo(180);
+            console.log(wheel_menu.activeIndex );
         }   
     </script>
 </body>
