@@ -24,27 +24,50 @@
             overflow: hidden;
         }
 
+        #circChart { cursor: pointer;}
+
         #chartFill {
+            opacity: 0;
             stroke-dasharray: 0 0;
-            transition: all 0.6s;
+            transition: opacity 0s, stroke-dasharray 1.6s;
         }
 
+        .step-progress-chart {
+            display: flex;
+            gap: 2px;
+        }
+
+        .step-progress-chart div {
+            width: 20px;
+            height: 2px;
+            background: #d9dbdc;
+        }
+
+        .step-progress-chart div.done {
+            background: #00B3C5;
+        }
     </style>
 </head>
 <body>
-    <div class="">
-        <svg width="200" height="200" viewBox="0 0 100 100" style="transform:rotate(150deg);" id="chartElem">
+    <div class="" id="circChart">
+        <svg width="72" height="72" viewBox="0 0 100 100" style="transform:rotate(162deg);" id="chartElem">
             <circle id="chartTrack" class="chart-track" cx="50" cy="50" r="48" fill="transparent" stroke="#d9dbdc" stroke-width="4" stroke-linecap="round" />
             <circle id="chartFill" class="chart-fill" cx="50" cy="50" r="48" fill="transparent" stroke="blue" stroke-width="4" stroke-linecap="round" stroke-dasharray="0 0" />
         </svg>
     </div>
 
-    <div class="">
+    <div class="step-progress-chart">
+        <div class="done"></div>
+        <div class=""></div>
+        <div class=""></div>
+    </div>
+
+    <!-- <div class="">
         <svg width="200" height="200" viewBox="0 0 100 100" style="transform:rotate(150deg);" id="chartElemxxx">
             <circle id="chartTrack" class="chart-track" cx="50" cy="50" r="48" fill="transparent" stroke="#d9dbdc" stroke-width="4" stroke-linecap="round" />
             <circle id="chartFill" class="chart-fill" cx="50" cy="50" r="48" fill="transparent" stroke="blue" stroke-width="4" stroke-linecap="round" />
         </svg>
-    </div>
+    </div> -->
 
     <script>
         function setCircChart(elem, percent) {
@@ -53,19 +76,26 @@
             const chartFill = tgt.querySelector(".chart-fill");
             const radius = 48;
             const diameter = 2 * Math.PI * radius;
-            const total = diameter * 0.6666;
-            const space = diameter * 0.3333;
+            const total = diameter * 0.6;
+            const space = diameter * 0.4;
             const calcTotal = total * percent;
             const calcSpace = (total * (1- percent)) + space;
 
             chartTrack.setAttribute('stroke-dasharray', total + ' ' + space);
-            //chartFill.setAttribute('stroke-dasharray', calcTotal + ' ' + calcSpace);
             chartFill.style.strokeDasharray = calcTotal + ' ' + calcSpace;
-            // chartFill.setAttribute('stroke-dasharray', total + ' ' + space);
-            // chartFill.setAttribute('stroke-dashoffset', -calcSpace);
+            if(percent != 0){
+                chartFill.style.opacity = "1";
+            }
+            //chartFill.style.strokeDashoffset = total;
         }
 
-        setCircChart("chartElem", 0.4);
+        setCircChart("chartElem", 0);
+
+        document.getElementById('circChart').addEventListener('click', function(){
+            setCircChart("chartElem", 0.6);
+        });
+
+        
     </script>
 </body>
 </html>
