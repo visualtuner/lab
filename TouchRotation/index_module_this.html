@@ -235,47 +235,51 @@
     </div>
 
     <script>
-        var wheel_menu = (function () {
+        var wheel_menu;
+
+        function WheelMenu() {
             navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
-            let wheelMenu = document.getElementById("wheelMenu"),
-                pieces = wheelMenu.querySelectorAll(".piece"),
-                wheelMenuBounding = wheelMenu.getBoundingClientRect(),
-                centerPoint = window.getComputedStyle(wheelMenu).transformOrigin,
-                centers = centerPoint.split(" ");
-            
-            let centerY = wheelMenuBounding.top + parseInt(centers[1]) - window.pageYOffset,
-                centerX = wheelMenuBounding.left + parseInt(centers[0]) - window.pageXOffset;
+            let $_this = this;
+            this.wheelMenu = document.getElementById("wheelMenu");
+            this.pieces = this.wheelMenu.querySelectorAll(".piece");
+            this.wheelMenuBounding = this.wheelMenu.getBoundingClientRect();
+            this.centerPoint = window.getComputedStyle(this.wheelMenu).transformOrigin;
+            this.centers = this.centerPoint.split(" ");
+            this.centerY = this.wheelMenuBounding.top + parseInt(this.centers[1]) - window.pageYOffset;
+            this.centerX = this.wheelMenuBounding.left + parseInt(this.centers[0]) - window.pageXOffset;
 
-            let totalDegrees = 0;
-            let startDegrees = 0;
-            let lastDegrees = 0;
-            let currentDegrees = 0;
-            let activeIndex = 0;
-            let target = null;
-            let dragging = false;
-            let targetDegrees = 0;
-            let direction;
-            let animationId = null;
-            let start = null;
-            let frameCount = 0;
-            let justBeforeDegrees = 0;
-            let acceleration = 0;
+            this.totalDegrees = 0;
+            this.startDegrees = 0;
+            this.lastDegrees = 0;
+            this.currentDegrees = 0;
+            this.activeIndex = 0;
+            this.target = null;
+            this.dragging = false;
+            this.targetDegrees = 0;
+            this.direction;
+            this.animationId = null;
+            this.start = null;
+            this.frameCount = 0;
+            this.justBeforeDegrees = 0;
+            this.acceleration = 0;
 
             //함수
-            let calcDegrees;
-            let onStart;
-            let onMove;
-            let onEnd;
-            let update;
-            let setBtnDegrees;
-            let activeBtn;
-            let inactiveBtn;
-            let wheelTo;
+            /*this.calcDegrees;
+            this.onStart;
+            this.onMove;
+            this.onEnd;
+            this.update;
+            this.setBtnDegrees;
+            this.activeBtn;
+            this.inactiveBtn;
+            this.wheelTo;
+            this.init;*/
 
 
-            calcDegrees = function(e) {
+            this.calcDegrees = function(e) {
                 let pointerEvent = e;
+                let mouseX,mouseY;
                 if (e.targetTouches && e.targetTouches[0]) {
                     e.preventDefault();
                     pointerEvent = e.targetTouches[0];
@@ -291,180 +295,189 @@
                 return degrees;
             }
 
-            onStart = function(e) {
-                dragging = true;
+            this.onStart = function(e) {
+                $_this.dragging = true;
 
-                target = e.currentTarget;
+                $_this.target = e.currentTarget;
 
-                startDegrees = calcDegrees(e);
-                currentDegrees = startDegrees;
+                $_this.startDegrees = $_this.calcDegrees(e);
+                $_this.currentDegrees = $_this.startDegrees;
 
-                target.style.transition = 'none';
-                target.style.willChange = 'transform';
+                $_this.target.style.transition = 'none';
+                $_this.target.style.willChange = 'transform';
 
-                for(let i = 0; i < pieces.length; i++){
-                    pieces[i].querySelector(".btn").style.transition = "none";
-                    pieces[i].querySelector(".btn").style.willChange = 'transform';
+                for(let i = 0; i < $_this.pieces.length; i++){
+                    $_this.pieces[i].querySelector(".btn").style.transition = "none";
+                    $_this.pieces[i].querySelector(".btn").style.willChange = 'transform';
                 }
 
-                animationId = requestAnimationFrame(update);
+                $_this.animationId = requestAnimationFrame($_this.update);
                 navigator.vibrate(100);
             }
 
-            onMove = function(e) {
-                dragging = true;
+            this.onMove = function(e) {
+                $_this.dragging = true;
                 
-                currentDegrees = calcDegrees(e);
+                $_this.currentDegrees = $_this.calcDegrees(e);
             }
 
-            onEnd = function(e) {
-                targetDegrees = 0;
+            this.onEnd = function(e) {
+                $_this.targetDegrees = 0;
                 
-                dragging = false;
+                $_this.dragging = false;
 
-                targetDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
+                $_this.targetDegrees = Math.round( Math.round($_this.totalDegrees) / 45 ) * 45;
             }
 
-            update = function(timestamp) {
+            this.update = function(timestamp) {
 
-                animationId = requestAnimationFrame(update);
+                $_this.animationId = requestAnimationFrame($_this.update);
 
-                if (!target)
+                if (!$_this.target)
                     return;
 
-                if (dragging) {
-                    totalDegrees = lastDegrees + (currentDegrees - startDegrees);
+                if ($_this.dragging) {
+                    $_this.totalDegrees = $_this.lastDegrees + ($_this.currentDegrees - $_this.startDegrees);
 
-                    if(Math.abs(justBeforeDegrees - currentDegrees) > 0.5){
+                    if(Math.abs($_this.justBeforeDegrees - $_this.currentDegrees) > 0.5){
                         navigator.vibrate(10000);
                     }else{
                         navigator.vibrate(0);
                     }
 
-                    acceleration = Math.min(Math.round(Math.abs(justBeforeDegrees - currentDegrees) * 0.25), 3);
+                    $_this.acceleration = Math.min(Math.round(Math.abs($_this.justBeforeDegrees - $_this.currentDegrees) * 0.25), 3);
                     
-                    if(justBeforeDegrees > currentDegrees){
-                        direction = -1;
+                    if($_this.justBeforeDegrees > $_this.currentDegrees){
+                        $_this.direction = -1;
                     }else{
-                        direction = 1;
+                        $_this.direction = 1;
                     }
 
-                    justBeforeDegrees = currentDegrees;
+                    $_this.justBeforeDegrees = $_this.currentDegrees;
 
                 } else {
                     navigator.vibrate(0);
 
-                    cancelAnimationFrame(animationId);
+                    cancelAnimationFrame($_this.animationId);
                     
-                    totalDegrees = Math.round( Math.round(totalDegrees) / 45 ) * 45;
-                    relativeDegrees = Math.abs(totalDegrees - targetDegrees);
-                    totalDegrees = totalDegrees + (direction * relativeDegrees) + (direction * (45 * acceleration));
+                    $_this.totalDegrees = Math.round( Math.round($_this.totalDegrees) / 45 ) * 45;
+                    $_this.relativeDegrees = Math.abs($_this.totalDegrees - $_this.targetDegrees);
+                    $_this.totalDegrees = $_this.totalDegrees + ($_this.direction * $_this.relativeDegrees) + ($_this.direction * (45 * $_this.acceleration));
                     
 
-                    target.style.transition = "all 0.2s";
+                    $_this.target.style.transition = "all 0.2s";
 
-                    target.addEventListener('transitionstart', function() {
-                        cancelAnimationFrame(animationId);
-                        activeBtn(totalDegrees);
-                        target.removeEventListener('transitionstart', arguments.callee);
+                    $_this.target.addEventListener('transitionstart', function() {
+                        cancelAnimationFrame($_this.animationId);
+                        $_this.activeBtn($_this.totalDegrees);
+                        $_this.target.removeEventListener('transitionstart', arguments.callee);
                     });
 
-                    target.addEventListener('transitionend', function() {
-                        cancelAnimationFrame(animationId);
-                        target.removeEventListener('transitionend', arguments.callee);
+                    $_this.target.addEventListener('transitionend', function() {
+                        cancelAnimationFrame($_this.animationId);
+                        $_this.target.removeEventListener('transitionend', arguments.callee);
                     });
 
-                    for(let i = 0; i < pieces.length; i++){
-                        pieces[i].querySelector(".btn").style.transition = "all 0.2s";
+                    for(let i = 0; i < $_this.pieces.length; i++){
+                        $_this.pieces[i].querySelector(".btn").style.transition = "all 0.2s";
                     }
 
                 }
 
-                target.style.transform = 'rotate(' + totalDegrees + 'deg)';
-                setBtnDegrees(totalDegrees);
+                $_this.target.style.transform = 'rotate(' + $_this.totalDegrees + 'deg)';
+                $_this.setBtnDegrees($_this.totalDegrees);
 
                 
                 // User has finished dragging.
-                if (dragging)
+                if ($_this.dragging)
                     return;
 
-                lastDegrees = totalDegrees % 360;
+                $_this.lastDegrees = $_this.totalDegrees % 360;
             }
             
-            setBtnDegrees = function(parentDegrees) {
-                for (let i = 0; i < pieces.length; i++) {
-                    pieces[i].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (parentDegrees + (i * 45)) + 'deg)';
+            this.setBtnDegrees = function(parentDegrees) {
+                for (let i = 0; i < $_this.pieces.length; i++) {
+                    $_this.pieces[i].querySelector(".btn").style.transform = 'translateX(-50%) translateY(-50%) rotate(' + -1 * (parentDegrees + (i * 45)) + 'deg)';
                 }
             }
 
-            activeBtn = function(targetDegrees) {
-                inactiveBtn();
+            this.activeBtn = function(targetDegrees) {
+                $_this.inactiveBtn();
 
                 let trackingNumber = (targetDegrees/45) % 8;
 
-                if(trackingNumber == 0){pieces[0].querySelector(".btn").classList.add("act"); activeIndex = 0; }
-                else if(trackingNumber == 1 || trackingNumber == -7){pieces[7].querySelector(".btn").classList.add("act"); activeIndex = 7; }
-                else if(trackingNumber == 2 || trackingNumber == -6){pieces[6].querySelector(".btn").classList.add("act"); activeIndex = 6; }
-                else if(trackingNumber == 3 || trackingNumber == -5){pieces[5].querySelector(".btn").classList.add("act"); activeIndex = 5; }
-                else if(trackingNumber == 4 || trackingNumber == -4){pieces[4].querySelector(".btn").classList.add("act"); activeIndex = 4; }
-                else if(trackingNumber == 5 || trackingNumber == -3){pieces[3].querySelector(".btn").classList.add("act"); activeIndex = 3; }
-                else if(trackingNumber == 6 || trackingNumber == -2){pieces[2].querySelector(".btn").classList.add("act"); activeIndex = 2; }
-                else if(trackingNumber == 7 || trackingNumber == -1){pieces[1].querySelector(".btn").classList.add("act"); activeIndex = 1; }
+                if(trackingNumber == 0){
+                    $_this.pieces[0].querySelector(".btn").classList.add("act"); $_this.activeIndex = 0;
+                }else if(trackingNumber == 1 || trackingNumber == -7){
+                    $_this.pieces[7].querySelector(".btn").classList.add("act"); $_this.activeIndex = 7;
+                }else if(trackingNumber == 2 || trackingNumber == -6){
+                    $_this.pieces[6].querySelector(".btn").classList.add("act"); $_this.activeIndex = 6;
+                }else if(trackingNumber == 3 || trackingNumber == -5){
+                    $_this.pieces[5].querySelector(".btn").classList.add("act"); $_this.activeIndex = 5;
+                }else if(trackingNumber == 4 || trackingNumber == -4){
+                    $_this.pieces[4].querySelector(".btn").classList.add("act"); $_this.activeIndex = 4;
+                }else if(trackingNumber == 5 || trackingNumber == -3){
+                    $_this.pieces[3].querySelector(".btn").classList.add("act"); $_this.activeIndex = 3;
+                }else if(trackingNumber == 6 || trackingNumber == -2){
+                    $_this.pieces[2].querySelector(".btn").classList.add("act"); $_this.activeIndex = 2;
+                }else if(trackingNumber == 7 || trackingNumber == -1){
+                    $_this.pieces[1].querySelector(".btn").classList.add("act"); $_this.activeIndex = 1;
+                }
 
-                //return activeIndex;
-                console.log(activeIndex );
             }
 
-            inactiveBtn = function() {
-                for (let i = 0; i < pieces.length; i++) {
-                    pieces[i].querySelector(".btn").classList.remove("act");
+            this.inactiveBtn = function() {
+                for (let i = 0; i < $_this.pieces.length; i++) {
+                    $_this.pieces[i].querySelector(".btn").classList.remove("act");
                 }
             }
 
-            wheelTo = function(degrees){
-                wheelMenu.style.transition = "all 0.2s";
-                wheelMenu.style.transform = 'rotate(' + degrees + 'deg)';
+            this.wheelTo = function(degrees, duration){
+                let durationTime = duration || "0.2s";
+                $_this.wheelMenu.style.transition = "all " + durationTime;
+                $_this.wheelMenu.style.transform = 'rotate(' + degrees + 'deg)';
 
-                pieces.forEach(function(currentElement) {
-                    currentElement.querySelector(".btn").style.transition = "all 0.2s";
-                    currentElement.querySelector(".btn").addEventListener('transitionend', function() {
-                        this.style.transition = 'none';
-                        this.removeEventListener('transitionend', arguments.callee);
+                $_this.pieces.forEach(function(currentElement) {
+                    currentElement.querySelector(".btn").style.transition = "all " + durationTime;
+                    currentElement.querySelector(".btn").addEventListener('transitionend', function(e) {
+                        e.currentTarget.style.transition = 'none';
+                        e.currentTarget.removeEventListener('transitionend', arguments.callee);
                     });
                 });
 
-                setBtnDegrees(degrees);
-                activeBtn(degrees);
+                $_this.setBtnDegrees(degrees);
+                $_this.activeBtn(degrees);
 
-                lastDegrees = degrees % 360;
+                $_this.lastDegrees = degrees % 360;
+
             }
 
-            wheelMenu.addEventListener('touchend', onEnd);
-            wheelMenu.addEventListener('touchmove', onMove);
-            wheelMenu.addEventListener('touchstart', onStart);
+            $_this.wheelMenu.addEventListener('touchend', $_this.onEnd);
+            $_this.wheelMenu.addEventListener('touchmove', $_this.onMove);
+            $_this.wheelMenu.addEventListener('touchstart', $_this.onStart);
 
-            wheelTo(0);
+            $_this.wheelTo(0);
+
 
             return {
-                activeIndex: activeIndex,
-                wheelTo: wheelTo,
+                activeIndex: $_this.activeIndex,
+                wheelTo: $_this.wheelTo,
             };
-        }())
+        }
 
 
-
+        wheel_menu = WheelMenu();
 
         document.addEventListener("DOMContentLoaded", function(){
-            //wheel_menu = new WheelMenu();
+            wheel_menu = WheelMenu();
         });
 
         window.addEventListener("resize", function(){
-            //wheel_menu = WheelMenu();
+            wheel_menu = WheelMenu();
         });
 
         document.getElementById("trace").onclick = function() {
             wheel_menu.wheelTo(180);
-            //console.log(wheel_menu.activeIndex );
         }   
     </script>
 </body>
