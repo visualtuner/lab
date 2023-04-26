@@ -110,15 +110,18 @@ var TitleUtil = {
                 }else if( this.resultArr[1] == "reminding-alarm" ) {
                     titleNm = "점검/교체 알림"
                 }else if( this.resultArr[1] == "smartCareDetail" ) {
-                    titleNm = "점검/교체 알림 상세"
+                    titleNm = "점검/교체 서비스항목 상세"
                 }
             }else if( this.resultArr[0] == "safeservice" ) {//안심서비스
+                titleNm = "안심서비스"
                 if( this.resultArr[1] == "ts" ) {
                     if( this.resultArr[2] == "lending" ) {
                         titleNm = "안심서비스"
                     }else if( this.resultArr[2] == "list" ) {
                         titleNm = "안심서비스 내역"
                     }else if( this.resultArr[2] == "lendingForm" ) {
+                        titleNm = "안심서비스 가입신청"
+                    }else if( this.resultArr[2] == "join" ) {
                         titleNm = "안심서비스 가입신청"
                     }
                 }
@@ -329,6 +332,10 @@ var TitleUtil = {
                     titleNm = "주문/결제"
                 }else if( this.resultArr[1] == "getOrderComplete" ) {
                     titleNm = "주문완료"
+                }else if( this.resultArr[1] == "smartToday" ) {
+                    titleNm = "오늘서비스로 쇼핑"
+                }else if( this.resultArr[1] == "smartPickup" ) {
+                    titleNm = "픽업서비스로 쇼핑"
                 }
             }else if( this.resultArr[0] == "terms" ) {//이용약관
                 titleNm = "이용약관"
