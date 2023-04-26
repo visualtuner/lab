@@ -235,7 +235,8 @@
     </div>
 
     <script>
-        var wheel_menu = (function () {
+        var wheel_menu;
+        function WheelMenu () {
             navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
             let wheelMenu = document.getElementById("wheelMenu"),
@@ -263,6 +264,7 @@
             let acceleration = 0;
 
             //함수
+            let init;
             let calcDegrees;
             let onStart;
             let onMove;
@@ -273,6 +275,30 @@
             let inactiveBtn;
             let wheelTo;
 
+            init = function() {
+                console.log('resize');
+                wheelMenuBounding = wheelMenu.getBoundingClientRect();
+                centerPoint = window.getComputedStyle(wheelMenu).transformOrigin;
+                centers = centerPoint.split(" ");
+                centerY = wheelMenuBounding.top + parseInt(centers[1]) - window.pageYOffset;
+                centerX = wheelMenuBounding.left + parseInt(centers[0]) - window.pageXOffset;
+                totalDegrees = 0;
+                startDegrees = 0;
+                lastDegrees = 0;
+                currentDegrees = 0;
+                activeIndex = 0;
+                target = null;
+                dragging = false;
+                targetDegrees = 0;
+                direction;
+                animationId = null;
+                start = null;
+                frameCount = 0;
+                justBeforeDegrees = 0;
+                acceleration = 0;
+
+                wheelTo(0);
+            }
 
             calcDegrees = function(e) {
                 let pointerEvent = e;
@@ -448,18 +474,19 @@
             return {
                 activeIndex: activeIndex,
                 wheelTo: wheelTo,
+                init: init,
             };
-        }())
+        }
 
 
 
 
         document.addEventListener("DOMContentLoaded", function(){
-            //wheel_menu = new WheelMenu();
+            wheel_menu = new WheelMenu();
         });
 
         window.addEventListener("resize", function(){
-            //wheel_menu = WheelMenu();
+            wheel_menu.init();
         });
 
         document.getElementById("trace").onclick = function() {
