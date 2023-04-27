@@ -308,7 +308,7 @@
                 wheelTo(0, "0.6s");
                 wheelMenuWrap.style.transition = 'all 0.6s';
                 wheelMenuWrap.style.willChange = 'transform';
-                wheelMenuWrap.style.opacity = 
+                wheelMenuWrap.style.opacity = "1";
                 wheelMenuWrap.style.transform = 'translateZ(0) scale(1)';
             }
 
@@ -316,6 +316,7 @@
                 wheelTo(lastDegrees + 180, "0.6s");
                 wheelMenuWrap.style.transition = 'all 0.6s';
                 wheelMenuWrap.style.willChange = 'transform';
+                wheelMenuWrap.style.opacity = "0";
                 wheelMenuWrap.style.transform = 'translateZ(0) scale(0)';
             }
 
