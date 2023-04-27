@@ -117,10 +117,12 @@
         .wheel-menu .piece .btn.act p { color: #fe6a2b; }
 
         #trace { position: absolute; top: 0; left: 0;}
+        #trace2 { position: absolute; top: 40px; left: 0;}
     </style>
 </head>
 <body>
-    <span id="trace">2번째메뉴로</span>
+    <span id="trace">접어</span>
+    <span id="trace2">펼쳐</span>
     <div class="wheel-menu-wrap">
         <div id="wheelMenu" class="wheel-menu">
             <div class="piece">
@@ -236,10 +238,11 @@
 
     <script>
         var wheel_menu;
-        function WheelMenu () {
+        function WheelMenu (callback) {
             navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 
             let wheelMenu = document.getElementById("wheelMenu"),
+                wheelMenuWrap = wheelMenu.parentElement,
                 pieces = wheelMenu.querySelectorAll(".piece"),
                 wheelMenuBounding = wheelMenu.getBoundingClientRect(),
                 centerPoint = window.getComputedStyle(wheelMenu).transformOrigin,
@@ -274,9 +277,10 @@
             let activeBtn;
             let inactiveBtn;
             let wheelTo;
+            let wheelOn;
+            let wheelOff;
 
             init = function() {
-                console.log('resize');
                 wheelMenuBounding = wheelMenu.getBoundingClientRect();
                 centerPoint = window.getComputedStyle(wheelMenu).transformOrigin;
                 centers = centerPoint.split(" ");
@@ -298,6 +302,21 @@
                 acceleration = 0;
 
                 wheelTo(0);
+            }
+
+            wheelOn = function() {
+                wheelTo(0, "0.6s");
+                wheelMenuWrap.style.transition = 'all 0.6s';
+                wheelMenuWrap.style.willChange = 'transform';
+                wheelMenuWrap.style.opacity = 
+                wheelMenuWrap.style.transform = 'translateZ(0) scale(1)';
+            }
+
+            wheelOff = function() {
+                wheelTo(lastDegrees + 180, "0.6s");
+                wheelMenuWrap.style.transition = 'all 0.6s';
+                wheelMenuWrap.style.willChange = 'transform';
+                wheelMenuWrap.style.transform = 'translateZ(0) scale(0)';
             }
 
             calcDegrees = function(e) {
@@ -391,7 +410,7 @@
 
                     target.addEventListener('transitionstart', function() {
                         cancelAnimationFrame(animationId);
-                        activeBtn(totalDegrees);
+                        activeBtn(totalDegrees, callback);
                         target.removeEventListener('transitionstart', arguments.callee);
                     });
 
@@ -423,7 +442,7 @@
                 }
             }
 
-            activeBtn = function(targetDegrees) {
+            activeBtn = function(targetDegrees, callback) {
                 inactiveBtn();
 
                 let trackingNumber = (targetDegrees/45) % 8;
@@ -437,8 +456,11 @@
                 else if(trackingNumber == 6 || trackingNumber == -2){pieces[2].querySelector(".btn").classList.add("act"); activeIndex = 2; }
                 else if(trackingNumber == 7 || trackingNumber == -1){pieces[1].querySelector(".btn").classList.add("act"); activeIndex = 1; }
 
-                //return activeIndex;
-                console.log(activeIndex );
+                if(callback != undefined) {
+                    callback(activeIndex);
+                }
+                
+
             }
 
             inactiveBtn = function() {
@@ -447,12 +469,14 @@
                 }
             }
 
-            wheelTo = function(degrees){
-                wheelMenu.style.transition = "all 0.2s";
+            wheelTo = function(degrees,speed){
+                wheelMenu.style.transitionProperty = "all";
+                wheelMenu.style.transitionDuration = speed || "0.2s";
                 wheelMenu.style.transform = 'rotate(' + degrees + 'deg)';
 
                 pieces.forEach(function(currentElement) {
-                    currentElement.querySelector(".btn").style.transition = "all 0.2s";
+                    currentElement.querySelector(".btn").style.transitionProperty = "all";
+                    currentElement.querySelector(".btn").style.transitionDuration = speed || "0.2s";
                     currentElement.querySelector(".btn").addEventListener('transitionend', function() {
                         this.style.transition = 'none';
                         this.removeEventListener('transitionend', arguments.callee);
@@ -474,15 +498,21 @@
             return {
                 activeIndex: activeIndex,
                 wheelTo: wheelTo,
+                wheelOn: wheelOn,
+                wheelOff: wheelOff,
                 init: init,
             };
+
+            
+        }
+
+        function afterWheel(activeIndex){
+            console.log(activeIndex);
         }
 
 
-
-
         document.addEventListener("DOMContentLoaded", function(){
-            wheel_menu = new WheelMenu();
+            wheel_menu = new WheelMenu(afterWheel);
         });
 
         window.addEventListener("resize", function(){
@@ -490,8 +520,12 @@
         });
 
         document.getElementById("trace").onclick = function() {
-            wheel_menu.wheelTo(180);
-            //console.log(wheel_menu.activeIndex );
+            //wheel_menu.wheelTo(180);
+            wheel_menu.wheelOff();
+        }
+        document.getElementById("trace2").onclick = function() {
+            //wheel_menu.wheelTo(180);
+            wheel_menu.wheelOn();
         }   
     </script>
 </body>
