@@ -47,7 +47,19 @@ var TitleUtil = {
         }else{
             if( this.resultArr[0] == "tire" ) {//타이어
                 if( this.resultArr[1] == "auto-brands" ) {
-                    titleNm = "한국타이어 쇼핑"
+                    if( this.resultArr[2] == "brandCd" ) {
+                        if( this.resultArr[3] == "hk" ) {
+                            titleNm = "한국타이어 쇼핑"
+                        }else if( this.resultArr[3] == "lf" ) {
+                            titleNm = "라우펜타이어 쇼핑"
+                        }else if( this.resultArr[3] == "bs" ) {
+                            titleNm = "브리지스톤타이어 쇼핑"
+                        }else if( this.resultArr[3] == "pi" ) {
+                            titleNm = "피렐리타이어 쇼핑"
+                        }else if( this.resultArr[3] == "mx" ) {
+                            titleNm = "맥시스타이어 쇼핑"
+                        }
+                    }
                 }else if( this.resultArr[1] == "sizes" ) {
                     titleNm = "타이어 검색결과"
                     if( this.resultArr[2] == "brandCd" ) {
