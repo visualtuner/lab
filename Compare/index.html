@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>LAB</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <style>
+        *,
+        *:before,
+        *:after { font-family: 'Pretendard'; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background:#1d1d1d;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        body { overflow: auto; }
+
+        .full-popup {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #f4f4f4;
+            padding-top: 50px;
+        }
+
+        .full-popup > header {
+            width: 100%;
+            height: 50px;
+            background: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 0 0 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            font-weight: 500;
+            z-index: 1000;
+        }
+
+        .full-popup > main {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            background: #fff;
+            overflow: auto;
+        }
+
+        .compare-item {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: auto;
+        }
+
+        .compare-item .product-thumb-list {
+            list-style: none;
+            width: auto;
+            height: auto;
+            position: sticky;
+            top: 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 0;
+            margin: 0;
+            z-index: 11;
+        }
+
+        .compare-item .product-thumb-list > li {
+            flex: 1 0 45vw;
+            height: 140px;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #fff;
+        }
+
+        .compare-item .product-thumb-list > li:not(:last-of-type) {
+            border-right: 1px solid #d9dbdc;
+        }
+
+        .compare-item .product-thumb-list > li:nth-of-type(1) { position: sticky; left: 0; }
+        .compare-item .product-thumb-list > li:nth-of-type(2) { }
+        .compare-item .product-thumb-list > li:nth-of-type(3) { }
+
+        .compare-item .product-thumb-list > li img {
+            width: auto;
+            height: 80px;
+        }
+
+        .compare-item .product-thumb-list > li p {
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .compare-item .product-spec-list {
+            list-style: none;
+            width: auto;
+            height: auto;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 0;
+            margin: 0;
+            z-index: 10;
+        }
+
+        .compare-item .product-spec-list > li {
+            flex: 1 0 45vw;
+            height: auto;
+            padding: 0;
+            margin: 0;
+            line-height: 100px;
+            text-align: center;
+            background: #fff;
+            border-right: 1px solid #d9dbdc;
+        }
+
+        .compare-item .product-spec-list > li:nth-of-type(1) { position: sticky; left: 0; }
+        .compare-item .product-spec-list > li:nth-of-type(2) {  }
+        .compare-item .product-spec-list > li:nth-of-type(3) {  }
+    </style>
+</head>
+<body>
+    <div class="full-popup">
+        <header>비교하기</header>
+        <main>
+            <div class="compare-item">
+                <ul class="product-thumb-list">
+                    <li>
+                        <img src="https://www.tstation.com/upload/goods/500/80/2022/0923/IH01A01ko.jpg">
+                        <p>iON evo AS suv</p>
+                    </li>
+                    <li>
+                        <img src="https://www.tstation.com/upload/goods/500/80/2022/0720/RA4301ko.png">
+                        <p>Dynapro HPX</p>
+                    </li>
+                    <li>
+                        <img src="https://www.tstation.com/upload/goods/500/10/0000/0033/G00000033268101ko.jpg">
+                        <p>Ventus S1 evo Z AS X</p>
+                    </li>
+                </ul>
+
+                <ul class="product-spec-list">
+                    <li>spec1<br>spec1<br>spec1<br>spec1<br>spec1<br>spec1<br>spec1<br>spec1<br>spec1<br>spec1<br>spec1</li>
+                    <li>spec2<br>spec2<br>spec2<br>spec2<br>spec2<br>spec2<br>spec2<br>spec2<br>spec2<br>spec2<br>spec2</li>
+                    <li>spec3<br>spec3<br>spec3<br>spec3<br>spec3<br>spec3<br>spec3<br>spec3<br>spec3<br>spec3<br>spec3</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
+
+
