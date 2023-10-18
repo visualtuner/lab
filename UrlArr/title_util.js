@@ -47,12 +47,6 @@ let TitleUtil = {
         document.querySelector('meta[name="description"]').setAttribute("content", description);
         document.querySelector('meta[property="og:title"]').setAttribute("content", title);
         document.querySelector('meta[property="og:description"]').setAttribute("content", description);
-
-        document.querySelector('body').addEventListener('click', clickHandler);
-        function clickHandler() {
-            console.log('click');
-            document.querySelector('body').classList.toggle("visible");
-        }
         
     },
 
