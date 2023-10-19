@@ -3,16 +3,15 @@ let TitleUtil = {
     title : "티스테이션",
     catchphrase : "티스테이션 | 타이어쇼핑과 차량관리를 한번에!",
     description: "가입만 해도 누리는 all my T 회원혜택! 내차관리부터 타이어쇼핑까지 가능한 한국타이어 공식 온라인몰",
-    deptLen: 0,
-    resultArr:[],
-    detailNm: {},
+    deptLen : 0,
+    resultArr :[],
+    detailNm : {},
     init : function(option) {
         this.getPageDept();
     },
     
     getPageDept : function() {
-        // let titleThisUrl = location.href;
-        let titleThisUrl = "https://www.tstation.com/deal";
+        let titleThisUrl = location.href;
         let baseUrl = _baseUrl;
         
         titleThisUrl = titleThisUrl.replace(baseUrl, "");
