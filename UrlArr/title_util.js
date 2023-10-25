@@ -11,9 +11,7 @@ let TitleUtil = {
     },
     
     getPageDept : function() {
-        // let titleThisUrl = location.href;
-        //let titleThisUrl = "https://www.tstation.com/tire/product/HK_s_a_dynapro_hpx?goodsNo=G000000332830&carEncry=null&ypos=37.404658&xpos=127.1140371";
-        let titleThisUrl = "https://www.tstation.com/tire/product/michelin_agilis(+)?ptrnNewCd=AGILI&goodsMdclCd=01&movePath=pattern";
+        let titleThisUrl = location.href;
 
         let baseUrl = _baseUrl;
         
