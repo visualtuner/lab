@@ -101,6 +101,40 @@ let TitleUtil = {
                         }else if( this.resultArr[3] == "gy" ) {
                             titleNm = "굿이어타이어 쇼핑"
                         }
+                    }else if( this.resultArr[2] == "carKndNm" ) {
+                        if( this.resultArr[3] == "p" ) {
+                            titleNm = "승용차/세단 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "s" ) {
+                            titleNm = "RV/SUV/CUV 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "lt" ) {
+                            titleNm = "VAN/미니밴/소형트럭/경트럭 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "e" ) {
+                            titleNm = "전기차 타이어 쇼핑"
+                        }
+                    }else if( this.resultArr[2] == "seasonNm" ) {
+                        if( this.resultArr[3] == "w" ) {
+                            titleNm = "겨울용 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "s" ) {
+                            titleNm = "여름용 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "as" ) {
+                            titleNm = "사계절용 올시즌 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "aw" ) {
+                            titleNm = "모든 날씨용 올웨더 타이어 쇼핑"
+                        }
+                    }else if( this.resultArr[2] == "gradeNm" ) {
+                        if( this.resultArr[3] == "p" ) {
+                            titleNm = "고성능 프리미엄 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "s" ) {
+                            titleNm = "스탠다드 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "e" ) {
+                            titleNm = "가성비 이코노미 타이어 쇼핑"
+                        }
+                    }else if( this.resultArr[2] == "performanceNm" ) {
+                        if( this.resultArr[3] == "c" ) {
+                            titleNm = "저소음/승차감 컴포트 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "s" ) {
+                            titleNm = "고속/제동성 스포츠 타이어 쇼핑"
+                        }
                     }
                 }else if( this.resultArr[1] == "types" ) {
                     if( this.resultArr[2] == "carKndNm" ) {
