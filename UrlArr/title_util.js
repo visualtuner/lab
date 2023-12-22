@@ -11,7 +11,8 @@ let TitleUtil = {
     },
     
     getPageDept : function() {
-        let titleThisUrl = location.href;
+        //let titleThisUrl = location.href;
+        let titleThisUrl = "https://m.tstation.com/tire/sizes?carKndNm=e";
 
         let baseUrl = _baseUrl;
         
@@ -82,7 +83,8 @@ let TitleUtil = {
                         }
                     }
                 }else if( this.resultArr[1] == "sizes" ) {
-                    titleNm = "타이어 검색결과"
+                    titleNm = "타이어 쇼핑"
+                    descriptionStr = "한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스. 수입 타이어도 역시 티스테이션! 승용차/SUV/전기차 타이어 추천과 가격·성능 비교."
                     if( this.resultArr[2] == "brandCd" ) {
                         if( this.resultArr[3] == "hk" ) {
                             titleNm = "한국타이어 쇼핑"
@@ -109,11 +111,12 @@ let TitleUtil = {
                         }else if( this.resultArr[3] == "lt" ) {
                             titleNm = "VAN/미니밴/소형트럭/경트럭 타이어 쇼핑"
                         }else if( this.resultArr[3] == "e" ) {
-                            titleNm = "전기차 타이어 쇼핑"
+                            titleNm = "전기차/EV 타이어 쇼핑"
+                            descriptionStr = "전기차 EV 전용 타이어 추천과 가격·성능 비교. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스"
                         }
                     }else if( this.resultArr[2] == "seasonNm" ) {
                         if( this.resultArr[3] == "w" ) {
-                            titleNm = "겨울용 타이어 쇼핑"
+                            titleNm = "겨울용/스노우/윈터 타이어 쇼핑"
                         }else if( this.resultArr[3] == "s" ) {
                             titleNm = "여름용 타이어 쇼핑"
                         }else if( this.resultArr[3] == "as" ) {
@@ -131,9 +134,9 @@ let TitleUtil = {
                         }
                     }else if( this.resultArr[2] == "performanceNm" ) {
                         if( this.resultArr[3] == "c" ) {
-                            titleNm = "저소음/승차감 컴포트 타이어 쇼핑"
+                            titleNm = "저소음/승차감/컴포트 타이어 쇼핑"
                         }else if( this.resultArr[3] == "s" ) {
-                            titleNm = "고속/제동성 스포츠 타이어 쇼핑"
+                            titleNm = "고속/제동성/스포츠 타이어 쇼핑"
                         }
                     }
                 }else if( this.resultArr[1] == "types" ) {
