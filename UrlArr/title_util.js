@@ -84,7 +84,7 @@ let TitleUtil = {
                     }
                 }else if( this.resultArr[1] == "sizes" ) {
                     titleNm = "타이어 쇼핑"
-                    descriptionStr = "한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스. 수입 타이어도 역시 티스테이션! 승용차/SUV/전기차 타이어 추천과 가격·성능 비교."
+                    descriptionStr = "한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 수입 타이어 추천과 가격·성능 비교! 승용차/SUV/전기차 타이어 구매부터 장착까지."
                     if( this.resultArr[2] == "brandCd" ) {
                         if( this.resultArr[3] == "hk" ) {
                             titleNm = "한국타이어 쇼핑"
@@ -137,6 +137,10 @@ let TitleUtil = {
                             titleNm = "저소음/승차감/컴포트 타이어 쇼핑"
                         }else if( this.resultArr[3] == "s" ) {
                             titleNm = "고속/제동성/스포츠 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "rf" ) {
+                            titleNm = "펑크에도 안전한 런플랫 타이어 쇼핑"
+                        }else if( this.resultArr[3] == "sa" ) {
+                            titleNm = "흡음재/소음저감 타이어 쇼핑"
                         }
                     }
                 }else if( this.resultArr[1] == "types" ) {
