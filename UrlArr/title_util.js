@@ -11,8 +11,7 @@ let TitleUtil = {
     },
     
     getPageDept : function() {
-        //let titleThisUrl = location.href;
-        let titleThisUrl = "https://m.tstation.com/tire/sizes?carKndNm=e";
+        let titleThisUrl = location.href;
 
         let baseUrl = _baseUrl;
         
