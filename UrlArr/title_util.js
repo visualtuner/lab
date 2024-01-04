@@ -62,97 +62,87 @@ let TitleUtil = {
         }else{
             if( this.resultArr[0] == "tire" ) {//타이어
                 titleNm = "타이어 쇼핑"
-                if( this.resultArr[1] == "auto-brands" ) {
-                    if( this.resultArr[2] == "brandCd" ) {
-                        if( this.resultArr[3] == "hk" ) {
-                            titleNm = "한국타이어 쇼핑"
-                        }else if( this.resultArr[3] == "lf" ) {
-                            titleNm = "라우펜타이어 쇼핑"
-                        }else if( this.resultArr[3] == "bs" ) {
-                            titleNm = "브리지스톤타이어 쇼핑"
-                        }else if( this.resultArr[3] == "pi" ) {
-                            titleNm = "피렐리타이어 쇼핑"
-                        }else if( this.resultArr[3] == "mx" ) {
-                            titleNm = "맥시스타이어 쇼핑"
-                        }else if( this.resultArr[3] == "mc" ) {
-                            titleNm = "미쉐린타이어 쇼핑"
-                        }else if( this.resultArr[3] == "ct" ) {
-                            titleNm = "콘티넨탈타이어 쇼핑"
-                        }else if( this.resultArr[3] == "gy" ) {
-                            titleNm = "굿이어타이어 쇼핑"
-                        }
-                    }
-                }else if( this.resultArr[1] == "sizes" ) {
+                if( this.resultArr[1] == "sizes" ) {
                     titleNm = "타이어 쇼핑"
-                    descriptionStr = "한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 수입 타이어 추천과 가격·성능 비교! 승용차/SUV/전기차 타이어 구매부터 장착까지."
+                    descriptionStr = "한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 수입 타이어 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 타이어 구매부터 장착까지."
                     if( this.resultArr[2] == "brandCd" ) {
                         if( this.resultArr[3] == "hk" ) {
                             titleNm = "한국타이어 쇼핑"
+                            descriptionStr = "한국타이어 프리미엄/스탠다드/이코노미 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 차종별 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "lf" ) {
                             titleNm = "라우펜타이어 쇼핑"
+                            descriptionStr = "라우펜타이어 프리미엄/스탠다드/이코노미 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 차종별 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "bs" ) {
                             titleNm = "브리지스톤타이어 쇼핑"
+                            descriptionStr = "브리지스톤타이어 프리미엄/스탠다드/이코노미 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 차종별 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "pi" ) {
                             titleNm = "피렐리타이어 쇼핑"
+                            descriptionStr = "피렐리타이어 프리미엄/스탠다드/이코노미 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 차종별 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "mx" ) {
                             titleNm = "맥시스타이어 쇼핑"
+                            descriptionStr = "맥시스타이어 프리미엄/스탠다드/이코노미 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 차종별 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "mc" ) {
                             titleNm = "미쉐린타이어 쇼핑"
+                            descriptionStr = "미쉐린타이어 프리미엄/스탠다드/이코노미 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 차종별 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "ct" ) {
                             titleNm = "콘티넨탈타이어 쇼핑"
+                            descriptionStr = "콘티넨탈타이어 프리미엄/스탠다드/이코노미 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 차종별 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "gy" ) {
                             titleNm = "굿이어타이어 쇼핑"
+                            descriptionStr = "굿이어타이어 프리미엄/스탠다드/이코노미 등급별 추천과 가격·성능 비교! 승용차/SUV/전기차 차종별 타이어 구매부터 장착까지."
                         }
                     }else if( this.resultArr[2] == "carKndNm" ) {
                         if( this.resultArr[3] == "p" ) {
                             titleNm = "승용차/세단 타이어 쇼핑"
+                            descriptionStr = "승용차 타이어, 대형·준대형·중형·준중형·소형 세단 타이어, 경차 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "s" ) {
                             titleNm = "RV/SUV/CUV 타이어 쇼핑"
+                            descriptionStr = "RV, SUV, CUV, 오프로드 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "lt" ) {
                             titleNm = "VAN/미니밴/소형트럭/경트럭 타이어 쇼핑"
+                            descriptionStr = "VAN, 미니밴, 소형트럭, 경트럭 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "e" ) {
                             titleNm = "전기차/EV 타이어 쇼핑"
-                            descriptionStr = "전기차 EV 전용 타이어 추천과 가격·성능 비교. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스"
+                            descriptionStr = "전기차 EV 전용 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }
                     }else if( this.resultArr[2] == "seasonNm" ) {
                         if( this.resultArr[3] == "w" ) {
                             titleNm = "겨울용/스노우/윈터 타이어 쇼핑"
+                            descriptionStr = "겨울용 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 타이어 보관 서비스. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "s" ) {
                             titleNm = "여름용 타이어 쇼핑"
+                            descriptionStr = "여름용 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "as" ) {
                             titleNm = "사계절용 올시즌 타이어 쇼핑"
+                            descriptionStr = "사계절용 올시즌 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "aw" ) {
                             titleNm = "모든 날씨용 올웨더 타이어 쇼핑"
+                            descriptionStr = "모든 날씨용 올웨더 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }
                     }else if( this.resultArr[2] == "gradeNm" ) {
                         if( this.resultArr[3] == "p" ) {
                             titleNm = "고성능 프리미엄 타이어 쇼핑"
+                            descriptionStr = "한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 프리미엄 등급 타이어 추천과 가격·성능 비교! 승용차/SUV/전기차 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "s" ) {
                             titleNm = "스탠다드 타이어 쇼핑"
+                            descriptionStr = "한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 스탠다드 등급 타이어 추천과 가격·성능 비교! 승용차/SUV/전기차 타이어 구매부터 장착까지."
                         }else if( this.resultArr[3] == "e" ) {
                             titleNm = "가성비 이코노미 타이어 쇼핑"
+                            descriptionStr = "한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 이코노미 등급 타이어 추천과 가격·성능 비교! 승용차/SUV/전기차 타이어 구매부터 장착까지."
                         }
                     }else if( this.resultArr[2] == "performanceNm" ) {
                         if( this.resultArr[3] == "c" ) {
                             titleNm = "저소음/승차감/컴포트 타이어 쇼핑"
+                            descriptionStr = "편안하고 정숙한 승차감을 제공하는 컴포트 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "s" ) {
                             titleNm = "고속/제동성/스포츠 타이어 쇼핑"
+                            descriptionStr = "고속, 제동성 중심의 퍼포먼스 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "rf" ) {
-                            titleNm = "펑크에도 안전한 런플랫 타이어 쇼핑"
+                            titleNm = "런플랫 타이어 쇼핑"
+                            descriptionStr = "펑크가 났을 때도 일정 거리, 일정 속도 내에서 주행이 가능한 런플랫 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }else if( this.resultArr[3] == "sa" ) {
                             titleNm = "흡음재/소음저감 타이어 쇼핑"
-                        }
-                    }
-                }else if( this.resultArr[1] == "types" ) {
-                    if( this.resultArr[2] == "carKndNm" ) {
-                        if( this.resultArr[3] == "p" ) {
-                            titleNm = "승용차 타이어"
-                        }else if( this.resultArr[3] == "s" ) {
-                            titleNm = "SUV 타이어"
-                        }else if( this.resultArr[3] == "lt" ) {
-                            titleNm = "VAN/소형트럭 타이어"
-                        }else if( this.resultArr[3] == "e" ) {
-                            titleNm = "전기차 타이어"
+                            descriptionStr = "흡음재 타이어 추천과 가격·성능 비교, 구매부터 장착까지. 한국타이어, 라우펜, 미쉐린, 콘티넨탈, 브리지스톤, 피렐리, 굿이어, 맥시스 등 원하는 타이어가 다 있는 곳. 티스테이션"
                         }
                     }
                 }else if( this.resultArr[1] == "product" ) {
@@ -161,17 +151,6 @@ let TitleUtil = {
                         descriptionStr = this.getMetaInfo( this.resultArr[2] ).description;
                     }else{
                         titleNm = (this.detailNm.ptrnNm != "") ? this.detailNm.ptrnNm : this.detailNm.goodsNm;
-                    }
-                }else if( this.resultArr[1] == "seasons" ) {
-                    titleNm = "계절별 타이어 쇼핑"
-                    if( this.resultArr[2] == "seasonNm" ) {
-                        if( this.resultArr[3] == "w" ) {
-                            titleNm = "겨울용 타이어 쇼핑"
-                        }else if( this.resultArr[3] == "s" ) {
-                            titleNm = "여름용 타이어 쇼핑"
-                        }else if( this.resultArr[3] == "a" ) {
-                            titleNm = "사계절용 타이어 쇼핑"
-                        }
                     }
                 }else if( this.resultArr[1] == "smartPayLink" ) {
                     titleNm = "스마트페이 상품 보기"
