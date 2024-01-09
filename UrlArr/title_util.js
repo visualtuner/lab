@@ -520,7 +520,7 @@ let TitleUtil = {
         let description;
         let valid = false;
         let found = this.metaInfo.find(function(e) {
-            return e.patternPath === prodName || e.patternBrandCode + "_" + e.patternPath == prodName
+            return e.patternPath == prodName || e.patternBrandCode + "_" + e.patternPath == prodName
         });
 
         if( found != undefined) {
