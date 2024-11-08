@@ -25,6 +25,7 @@
         body {
             overflow: auto;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
@@ -218,12 +219,27 @@
         }
 
         $(document).ready(function() {
-            let myMarquee = new Marquee('#testMarquee', {animationSpeed: 1, animationDirection: 'right', dragSensitivity: 2});
+            let myMarquee1 = new Marquee('#testMarquee1', {animationSpeed: 1, animationDirection: 'right', dragSensitivity: 2});
+            let myMarquee2 = new Marquee('#testMarquee2', {animationSpeed: 1, animationDirection: 'left', dragSensitivity: 2});
         });
     </script>
 </head>
 <body>
-    <div class="marquee-container" id="testMarquee">
+    <div class="marquee-container" id="testMarquee1">
+        <div class="marquee-wrapper">
+            <img src="thumb_iON_evo.png" style="background-color:rgba(255,0,0,0.2);" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+        </div>
+    </div>
+    <div class="marquee-container" id="testMarquee2">
         <div class="marquee-wrapper">
             <img src="thumb_iON_evo.png" style="background-color:rgba(255,0,0,0.2);" />
             <img src="thumb_iON_evo.png" />
