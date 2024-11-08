@@ -78,6 +78,7 @@
                 this.animationFrameId = null;
                 this.lastTimestamp = null;
                 this.isVerticalScroll = null;
+                this.callbacks = options.on || {};
 
                 this.init();
             }
@@ -87,6 +88,7 @@
                 this.marqueeWrapper.find('img').attr('draggable', 'false');
                 this.startMarqueeAnimation();
                 this.attachEventHandlers();
+                this.triggerCallback('init');
             }
 
             cloneMarquee() {
@@ -140,6 +142,7 @@
             onMouseDown(e) {
                 e.preventDefault();
                 this.isDragging = true;
+                this.triggerCallback('dragStart');
                 this.marqueeContainer.addClass('active');
                 this.startX = e.clientX;
                 this.marqueeContainer.css('cursor', 'grabbing');
@@ -168,11 +171,13 @@
                     this.marqueeContainer.css('cursor', 'grab');
                     this.startMarqueeAnimation();
                     this.animationPaused = false;
+                    this.triggerCallback('dragEnd');
                 }
             }
 
             onTouchStart(e) {
                 this.isDragging = true;
+                this.triggerCallback('dragStart');
                 this.startX = e.touches[0].clientX;
                 this.startY = e.touches[0].clientY;
                 this.isVerticalScroll = null;
@@ -215,6 +220,7 @@
                     this.marqueeContainer.removeClass('active');
                     this.startMarqueeAnimation();
                     this.animationPaused = false;
+                    this.triggerCallback('dragEnd');
                 }
             }
 
@@ -234,7 +240,20 @@
                 }
                 return 0;
             }
+
+            triggerCallback(eventName) {
+                if (this.callbacks && typeof this.callbacks[eventName] === 'function') {
+                    this.callbacks[eventName].call(this);
+                }
+            }
+
+            on(eventName, callback) {
+                if (typeof callback === 'function') {
+                    this.callbacks[eventName] = callback;
+                }
+            }
         }
+
     </script>
 
     <div class="marquee-container" id="testMarquee1">
@@ -270,8 +289,21 @@
         let myMarquee1 = new Marquee('#testMarquee1', {
             animationSpeed: 1,
             animationDirection: 'right',
-            dragSensitivity: 2
+            dragSensitivity: 2,
+            on: {
+                init: function(){
+                    console.log('초기화 되었어!');
+                },
+                dragStart: function(){
+                    console.log('드래그가 시작되었어!');
+                },
+                dragEnd: function(){
+                    console.log('드래그가 끝났어!');
+                },
+            }
         });
+
+
         let myMarquee2 = new Marquee('#testMarquee2', {animationSpeed: 1, animationDirection: 'left', dragSensitivity: 2});
     </script>
 </body>

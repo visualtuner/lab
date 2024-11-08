@@ -13,6 +13,7 @@ class Marquee {
         this.animationFrameId = null;
         this.lastTimestamp = null;
         this.isVerticalScroll = null;
+        this.callbacks = options.on || {};
 
         this.init();
     }
@@ -22,6 +23,7 @@ class Marquee {
         this.marqueeWrapper.find('img').attr('draggable', 'false');
         this.startMarqueeAnimation();
         this.attachEventHandlers();
+        this.triggerCallback('init');
     }
 
     cloneMarquee() {
@@ -75,6 +77,7 @@ class Marquee {
     onMouseDown(e) {
         e.preventDefault();
         this.isDragging = true;
+        this.triggerCallback('dragStart');
         this.marqueeContainer.addClass('active');
         this.startX = e.clientX;
         this.marqueeContainer.css('cursor', 'grabbing');
@@ -103,11 +106,13 @@ class Marquee {
             this.marqueeContainer.css('cursor', 'grab');
             this.startMarqueeAnimation();
             this.animationPaused = false;
+            this.triggerCallback('dragEnd');
         }
     }
 
     onTouchStart(e) {
         this.isDragging = true;
+        this.triggerCallback('dragStart');
         this.startX = e.touches[0].clientX;
         this.startY = e.touches[0].clientY;
         this.isVerticalScroll = null;
@@ -150,6 +155,7 @@ class Marquee {
             this.marqueeContainer.removeClass('active');
             this.startMarqueeAnimation();
             this.animationPaused = false;
+            this.triggerCallback('dragEnd');
         }
     }
 
@@ -168,5 +174,17 @@ class Marquee {
             return parseFloat(transformMatrix.split(',')[4].trim());
         }
         return 0;
+    }
+
+    triggerCallback(eventName) {
+        if (this.callbacks && typeof this.callbacks[eventName] === 'function') {
+            this.callbacks[eventName].call(this);
+        }
+    }
+
+    on(eventName, callback) {
+        if (typeof callback === 'function') {
+            this.callbacks[eventName] = callback;
+        }
     }
 }
