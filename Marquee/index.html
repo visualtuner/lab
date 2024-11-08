@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>LAB</title>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+
+    <style>
+        *,
+        *:before,
+        *:after { font-family: 'Pretendard'; box-sizing: border-box; }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background:#1d1d1d;
+            padding: 0;
+            margin: 0;
+            position: relative;
+        }
+        body {
+            overflow: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .marquee-wrap {
+            width: 1100px;
+            height: auto;
+            overflow: hidden;
+            background: rgba(255,255,255,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            cursor: grab;
+        }
+
+        .marquee {
+            width: max-content;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            transform: translateX(0);
+        }
+
+        .marquee img {
+            display: block;
+            width: 200px;
+            height: 200px;
+            user-select: none;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="marquee-wrap">
+        <div class="marquee">
+            <img src="thumb_iON_evo.png" style="background-color:rgba(255,0,0,0.2);" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+            <img src="thumb_iON_evo.png" />
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            const marqueeWrap = $('.marquee-wrap');
+            const marquee = $('.marquee');
+            let isDragging = false;
+            let startX;
+            let currentTransform = 0;
+            let animationPaused = false;
+            let animationFrameId;
+            const animationSpeed = 1; // 자동 애니메이션 속도 (밀리초당 픽셀 수)
+            const animationDirection = 'left'; // 애니메이션 방향 ('left' 또는 'right')
+
+            // 무한 반복을 위해 복제 요소 추가 (왼쪽 및 오른쪽에 모두 클론 생성)
+            function cloneMarquee() {
+                const originalContent = marquee.html();
+                marquee.append(originalContent);
+                marquee.prepend(originalContent);
+                currentTransform = -marquee.width() / 3; // 초기 위치를 가운데로 조정
+                marquee.css('transform', `translateX(${currentTransform}px)`);
+            }
+
+            cloneMarquee();
+
+            // 이미지에 draggable 속성 설정
+            marquee.find('img').attr('draggable', 'false');
+
+            function startMarqueeAnimation() {
+                function animate() {
+                    if (animationDirection === 'left') {
+                        currentTransform -= animationSpeed; // 왼쪽으로 이동
+                    } else if (animationDirection === 'right') {
+                        currentTransform += animationSpeed; // 오른쪽으로 이동
+                    }
+                    
+                    if (animationDirection === 'right' && currentTransform >= 0) {
+                        currentTransform = -marquee.width() / 3;
+                    } else if (animationDirection === 'left' && Math.abs(currentTransform) >= marquee.width() / 3) {
+                        currentTransform = 0;
+                    }
+                    marquee.css('transform', `translateX(${currentTransform}px)`);
+                    animationFrameId = requestAnimationFrame(animate);
+                }
+                animationFrameId = requestAnimationFrame(animate);
+            }
+
+            function stopMarqueeAnimation() {
+                cancelAnimationFrame(animationFrameId);
+            }
+
+            startMarqueeAnimation();
+
+            // 마우스 드래그 이벤트 핸들러
+            marqueeWrap.on('mousedown', function(e) {
+                e.preventDefault(); // 기본 드래그 동작 방지
+                isDragging = true;
+                marqueeWrap.addClass('active');
+                startX = e.clientX;
+                marqueeWrap.css('cursor', 'grabbing');
+                if (!animationPaused) {
+                    currentTransform = getCurrentTransform();
+                    stopMarqueeAnimation();
+                    animationPaused = true;
+                }
+                $(document).on('mousemove.dragMarquee', onMouseMove);
+                $(document).on('mouseup.dragMarquee', onMouseUp);
+            });
+
+            function onMouseMove(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.clientX;
+                const walk = (x - startX) * 1; // 스크롤 속도 조절
+                currentTransform += walk;
+                normalizeTransform();
+                marquee.css('transform', `translateX(${currentTransform}px)`);
+                startX = x;
+            }
+
+            function onMouseUp() {
+                if (isDragging) {
+                    isDragging = false;
+                    marqueeWrap.removeClass('active');
+                    marqueeWrap.css('cursor', 'grab');
+                    // 드래그가 끝난 후 자연스럽게 애니메이션 이어서 시작
+                    startMarqueeAnimation();
+                    animationPaused = false;
+                }
+                $(document).off('mousemove.dragMarquee');
+                $(document).off('mouseup.dragMarquee');
+            }
+
+            // 터치 이벤트 핸들러
+            marqueeWrap.on('touchstart', function(e) {
+                e.preventDefault(); // 기본 드래그 동작 방지
+                isDragging = true;
+                startX = e.touches[0].clientX;
+                marqueeWrap.css('cursor', 'grabbing');
+                if (!animationPaused) {
+                    currentTransform = getCurrentTransform();
+                    stopMarqueeAnimation();
+                    animationPaused = true;
+                }
+                $(document).on('touchmove.dragMarquee', onTouchMove);
+                $(document).on('touchend.dragMarquee', onTouchEnd);
+            });
+
+            function onTouchMove(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.touches[0].clientX;
+                const walk = (x - startX) * 1; // 스크롤 속도 조절
+                currentTransform += walk;
+                normalizeTransform();
+                marquee.css('transform', `translateX(${currentTransform}px)`);
+                startX = x;
+            }
+
+            function onTouchEnd() {
+                if (isDragging) {
+                    isDragging = false;
+                    marqueeWrap.removeClass('active');
+                    // 드래그가 끝난 후 자연스럽게 애니메이션 이어서 시작
+                    startMarqueeAnimation();
+                    animationPaused = false;
+                }
+                $(document).off('touchmove.dragMarquee');
+                $(document).off('touchend.dragMarquee');
+            }
+
+            function normalizeTransform() {
+                const maxOffset = marquee.width() / 3;
+                if (currentTransform > 0) {
+                    currentTransform = -maxOffset + (currentTransform % maxOffset);
+                } else if (Math.abs(currentTransform) >= maxOffset) {
+                    currentTransform = currentTransform % maxOffset;
+                }
+            }
+
+            function getCurrentTransform() {
+                const transformMatrix = window.getComputedStyle(marquee[0]).transform;
+                if (transformMatrix !== 'none') {
+                    return parseFloat(transformMatrix.split(',')[4].trim());
+                }
+                return 0;
+            }
+        });
+    </script>
+</body>
+</html>

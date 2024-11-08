@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Flip Example Preset</title>
+
+        <link rel="stylesheet" href="flip.css" />
+    </head>
+    <body>
+        <!-- START OF FLIP EXAMPLE PRESET -->
+
+        <style>
+            body { font-size: 14px;}
+            .container {
+                width: 100%;
+                max-width: 750px;
+                margin: 0 auto;
+                font-size: 1em;
+            }
+        </style>
+
+        <div class="container">
+            <div style="font-size:1.6em; font-weight:500; margin-bottom:0.5em;">블랙세일 종료까지 남은 시간</div>
+            <div class="tick" data-did-init="handleTickInit">
+                <div data-repeat="true" data-layout="horizontal center fit" data-transform="preset(d, h, m, s) -> delay">
+                    <div class="tick-group">
+                        <div data-key="value" data-repeat="true" data-transform="pad(00) -> split -> delay">
+                            <span data-view="flip" data-style="flip-easing: ease-in-cubic"></span>
+                        </div>
+                        <span data-key="label" data-view="text" class="tick-label"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function handleTickInit(tick) {
+                let endTime = new Date("2024-10-24:00:00:00+0900");
+                let eventCounter = Tick.count.down(endTime);
+
+                eventCounter.onupdate = function (value) {
+                    tick.value = value;
+                };
+
+                eventCounter.onended = function() {
+                    console.log('블랙세일 종료!');
+                }
+            }
+        </script>
+
+        <!-- END OF FLIP EXAMPLE PRESET -->
+
+        <script src="flip.js"></script>
+    </body>
+</html>
