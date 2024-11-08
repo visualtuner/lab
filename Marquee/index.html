@@ -73,6 +73,7 @@
                 this.currentTransform = 0;
                 this.animationPaused = false;
                 this.animationFrameId = null;
+                this.lastTimestamp = null;
 
                 this.init();
             }
@@ -93,11 +94,17 @@
             }
 
             startMarqueeAnimation() {
-                const animate = () => {
+                const animate = (timestamp) => {
+                    if (!this.lastTimestamp) this.lastTimestamp = timestamp;
+                    const delta = timestamp - this.lastTimestamp;
+                    this.lastTimestamp = timestamp;
+
+                    const speed = (delta / 16.67) * this.animationSpeed; // 16.67ms is approximately 60fps
+
                     if (this.animationDirection === 'left') {
-                        this.currentTransform -= this.animationSpeed;
+                        this.currentTransform -= speed;
                     } else if (this.animationDirection === 'right') {
-                        this.currentTransform += this.animationSpeed;
+                        this.currentTransform += speed;
                     }
 
                     if (this.animationDirection === 'right' && this.currentTransform >= 0) {
@@ -113,6 +120,7 @@
 
             stopMarqueeAnimation() {
                 cancelAnimationFrame(this.animationFrameId);
+                this.lastTimestamp = null;
             }
 
             attachEventHandlers() {
@@ -210,7 +218,7 @@
         }
 
         $(document).ready(function() {
-            let myMarquee = new Marquee('#testMarquee', {animationSpeed: 1, animationDirection: 'right', dragSensitivity: 2});
+            let myMarquee = new Marquee('#testMarquee', {animationSpeed: 1, animationDirection: 'right', dragSensitivity: 1});
         });
     </script>
 </head>
