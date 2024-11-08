@@ -7,10 +7,12 @@ class Marquee {
         this.dragSensitivity = options.dragSensitivity || 1;
         this.isDragging = false;
         this.startX = 0;
+        this.startY = 0;
         this.currentTransform = 0;
         this.animationPaused = false;
         this.animationFrameId = null;
         this.lastTimestamp = null;
+        this.isVerticalScroll = null;
 
         this.init();
     }
@@ -105,9 +107,10 @@ class Marquee {
     }
 
     onTouchStart(e) {
-        e.preventDefault();
         this.isDragging = true;
         this.startX = e.touches[0].clientX;
+        this.startY = e.touches[0].clientY;
+        this.isVerticalScroll = null;
         this.marqueeContainer.css('cursor', 'grabbing');
         if (!this.animationPaused) {
             this.currentTransform = this.getCurrentTransform();
@@ -118,8 +121,22 @@ class Marquee {
 
     onTouchMove(e) {
         if (!this.isDragging) return;
-        e.preventDefault();
+
         const x = e.touches[0].clientX;
+        const y = e.touches[0].clientY;
+
+        if (this.isVerticalScroll === null) {
+            const deltaX = Math.abs(x - this.startX);
+            const deltaY = Math.abs(y - this.startY);
+            this.isVerticalScroll = deltaY > deltaX;
+        }
+
+        if (this.isVerticalScroll) {
+            this.onTouchEnd();
+            return;
+        }
+
+        e.preventDefault();
         const walk = (x - this.startX) * this.dragSensitivity;
         this.currentTransform += walk;
         this.normalizeTransform();
