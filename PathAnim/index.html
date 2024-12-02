@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Animation Example</title>
+    <style>
+        .path-animation {
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 0%;
+            position: absolute;
+            offset-path: path('M10,80 C40,10 65,10 95,80 S150,150 180,80');
+            /* offset-path: path('M250.5,462.5c67.2-40.4,60.1-167.2-42.1-160.1s-169.9-62.3-107.1-109.3,329-43.2,288,67.2-231.7,229-295.6,139.9S238.4,161.4,362.5,121,411.1,7.3,411.1,7.3'); */
+            offset-rotate: auto;
+            animation: moveAlongPath 1.2s infinite;
+        }
+
+        @keyframes moveAlongPath {
+            0% {
+                offset-distance: 0%;
+            }
+            100% {
+                offset-distance: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="path-animation"></div>
+</body>
+</html>
