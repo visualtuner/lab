@@ -100,21 +100,30 @@
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            gap: 4px;
             width: auto;
             height: 24px;
             border-radius: 12px;
             background: rgba(255,255,255,0.24);
-            padding-left: 12px;
             white-space: nowrap;
             color: #fff;
-            font-size: 12px;
             user-select: none;
         }
 
         #searchPopup .recent-search .chip * { user-select: none; }
 
-        #searchPopup .recent-search .chip:active { background: rgba(255,255,255,0.1);}
+        #searchPopup .recent-search .chip:has(.label-txt:active) { background: rgba(255,255,255,0.32);}
+        
+        #searchPopup .recent-search .chip:has(.btn-remove:active) { background: rgba(255,255,255,0.1);}
+        #searchPopup .recent-search .chip:has(.btn-remove:active) .label-txt { opacity: 0.4; text-decoration: line-through; }
+
+        #searchPopup .recent-search .chip .label-txt {
+            display: inline-block;
+            width: auto;
+            height: 24px;
+            line-height: 24px;
+            padding: 0 4px 0 12px;
+            font-size: 12px;
+        }
 
         #searchPopup .recent-search .chip .btn-remove {
             appearance: none;
@@ -130,7 +139,6 @@
             border-radius: 0 12px 12px 0;
         }
 
-        #searchPopup .recent-search .chip .btn-remove:active { background: rgba(255,255,255,0.1);}
 
         #searchPopup .search-body {
             flex: 1 0 0;
@@ -222,37 +230,37 @@
                     <h5>최근 찾아본 결과</h5>
                     <div class="chips-wrap">
                         <div class="chip">
-                            <span>Benz E220 2017</span>
+                            <span class="label-txt">Benz E220 2017</span>
                             <button type="button" class="btn-item btn-xs btn-remove">
                                 <span class="line-icons close size-16"></span>
                             </button>
                         </div>
                         <div class="chip">
-                            <span>Benz E220 2017</span>
+                            <span class="label-txt">Benz E220 2017</span>
                             <button type="button" class="btn-item btn-xs btn-remove">
                                 <span class="line-icons close size-16"></span>
                             </button>
                         </div>
                         <div class="chip">
-                            <span>Benz E220 2017</span>
+                            <span class="label-txt">Benz E220 2017</span>
                             <button type="button" class="btn-item btn-xs btn-remove">
                                 <span class="line-icons close size-16"></span>
                             </button>
                         </div>
                         <div class="chip">
-                            <span>Benz E220 2017</span>
+                            <span class="label-txt">Benz E220 2017</span>
                             <button type="button" class="btn-item btn-xs btn-remove">
                                 <span class="line-icons close size-16"></span>
                             </button>
                         </div>
                         <div class="chip">
-                            <span>Benz E220 2017</span>
+                            <span class="label-txt">Benz E220 2017</span>
                             <button type="button" class="btn-item btn-xs btn-remove">
                                 <span class="line-icons close size-16"></span>
                             </button>
                         </div>
                         <div class="chip">
-                            <span>Benz E220 2017</span>
+                            <span class="label-txt">Benz E220 2017</span>
                             <button type="button" class="btn-item btn-xs btn-remove">
                                 <span class="line-icons close size-16"></span>
                             </button>
