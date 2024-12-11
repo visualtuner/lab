@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Path Animation Example</title>
     <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
         .path-animation {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 20px;
             height: 20px;
             background-color: red;
@@ -16,6 +20,8 @@
             offset-rotate: auto;
             animation: moveAlongPath 1.2s infinite;
         }
+
+        .path-animation i { color: #fff; }
 
         @keyframes moveAlongPath {
             0% {
@@ -28,6 +34,7 @@
     </style>
 </head>
 <body>
-    <div class="path-animation"></div>
+    <div class="path-animation"><i class="fas fa-walking"></i></div>
+    
 </body>
 </html>

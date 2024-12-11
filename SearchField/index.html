@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Search Field Example</title>
+        <link rel="stylesheet" type="text/css" href="../css/font/NotoSansKR/NotoSansKR.css">
+        <link rel="stylesheet" type="text/css" href="../css/font/LineIcons/LineIcons.css">
+    </head>
+
+    <style>
+        *, *:before, *:after { box-sizing: border-box; }
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'NotoSansKR', 'Malgun Gothic', sans-serif;
+            padding: 0;
+            margin: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            overflow: auto;
+            font-size: 14px;
+            font-weight: 400;
+            color: #2a3138;
+            background: #fff;
+            word-break: keep-all;
+            position: relative;
+            overflow-scrolling: touch;
+            padding: 0;
+            margin: 0;
+        }
+
+
+        #searchPopup {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: #FE6A2B;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+
+        #searchPopup .search-header {
+            flex: none;
+            width: 100%;
+            height: auto;
+            padding: 8px 20px;
+            background: #FE6A2B;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        #searchPopup .recent-search {
+            width: 100%;
+            height: auto;
+            padding: 20px 20px 12px;
+            background: #FE6A2B;
+            border-bottom: 1px dashed #fff;
+        }
+
+        #searchPopup .recent-search h5 {
+            font-size: 12px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        #searchPopup .recent-search .chips-wrap {
+            width: auto;
+            height: auto;
+            position: relative;
+            overflow-x: auto;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-left: -20px;
+            margin-right: -20px;
+            padding: 8px 20px 0;
+            gap: 8px;
+        }
+
+        #searchPopup .recent-search .chips-wrap::-webkit-scrollbar { display: none; }
+
+        #searchPopup .recent-search .chip {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 4px;
+            width: auto;
+            height: 24px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.24);
+            padding-left: 12px;
+            white-space: nowrap;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        #searchPopup .recent-search .chip .btn-remove {
+            appearance: none;
+            display: inline-block;
+            width: auto;
+            height: 24px;
+            padding: 0 8px 0 4px;
+            background: transparent;
+            color: #fff;
+            margin: 0;
+            border: none;
+            outline: none;
+            border-radius: 0 12px 12px 0;
+        }
+
+        #searchPopup .recent-search .chip .btn-remove:active { background: rgba(255,255,255,0.1);}
+
+        #searchPopup .search-body {
+            flex: 1 0 0;
+            min-height: 0;
+            width: 100%;
+        }
+
+        .search-input-item {
+            flex: none;
+            display: block;
+            width: 100%;
+            height: 40px;
+            border-radius: 100px;
+            position: relative;
+        }
+
+        .search-input-item input {
+            display: block;
+            width: 100%;
+            height: inherit;
+            border-radius: inherit;;
+            position: relative;
+            background: #fff;
+            font-size: 18px;
+            color: #2a3138;
+            border: none;
+            outline: none;
+            padding-left: 48px;
+            caret-color: #fe6a2b;
+            line-height: 24px;
+        }
+
+        .search-input-item input::placeholder {
+            font-size: 14px;
+            color: #C0C6CE;
+        }
+
+        .search-input-item:after {
+            content: "\e92e";
+            font-family: 'LineIcons';
+            --size: 24px;
+            width: var(--size);
+            height: var(--size);
+            line-height: var(--size);
+            font-size: var(--size);
+            color: #2a3138;
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+        }
+
+        .btn-item.btn-back {
+            flex: none;
+            margin: 0 -8px 0 auto;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .btn-item.btn-back:active { background: rgba(255,255,255,0.1);}
+    </style>
+
+    <body>
+        <div id="wrap">
+            <main id="main">
+                <div class="main-basis case-general">
+                    
+                </div>
+            </main>
+        </div>
+        <div id="searchPopup" class="">
+            <div class="search-header">
+                <div class="btn-item btn-back">
+                    <span class="line-icons arrow-left size-24"></span>
+                </div>
+                <label class="search-input-item">
+                    <input type="text" id="searchInput" placeholder="차번/차종/사이즈 정보로 타이어 찾기">
+                </label>
+            </div>
+            
+            <div class="search-body">
+                <div class="recent-search">
+                    <h5>최근 찾아본 결과</h5>
+                    <div class="chips-wrap">
+                        <div class="chip">
+                            <span>Benz E220 2017</span>
+                            <button type="button" class="btn-item btn-xs btn-remove">
+                                <span class="line-icons close size-16"></span>
+                            </button>
+                        </div>
+                        <div class="chip">
+                            <span>Benz E220 2017</span>
+                            <button type="button" class="btn-item btn-xs btn-remove">
+                                <span class="line-icons close size-16"></span>
+                            </button>
+                        </div>
+                        <div class="chip">
+                            <span>Benz E220 2017</span>
+                            <button type="button" class="btn-item btn-xs btn-remove">
+                                <span class="line-icons close size-16"></span>
+                            </button>
+                        </div>
+                        <div class="chip">
+                            <span>Benz E220 2017</span>
+                            <button type="button" class="btn-item btn-xs btn-remove">
+                                <span class="line-icons close size-16"></span>
+                            </button>
+                        </div>
+                        <div class="chip">
+                            <span>Benz E220 2017</span>
+                            <button type="button" class="btn-item btn-xs btn-remove">
+                                <span class="line-icons close size-16"></span>
+                            </button>
+                        </div>
+                        <div class="chip">
+                            <span>Benz E220 2017</span>
+                            <button type="button" class="btn-item btn-xs btn-remove">
+                                <span class="line-icons close size-16"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <p id="result">결과가 여기에 표시됩니다.</p>
+
+                <div class="input-feedback">
+                    <div class="" data-feedback-type="default">
+                        <p>더 편한 타이어 관리와 쇼핑을 위해<br>운행 중인 차량을 등록하세요.</p>
+                    </div>
+                    <div class="" data-feedback-type="no-result">
+                        <p>검색 결과가 없습니다.</p>
+                    </div>
+                    <div class="" data-feedback-type="car-name"></div>
+                    <div class="" data-feedback-type="car-number">
+                        <p>차번을 입력 하셨습니다.<br>차량 소유주를 입력해 주세요.</p>
+                    </div>
+                    <div class="" data-feedback-type="tire-size">
+                        <p>사이즈네요.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const carNumberRegex = /^\d{2,3}[가-힣](?=[^ㄱ-ㅎㅏ-ㅣ])[0-9]{4}$/;
+            const tireSizeRegex = /^\d{3}([\/ ]?)\d{2}([ ]?[Rr]?\d{2})$/;
+
+            // DOM 요소 가져오기
+            const inputField = document.getElementById('searchInput');
+            const resultDisplay = document.getElementById('result');
+
+            // keyup 이벤트 리스너
+            inputField.addEventListener('keyup', () => {
+                const inputValue = inputField.value.trim(); // 입력값 가져오기
+
+                if (carNumberRegex.test(inputValue)) {
+                    resultDisplay.textContent = '입력된 값은 차량번호입니다.';
+                } else if (tireSizeRegex.test(inputValue)) {
+                    resultDisplay.textContent = '입력된 값은 타이어 사이즈입니다.';
+                } else {
+                    resultDisplay.textContent = '입력된 값은 이도저도 아닙니다.';
+                }
+            });
+        </script>
+    </body>
+</html>

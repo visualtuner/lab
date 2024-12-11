@@ -59,6 +59,15 @@
             user-select: none;
             pointer-events: none;
         }
+
+        .marquee-wrapper :is(a, span) {
+            display: inline-block;
+            width: auto;
+            white-space: nowrap;
+            font-size: 16px;
+        }
+
+        #testMarquee3 .marquee-wrapper { gap: 8px;}
     </style>
 </head>
 <body>
@@ -284,6 +293,11 @@
             <img src="thumb_iON_evo.png" />
         </div>
     </div>
+    <div class="marquee-container" id="testMarquee3">
+        <div class="marquee-wrapper">
+            <a href="https://mqa.tstation.com/">품질 보증배터리의 보증기간은 구입일로부터 24개월 또는 누계주행거리 4만 Km 이내입니다.</a>
+        </div>
+    </div>
 
     <script>
         let myMarquee1 = new Marquee('#testMarquee1', {
@@ -305,6 +319,8 @@
 
 
         let myMarquee2 = new Marquee('#testMarquee2', {animationSpeed: 1, animationDirection: 'left', dragSensitivity: 2});
+
+        let myMarquee3 = new Marquee('#testMarquee3', {animationSpeed: 1, animationDirection: 'left', dragSensitivity: 2});
     </script>
 </body>
 </html>
