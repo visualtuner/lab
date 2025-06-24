@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
     <title>Scroll Timeline Example</title>
     <style>
+        *,
+        *:before,
+        *:after { font-family: 'Pretendard'; box-sizing: border-box; }
         body {
             margin: 0;
             overflow: hidden; /* Prevent body scroll */
@@ -19,6 +23,58 @@
             scroll-snap-type: y proximity;
         }
 
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            height: 56px;
+            background: rgba(255,255,255,0);
+            color: #fff;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            animation: headerChange linear forwards;
+            animation-timeline: --my-scroll-timeline;
+            animation-range-start: 0;
+            animation-range-end: calc(300px - 56px);
+            padding: 0 16px;
+        }
+
+        @keyframes headerChange {
+            0% {
+                background: rgba(255,255,255,0);
+                color: #fff;
+                box-shadow: 0 1px 2px rgba(0,0,0,0);
+            }
+            100% {
+                background: rgba(255,255,255,1);
+                color: #000;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            }
+        }
+
+        header h1 {
+            font-size: 18px;
+            line-height: 24px;
+            font-weight: 700;
+            margin: 0;
+            transform-origin: 0% 50%;
+            animation: headerH1Change 0.4s ease forwards;
+            animation-timeline: --my-scroll-timeline;
+            animation-range-start: 0;
+            animation-range-end: calc(300px - 56px);
+        }
+
+        @keyframes headerH1Change {
+            0% {
+                transform: translateX(0) translateY(200px) translateZ(0) scale(1.5);
+            }
+            100% {
+                transform: translateX(0) translateY(0) translateZ(0) scale(1);
+            }
+        }
+
         .spacer {
             height: 300vh; /* 스크롤 공간 확보 */
             background-color: #fff;
@@ -31,15 +87,10 @@
 
         .animated-box {
             width: 100%;
-            height: 200px;
+            height: 300px;
             background-color: #000;
             overflow: hidden;
             scroll-snap-align: start;
-        }
-
-        .snap-point {
-            scroll-snap-align: start;
-            scroll-margin-block: 60px;
         }
 
         .animated-box img {
@@ -47,15 +98,15 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            animation: scaleAndFade linear forwards; /* 애니메이션 이름과 이징 함수 */
-            animation-timeline: --my-scroll-timeline; /* 타임라인 연결 */
-            animation-range-start: 0; /* 스크롤 진행률 25%부터 애니메이션 시작 */
-            animation-range-end: 200px;   /* 스크롤 진행률 75%에서 애니메이션 종료 */
+            animation: scaleAndFade linear forwards;
+            animation-timeline: --my-scroll-timeline;
+            animation-range-start: 0;
+            animation-range-end: 300px;
         }
 
         @keyframes scaleAndFade {
             0% {
-                opacity: 1;
+                opacity: 0.8;
                 transform: translateY(0) translateZ(0);
             }
             100% {
@@ -67,10 +118,12 @@
 </head>
 <body>
     <div class="scroll-container">
+        <header>
+            <h1>페이지 타이틀</h1>
+        </header>
         <div class="animated-box">
             <img src="mnstarbucks.png">
         </div>
-        <div class="snap-point"></div>
         <div class="spacer"></div>
     </div>
 </body>
