@@ -2,18 +2,28 @@ class Marquee {
     constructor(selector, options = {}) {
         this.marqueeContainer = $(selector);
         this.marqueeWrapper = this.marqueeContainer.find('.marquee-wrapper');
-        this.animationSpeed = options.animationSpeed || 1;
+
         this.animationDirection = options.animationDirection || 'right';
+        this.axis = ['left', 'right'].includes(this.animationDirection) ? 'x' : 'y';
+
+        this.animationSpeed = options.animationSpeed || 1;
+        this.originalSpeed = this.animationSpeed;
+        this.pauseSpeed = options.pauseSpeed ?? 0.1;
+
         this.dragSensitivity = options.dragSensitivity || 1;
+        this.callbacks = options.on || {};
+
+        this.pauseInterval = options.pauseInterval || null;
+        this.pauseDuration = options.pauseDuration || 2000;
+        this.pauseCycleTimer = null;
+        this.pauseSubTimer = null;
+        this.pauseCycleRunning = false;
+
         this.isDragging = false;
         this.startX = 0;
-        this.startY = 0;
         this.currentTransform = 0;
-        this.animationPaused = false;
         this.animationFrameId = null;
         this.lastTimestamp = null;
-        this.isVerticalScroll = null;
-        this.callbacks = options.on || {};
 
         this.init();
     }
@@ -27,41 +37,120 @@ class Marquee {
     }
 
     cloneMarquee() {
-        const originalContent = this.marqueeWrapper.html();
-        this.marqueeWrapper.append(originalContent);
-        this.marqueeWrapper.prepend(originalContent);
-        this.currentTransform = -this.marqueeWrapper.width() / 3; // 초기 위치를 가운데로 조정
-        this.marqueeWrapper.css('transform', `translateX(${this.currentTransform}px)`);
+        const content = this.marqueeWrapper.html();
+        this.marqueeWrapper.append(content);
+        this.marqueeWrapper.prepend(content);
+
+        const size = this.axis === 'x'
+            ? this.marqueeWrapper.width() / 3
+            : this.marqueeWrapper.height() / 3;
+        this.currentTransform = -size;
+
+        const transformProp = this.axis === 'x' ? 'translateX' : 'translateY';
+        this.marqueeWrapper.css('transform', `${transformProp}(${this.currentTransform}px)`);
     }
 
     startMarqueeAnimation() {
+        if (this.pauseInterval) this.setupPauseCycle();
+
         const animate = (timestamp) => {
             if (!this.lastTimestamp) this.lastTimestamp = timestamp;
             const delta = timestamp - this.lastTimestamp;
             this.lastTimestamp = timestamp;
 
-            const speed = (delta / 16.67) * this.animationSpeed; // 16.67ms is approximately 60fps
+            const speed = (delta / 16.67) * this.animationSpeed;
+            const directionMultiplier = ['left', 'up'].includes(this.animationDirection) ? -1 : 1;
+            this.currentTransform += directionMultiplier * speed;
 
-            if (this.animationDirection === 'left') {
-                this.currentTransform -= speed;
-            } else if (this.animationDirection === 'right') {
-                this.currentTransform += speed;
+            const size = this.axis === 'x'
+                ? this.marqueeWrapper.width() / 3
+                : this.marqueeWrapper.height() / 3;
+
+            if (['right', 'down'].includes(this.animationDirection) && this.currentTransform >= 0) {
+                this.currentTransform = -size;
+            } else if (['left', 'up'].includes(this.animationDirection) && Math.abs(this.currentTransform) >= size) {
+                this.currentTransform = this.currentTransform % size;
             }
 
-            if (this.animationDirection === 'right' && this.currentTransform >= 0) {
-                this.currentTransform = -this.marqueeWrapper.width() / 3;
-            } else if (this.animationDirection === 'left' && Math.abs(this.currentTransform) >= this.marqueeWrapper.width() / 3) {
-                this.currentTransform = 0;
-            }
-            this.marqueeWrapper.css('transform', `translateX(${this.currentTransform}px)`);
+            const transformProp = this.axis === 'x' ? 'translateX' : 'translateY';
+            this.marqueeWrapper.css('transform', `${transformProp}(${this.currentTransform}px)`);
+
             this.animationFrameId = requestAnimationFrame(animate);
         };
+
         this.animationFrameId = requestAnimationFrame(animate);
     }
 
     stopMarqueeAnimation() {
         cancelAnimationFrame(this.animationFrameId);
         this.lastTimestamp = null;
+        this.clearPauseCycle();
+    }
+
+    setupPauseCycle() {
+        if (this.pauseCycleRunning) return;
+        this.pauseCycleRunning = true;
+
+        const scheduleNextPause = () => {
+            this.pauseCycleTimer = setTimeout(() => {
+                this.animationSpeed = this.pauseSpeed;
+                this.triggerCallback('pauseStart');
+
+                requestAnimationFrame(() => {
+                    this.alignToNearestItem();
+
+                    this.pauseSubTimer = setTimeout(() => {
+                        this.animationSpeed = this.originalSpeed;
+                        this.triggerCallback('pauseEnd');
+                        scheduleNextPause();
+                    }, this.pauseDuration);
+                });
+            }, this.pauseInterval);
+        };
+
+        this.clearPauseCycle();
+        scheduleNextPause();
+    }
+
+    alignToNearestItem() {
+        const containerRect = this.marqueeContainer[0].getBoundingClientRect();
+        const containerCenter = this.axis === 'x'
+            ? containerRect.left + containerRect.width / 2
+            : containerRect.top + containerRect.height / 2;
+
+        const items = this.marqueeWrapper.children('img, a, span');
+        let closest = null;
+        let minDist = Infinity;
+
+        items.each((_, el) => {
+            const rect = el.getBoundingClientRect();
+            const center = this.axis === 'x'
+                ? rect.left + rect.width / 2
+                : rect.top + rect.height / 2;
+            const dist = Math.abs(center - containerCenter);
+            if (dist < minDist) {
+                minDist = dist;
+                closest = { center };
+            }
+        });
+
+        if (!closest) return;
+
+        const delta = closest.center - containerCenter;
+        this.currentTransform -= delta;
+
+        const transformProp = this.axis === 'x' ? 'translateX' : 'translateY';
+        this.marqueeWrapper.css('transform', `${transformProp}(${this.currentTransform}px)`);
+
+        this.lastTimestamp = performance.now();
+    }
+
+    clearPauseCycle() {
+        clearTimeout(this.pauseCycleTimer);
+        clearTimeout(this.pauseSubTimer);
+        this.pauseCycleTimer = null;
+        this.pauseSubTimer = null;
+        this.pauseCycleRunning = false;
     }
 
     attachEventHandlers() {
@@ -79,24 +168,23 @@ class Marquee {
         this.isDragging = true;
         this.triggerCallback('dragStart');
         this.marqueeContainer.addClass('active');
-        this.startX = e.clientX;
+        this.startX = this.axis === 'x' ? e.clientX : e.clientY;
         this.marqueeContainer.css('cursor', 'grabbing');
-        if (!this.animationPaused) {
-            this.currentTransform = this.getCurrentTransform();
-            this.stopMarqueeAnimation();
-            this.animationPaused = true;
-        }
+
+        this.currentTransform = this.getCurrentTransform();
+        this.stopMarqueeAnimation();
     }
 
     onMouseMove(e) {
         if (!this.isDragging) return;
         e.preventDefault();
-        const x = e.clientX;
-        const walk = (x - this.startX) * this.dragSensitivity;
-        this.currentTransform += walk;
+        const client = this.axis === 'x' ? e.clientX : e.clientY;
+        const delta = (client - this.startX) * this.dragSensitivity;
+        this.currentTransform += delta;
         this.normalizeTransform();
-        this.marqueeWrapper.css('transform', `translateX(${this.currentTransform}px)`);
-        this.startX = x;
+        const transformProp = this.axis === 'x' ? 'translateX' : 'translateY';
+        this.marqueeWrapper.css('transform', `${transformProp}(${this.currentTransform}px)`);
+        this.startX = client;
     }
 
     onMouseUp() {
@@ -105,7 +193,6 @@ class Marquee {
             this.marqueeContainer.removeClass('active');
             this.marqueeContainer.css('cursor', 'grab');
             this.startMarqueeAnimation();
-            this.animationPaused = false;
             this.triggerCallback('dragEnd');
         }
     }
@@ -113,40 +200,22 @@ class Marquee {
     onTouchStart(e) {
         this.isDragging = true;
         this.triggerCallback('dragStart');
-        this.startX = e.touches[0].clientX;
-        this.startY = e.touches[0].clientY;
-        this.isVerticalScroll = null;
+        this.startX = this.axis === 'x' ? e.touches[0].clientX : e.touches[0].clientY;
         this.marqueeContainer.css('cursor', 'grabbing');
-        if (!this.animationPaused) {
-            this.currentTransform = this.getCurrentTransform();
-            this.stopMarqueeAnimation();
-            this.animationPaused = true;
-        }
+        this.currentTransform = this.getCurrentTransform();
+        this.stopMarqueeAnimation();
     }
 
     onTouchMove(e) {
         if (!this.isDragging) return;
-
-        const x = e.touches[0].clientX;
-        const y = e.touches[0].clientY;
-
-        if (this.isVerticalScroll === null) {
-            const deltaX = Math.abs(x - this.startX);
-            const deltaY = Math.abs(y - this.startY);
-            this.isVerticalScroll = deltaY > deltaX;
-        }
-
-        if (this.isVerticalScroll) {
-            this.onTouchEnd();
-            return;
-        }
-
         e.preventDefault();
-        const walk = (x - this.startX) * this.dragSensitivity;
-        this.currentTransform += walk;
+        const client = this.axis === 'x' ? e.touches[0].clientX : e.touches[0].clientY;
+        const delta = (client - this.startX) * this.dragSensitivity;
+        this.currentTransform += delta;
         this.normalizeTransform();
-        this.marqueeWrapper.css('transform', `translateX(${this.currentTransform}px)`);
-        this.startX = x;
+        const transformProp = this.axis === 'x' ? 'translateX' : 'translateY';
+        this.marqueeWrapper.css('transform', `${transformProp}(${this.currentTransform}px)`);
+        this.startX = client;
     }
 
     onTouchEnd() {
@@ -154,37 +223,35 @@ class Marquee {
             this.isDragging = false;
             this.marqueeContainer.removeClass('active');
             this.startMarqueeAnimation();
-            this.animationPaused = false;
             this.triggerCallback('dragEnd');
         }
     }
 
     normalizeTransform() {
-        const maxOffset = this.marqueeWrapper.width() / 3;
+        const size = this.axis === 'x'
+            ? this.marqueeWrapper.width() / 3
+            : this.marqueeWrapper.height() / 3;
+
         if (this.currentTransform > 0) {
-            this.currentTransform = -maxOffset + (this.currentTransform % maxOffset);
-        } else if (Math.abs(this.currentTransform) >= maxOffset) {
-            this.currentTransform = this.currentTransform % maxOffset;
+            this.currentTransform = -size + (this.currentTransform % size);
+        } else if (Math.abs(this.currentTransform) >= size) {
+            this.currentTransform = this.currentTransform % size;
         }
     }
 
     getCurrentTransform() {
-        const transformMatrix = window.getComputedStyle(this.marqueeWrapper[0]).transform;
-        if (transformMatrix !== 'none') {
-            return parseFloat(transformMatrix.split(',')[4].trim());
-        }
-        return 0;
+        const transform = getComputedStyle(this.marqueeWrapper[0]).transform;
+        if (transform === 'none') return 0;
+
+        const matrix = transform.split(',');
+        return this.axis === 'x'
+            ? parseFloat(matrix[4])
+            : parseFloat(matrix[5]);
     }
 
-    triggerCallback(eventName) {
-        if (this.callbacks && typeof this.callbacks[eventName] === 'function') {
-            this.callbacks[eventName].call(this);
-        }
-    }
-
-    on(eventName, callback) {
-        if (typeof callback === 'function') {
-            this.callbacks[eventName] = callback;
+    triggerCallback(event, data = null) {
+        if (typeof this.callbacks[event] === 'function') {
+            this.callbacks[event].call(this, data);
         }
     }
 }

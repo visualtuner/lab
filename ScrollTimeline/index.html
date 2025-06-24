@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Animation Example</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent body scroll */
+        }
+
+        .scroll-container {
+            height: 100vh; /* 뷰포트 높이만큼 */
+            overflow-y: scroll; /* 스크롤 가능하게 설정 */
+            scroll-timeline-name: --my-scroll-timeline;
+            scroll-timeline-axis: block;
+        }
+
+        .spacer {
+            height: 100vh; /* 스크롤 공간 확보 */
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: #333;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .animated-box {
+            width: 200px;
+            height: 200px;
+            background-color: dodgerblue;
+            margin: 100vh auto; /* 스크롤 가능한 공간 중간에 위치하도록 */
+            border-radius: 10px;
+            transform: scale(1);
+            opacity: 0.5;
+            transition: background-color 0.3s ease; /* 색상 변화 애니메이션 */
+            animation: scaleAndFade linear; /* 애니메이션 이름과 이징 함수 */
+            animation-timeline: --my-scroll-timeline; /* 타임라인 연결 */
+            animation-range-start: 25%; /* 스크롤 진행률 25%부터 애니메이션 시작 */
+            animation-range-end: 75%;   /* 스크롤 진행률 75%에서 애니메이션 종료 */
+        }
+
+        @keyframes scaleAndFade {
+            0% {
+                transform: scale(0.5);
+                background-color: tomato;
+                opacity: 0.2;
+            }
+            50% {
+                transform: scale(1.2);
+                background-color: lightgreen;
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0.7);
+                background-color: orange;
+                opacity: 0.4;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-container">
+        <div class="spacer"></div>
+        <div class="animated-box" id="my-animation-target"></div>
+        <div class="spacer"></div>
+    </div>
+</body>
+</html>
