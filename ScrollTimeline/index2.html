@@ -128,5 +128,42 @@
         </div>
         <div class="spacer"></div>
     </div>
+    <script>
+        const scrollContainer = document.querySelector('.scroll-container');
+        const animatedBox = document.querySelector('.animated-box');
+
+        let scrollTimeout; // 스크롤 멈춤을 감지하기 위한 타이머 변수
+
+        scrollContainer.addEventListener('scroll', () => {
+            // 스크롤 이벤트가 발생할 때마다 이전 타이머를 초기화
+            clearTimeout(scrollTimeout);
+
+            // 스크롤이 멈췄을 때 실행될 함수를 딜레이(예: 100ms) 후에 설정
+            scrollTimeout = setTimeout(() => {
+                const animatedBoxHeight = animatedBox.offsetHeight; // animated-box의 실제 높이
+                const currentScrollY = scrollContainer.scrollTop; // 현재 스크롤 위치
+
+                // animated-box 높이의 절반 기준점을 계산
+                const halfHeight = animatedBoxHeight / 2;
+
+                if (currentScrollY <= halfHeight) {
+                    // 현재 스크롤 위치가 animated-box 높이의 절반 이하면 0으로 스냅
+                    scrollContainer.scrollTo({
+                        top: 0,
+                        behavior: 'smooth' // 부드러운 스크롤 효과 적용
+                    });
+                } else if (currentScrollY > halfHeight && currentScrollY < animatedBoxHeight) {
+                    // 현재 스크롤 위치가 절반보다 크고 animated-box 높이 미만이면 animated-box의 높이로 스냅
+                    scrollContainer.scrollTo({
+                        top: animatedBoxHeight,
+                        behavior: 'smooth' // 부드러운 스크롤 효과 적용
+                    });
+                }
+                // 참고: currentScrollY가 animatedBoxHeight 이상인 경우는 특별히 처리할 필요 없으면 생략 가능
+                //       여기서는 animatedBoxHeight까지의 범위만 다룹니다.
+
+            }, 100); // 100ms 동안 스크롤이 없으면 스크롤이 멈췄다고 판단
+        });
+    </script>
 </body>
 </html>
