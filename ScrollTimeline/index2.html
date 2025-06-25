@@ -26,6 +26,10 @@
             /* scroll-snap-type: y proximity; */
         }
 
+        .scroll-container.scroll-snap {
+            scroll-snap-type: y mandatory;
+        }
+
         header {
             display: flex;
             align-items: center;
@@ -93,7 +97,7 @@
             height: 300px;
             background-color: #000;
             overflow: hidden;
-            /* scroll-snap-align: start; */
+            scroll-snap-align: start;
         }
 
         .animated-box img {
@@ -117,6 +121,10 @@
                 transform: translateY(50%) translateZ(0);
             }
         }
+
+        .snap-point {
+            scroll-snap-align: start;
+        }
     </style>
 </head>
 <body>
@@ -127,10 +135,11 @@
         <div class="animated-box">
             <img src="mnstarbucks.png">
         </div>
+        <div class="snap-point"></div>
         <div class="spacer"></div>
     </div>
     <script>
-        const scrollContainer = document.querySelector('.scroll-container');
+        /*const scrollContainer = document.querySelector('.scroll-container');
         const animatedBox = document.querySelector('.animated-box');
 
         // scrollend 지원 여부 확인 (점진적 향상)
@@ -162,6 +171,46 @@
                     behavior: 'smooth'
                 });
             }
+        }*/
+
+
+
+        const scrollContainer = document.querySelector('.scroll-container');
+        const animatedBox = document.querySelector('.animated-box');
+
+        // 요소가 없으면 스크립트 실행 중지
+        if (!scrollContainer || !animatedBox) {
+            console.error('필요한 DOM 요소를 찾을 수 없습니다: .scroll-container 또는 .animated-box');
+        } else {
+            // 실시간 스크롤 중 실행될 로직 함수
+            const handleScrollLive = () => {
+                const animatedBoxHeight = animatedBox.offsetHeight; // .animated-box의 실제 높이
+                const currentScrollY = scrollContainer.scrollTop; // 현재 스크롤 위치
+
+                // 현재 스크롤 위치가 animatedBoxHeight보다 작으면 .scroll-snap 클래스 추가
+                if (currentScrollY < animatedBoxHeight) {
+                    // 이미 클래스가 있다면 추가하지 않아 불필요한 DOM 조작을 막습니다.
+                    if (!scrollContainer.classList.contains('scroll-snap')) {
+                        scrollContainer.classList.add('scroll-snap');
+                        console.log('클래스 추가: .scroll-snap (scrollTop < animatedBoxHeight)');
+                    }
+                } else {
+                    // 현재 스크롤 위치가 animatedBoxHeight 이상이면 .scroll-snap 클래스 제거
+                    // 이미 클래스가 없다면 제거하지 않아 불필요한 DOM 조작을 막습니다.
+                    if (scrollContainer.classList.contains('scroll-snap')) {
+                        scrollContainer.classList.remove('scroll-snap');
+                        console.log('클래스 제거: .scroll-snap (scrollTop >= animatedBoxHeight)');
+                    }
+                }
+            };
+
+            // --- scroll 이벤트 리스너 등록 ---
+            // scroll 이벤트는 매우 자주 발생하므로, 성능에 민감한 경우 디바운싱/스로틀링을 고려할 수 있지만,
+            // 이 정도의 클래스 토글은 일반적으로 큰 문제 없습니다.
+            scrollContainer.addEventListener('scroll', handleScrollLive);
+
+            // 페이지 로드 시 초기 스크롤 위치에 따라 한 번 실행하여 초기 상태를 설정합니다.
+            handleScrollLive();
         }
     </script>
 </body>
