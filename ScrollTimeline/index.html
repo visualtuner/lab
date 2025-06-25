@@ -3,70 +3,219 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://unpkg.com/some-scrollend-polyfill/dist/scrollend-polyfill.min.js"></script>
     <title>Scroll Timeline Example</title>
     <style>
-        body {
+        *,
+        *:before,
+        *:after { font-family: 'Pretendard'; box-sizing: border-box; }
+        html,body {
             margin: 0;
             overflow: hidden; /* Prevent body scroll */
+            width: 100%;
+            height: 100%;
         }
 
         .scroll-container {
-            height: 100vh; /* 뷰포트 높이만큼 */
+            width: 100%;
+            height: 100%; /* 뷰포트 높이만큼 */
             overflow-y: scroll; /* 스크롤 가능하게 설정 */
             scroll-timeline-name: --my-scroll-timeline;
-            scroll-timeline-axis: block;
+            scroll-timeline-axis: y;
+            /* scroll-snap-type: y proximity; */
         }
 
+        .scroll-container.scroll-snap {
+            scroll-snap-type: y mandatory;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            height: 56px;
+            background: rgba(255,255,255,0);
+            color: #fff;
+            position: fixed;
+            top: 0;
+            z-index: 100;
+            animation: headerChange linear forwards;
+            animation-timeline: --my-scroll-timeline;
+            animation-range-start: 0;
+            animation-range-end: calc(300px - 56px);
+            padding: 0 6px;
+        }
+
+        @keyframes headerChange {
+            0% {
+                background: rgba(255,255,255,0);
+                color: #fff;
+                box-shadow: 0 1px 2px rgba(0,0,0,0);
+            }
+            100% {
+                background: rgba(255,255,255,1);
+                color: #000;
+                box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            }
+        }
+
+        header h1 {
+            font-size: 18px;
+            line-height: 24px;
+            font-weight: 700;
+            margin: 0;
+            transform-origin: 0% 50%;
+            animation: headerH1Change linear forwards;
+            animation-timeline: --my-scroll-timeline;
+            animation-range-start: 0;
+            animation-range-end: calc(300px - 56px);
+        }
+
+        @keyframes headerH1Change {
+            0% {
+                transform: translateX(-34px) translateY(150px) translateZ(0) scale(1.8);
+            }
+            100% {
+                transform: translateX(0) translateY(0) translateZ(0) scale(1);
+            }
+        }
+
+        header .btn {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100px;
+            margin-right: 6px;
+        }
+
+        header .btn:active { background: rgba(0,0,0,0.06);}
+
         .spacer {
-            height: 100vh; /* 스크롤 공간 확보 */
-            background-color: #f0f0f0;
+            height: 300vh; /* 스크롤 공간 확보 */
+            background-color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 2em;
             color: #333;
-            border-bottom: 1px dashed #ccc;
         }
 
         .animated-box {
-            width: 200px;
-            height: 200px;
-            background-color: dodgerblue;
-            margin: 100vh auto; /* 스크롤 가능한 공간 중간에 위치하도록 */
-            border-radius: 10px;
-            transform: scale(1);
-            opacity: 0.5;
-            transition: background-color 0.3s ease; /* 색상 변화 애니메이션 */
-            animation: scaleAndFade linear; /* 애니메이션 이름과 이징 함수 */
-            animation-timeline: --my-scroll-timeline; /* 타임라인 연결 */
-            animation-range-start: 25%; /* 스크롤 진행률 25%부터 애니메이션 시작 */
-            animation-range-end: 75%;   /* 스크롤 진행률 75%에서 애니메이션 종료 */
+            width: 100%;
+            height: 300px;
+            background-color: #000;
+            overflow: hidden;
+            scroll-snap-align: start;
+            position: relative;
+        }
+
+        .animated-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            /* mix-blend-mode: multiply; */
+            animation: scaleAndFade linear forwards;
+            animation-timeline: --my-scroll-timeline;
+            animation-range-start: 0;
+            animation-range-end: 300px;
+        }
+
+        .animated-box p {
+            padding: 24px;
+            position: absolute;
+            bottom: 0;
+            font-size: 14px;
+            font-weight: 200;
+            color: #fff;
+            animation: fadeAnim linear forwards;
+            animation-timeline: --my-scroll-timeline;
+            animation-range-start: 0;
+            animation-range-end: calc(300px - 56px);
         }
 
         @keyframes scaleAndFade {
             0% {
-                transform: scale(0.5);
-                background-color: tomato;
-                opacity: 0.2;
+                opacity: 0.8;
+                transform: translateY(0) translateZ(0);
             }
-            50% {
-                transform: scale(1.2);
-                background-color: lightgreen;
+            100% {
+                opacity: 0.6;
+                transform: translateY(50%) translateZ(0);
+            }
+        }
+
+        @keyframes fadeAnim {
+            0% {
                 opacity: 1;
             }
             100% {
-                transform: scale(0.7);
-                background-color: orange;
-                opacity: 0.4;
+                opacity: 0;
             }
+        }
+
+        .snap-point {
+            scroll-snap-align: start;
         }
     </style>
 </head>
 <body>
     <div class="scroll-container">
-        <div class="spacer"></div>
-        <div class="animated-box" id="my-animation-target"></div>
+        <header>
+            <div class="btn">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </div>
+            <h1>페이지 타이틀</h1>
+        </header>
+        <div class="animated-box">
+            <img src="showroom_all_weather_all_season_story_6.png">
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+        </div>
+        <div class="snap-point"></div>
         <div class="spacer"></div>
     </div>
+    <script>
+        const scrollContainer = document.querySelector('.scroll-container');
+        const animatedBox = document.querySelector('.animated-box');
+
+        // 요소가 없으면 스크립트 실행 중지
+        if (!scrollContainer || !animatedBox) {
+            console.error('필요한 DOM 요소를 찾을 수 없습니다: .scroll-container 또는 .animated-box');
+        } else {
+            // 실시간 스크롤 중 실행될 로직 함수
+            const handleScrollLive = () => {
+                const animatedBoxHeight = animatedBox.offsetHeight; // .animated-box의 실제 높이
+                const currentScrollY = scrollContainer.scrollTop; // 현재 스크롤 위치
+
+                // 현재 스크롤 위치가 animatedBoxHeight보다 작으면 .scroll-snap 클래스 추가
+                if (currentScrollY < animatedBoxHeight) {
+                    // 이미 클래스가 있다면 추가하지 않아 불필요한 DOM 조작을 막습니다.
+                    if (!scrollContainer.classList.contains('scroll-snap')) {
+                        scrollContainer.classList.add('scroll-snap');
+                        console.log('클래스 추가: .scroll-snap (scrollTop < animatedBoxHeight)');
+                    }
+                } else {
+                    // 현재 스크롤 위치가 animatedBoxHeight 이상이면 .scroll-snap 클래스 제거
+                    // 이미 클래스가 없다면 제거하지 않아 불필요한 DOM 조작을 막습니다.
+                    if (scrollContainer.classList.contains('scroll-snap')) {
+                        scrollContainer.classList.remove('scroll-snap');
+                    }
+                }
+            };
+
+            // --- scroll 이벤트 리스너 등록 ---
+            // scroll 이벤트는 매우 자주 발생하므로, 성능에 민감한 경우 디바운싱/스로틀링을 고려할 수 있지만,
+            // 이 정도의 클래스 토글은 일반적으로 큰 문제 없습니다.
+            scrollContainer.addEventListener('scroll', handleScrollLive);
+
+            // 페이지 로드 시 초기 스크롤 위치에 따라 한 번 실행하여 초기 상태를 설정합니다.
+            handleScrollLive();
+        }
+    </script>
 </body>
 </html>
