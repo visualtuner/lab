@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <script src="https://unpkg.com/some-scrollend-polyfill/dist/scrollend-polyfill.min.js"></script>
     <title>Scroll Timeline Example</title>
     <style>
@@ -45,7 +46,7 @@
             animation-timeline: --my-scroll-timeline;
             animation-range-start: 0;
             animation-range-end: 244px;
-            padding: 0 16px;
+            padding: 0 6px;
         }
 
         @keyframes headerChange {
@@ -75,12 +76,24 @@
 
         @keyframes headerH1Change {
             0% {
-                transform: translateX(0) translateY(200px) translateZ(0) scale(1.5);
+                transform: translateX(-30px) translateY(200px) translateZ(0) scale(1.5);
             }
             100% {
                 transform: translateX(0) translateY(0) translateZ(0) scale(1);
             }
         }
+
+        header .btn {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100px;
+            margin-right: 6px;
+        }
+
+        header .btn:active { background: rgba(0,0,0,0.06);}
 
         .spacer {
             height: 300vh; /* 스크롤 공간 확보 */
@@ -105,6 +118,7 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
+            /* mix-blend-mode: multiply; */
             animation: scaleAndFade linear forwards;
             animation-timeline: --my-scroll-timeline;
             animation-range-start: 0;
@@ -130,10 +144,13 @@
 <body>
     <div class="scroll-container">
         <header>
+            <div class="btn">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </div>
             <h1>페이지 타이틀</h1>
         </header>
         <div class="animated-box">
-            <img src="mnstarbucks.png">
+            <img src="showroom_all_weather_all_season_story_6.png">
         </div>
         <div class="snap-point"></div>
         <div class="spacer"></div>
