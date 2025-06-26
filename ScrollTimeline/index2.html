@@ -149,11 +149,24 @@
         
         .map-container {
             width: 100%;
-            height: 100%;
+            height: calc(100% + 24px);
             overflow: hidden;
             position: absolute;
-            top: 0;
+            bottom: -24px;
             left: 0;
+            animation: mapHeightAnim linear forwards;
+            animation-timeline: --my-scroll-timeline;
+            animation-range-start: 0;
+            animation-range-end: calc(360px - 72px);
+        }
+
+        @keyframes mapHeightAnim {
+            0% {
+                height: calc(100% + 24px);
+            }
+            100% {
+                height: calc(72px + 24px);
+            }
         }
 
         .map {
@@ -176,8 +189,8 @@
             position: relative;
             background: #fff;
             scroll-snap-align: start;
-            /* scroll-margin-block-start: 72px; */
             border-radius: 24px 24px 0 0;
+            box-shadow: 0 0 2px rgba(0,0,0,0.2);
         }
 
         .list-section:before {
@@ -213,9 +226,6 @@
         .list-section ol li {
             width: 100%;
             height: 80px;
-            /* display: flex;
-            align-items: center;
-            justify-content: flex-start; */
             padding: 16px;
             border-bottom: 1px solid #d9dbdc;
             margin: 0;
