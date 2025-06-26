@@ -201,12 +201,25 @@
             padding: 0;
             font-size: 14px;
             line-height: 24px;
-            padding: 24px 20px;
-            padding-left: 40px;
+            padding: 24px 16px;
             animation: listHeightAnim linear forwards;
             animation-timeline: --my-scroll-timeline;
             animation-range-start: 0;
             animation-range-end: calc(360px - 72px);
+            list-style-position: inside;
+            list-style-type: decimal-leading-zero;
+        }
+
+        .list-section ol li {
+            width: 100%;
+            height: 80px;
+            /* display: flex;
+            align-items: center;
+            justify-content: flex-start; */
+            padding: 16px;
+            border-bottom: 1px solid #d9dbdc;
+            margin: 0;
+            list-style-type: decimal-leading-zero;
         }
 
         @keyframes listHeightAnim {
@@ -225,7 +238,7 @@
             <div class="btn">
                 <span class="material-symbols-outlined">arrow_back</span>
             </div>
-            <h1>매장 상세보기</h1>
+            <h1>매장 리스트</h1>
         </header>
         <section class="map-section">
             <div class="snap-point"></div>
@@ -235,7 +248,6 @@
                 </div>
             </div>
         </section>
-        <!-- <div class="snap-point"></div> -->
         <section class="list-section">
             <ol>
                 <li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li><li>리스트</li>
@@ -243,87 +255,7 @@
         </div>
     </div>
     <script>
-        /*const scrollContainer = document.querySelector('.scroll-container');
-        const animatedBox = document.querySelector('.animated-box');
-
-        // 요소가 없으면 스크립트 실행 중지
-        if (!scrollContainer || !animatedBox) {
-            console.error('필요한 DOM 요소를 찾을 수 없습니다: .scroll-container 또는 .animated-box');
-        } else {
-            // 실시간 스크롤 중 실행될 로직 함수
-            const handleScrollLive = () => {
-                const animatedBoxHeight = animatedBox.offsetHeight; // .animated-box의 실제 높이
-                const currentScrollY = scrollContainer.scrollTop; // 현재 스크롤 위치
-
-                // 현재 스크롤 위치가 animatedBoxHeight보다 작으면 .scroll-snap 클래스 추가
-                if (currentScrollY < animatedBoxHeight) {
-                    // 이미 클래스가 있다면 추가하지 않아 불필요한 DOM 조작을 막습니다.
-                    if (!scrollContainer.classList.contains('scroll-snap')) {
-                        scrollContainer.classList.add('scroll-snap');
-                        console.log('클래스 추가: .scroll-snap (scrollTop < animatedBoxHeight)');
-                    }
-                } else {
-                    // 현재 스크롤 위치가 animatedBoxHeight 이상이면 .scroll-snap 클래스 제거
-                    // 이미 클래스가 없다면 제거하지 않아 불필요한 DOM 조작을 막습니다.
-                    if (scrollContainer.classList.contains('scroll-snap')) {
-                        scrollContainer.classList.remove('scroll-snap');
-                    }
-                }
-            };
-
-            // --- scroll 이벤트 리스너 등록 ---
-            // scroll 이벤트는 매우 자주 발생하므로, 성능에 민감한 경우 디바운싱/스로틀링을 고려할 수 있지만,
-            // 이 정도의 클래스 토글은 일반적으로 큰 문제 없습니다.
-            scrollContainer.addEventListener('scroll', handleScrollLive);
-
-            // 페이지 로드 시 초기 스크롤 위치에 따라 한 번 실행하여 초기 상태를 설정합니다.
-            handleScrollLive();
-        }*/
-
-        /*document.addEventListener('DOMContentLoaded', () => {
-            const scrollContainer = document.querySelector('.scroll-container');
-            const animatedBox = document.querySelector('.animated-box');
-
-            if (!scrollContainer || !animatedBox) {
-                console.error('필요한 DOM 요소를 찾을 수 없습니다: .scroll-container 또는 .animated-box');
-                return;
-            }
-
-            // Intersection Observer 생성
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    entries.forEach(entry => {
-                        // entry.target은 animatedBox입니다.
-                        // entry.isIntersecting: animatedBox가 'root' 요소와 교차하는지 여부
-                        
-                        // animatedBox가 '화면 안에 보이는' 상태라면 (isIntersecting: true)
-                        if (entry.isIntersecting) {
-                            // scroll-snap 클래스 추가
-                            scrollContainer.classList.add('scroll-snap');
-                            console.log('클래스 추가: .scroll-snap (animated-box 보임)');
-                        } else {
-                            // animatedBox가 '화면 밖으로 사라진' 상태라면 (isIntersecting: false)
-                            // scroll-snap 클래스 제거
-                            scrollContainer.classList.remove('scroll-snap');
-                            console.log('클래스 제거: .scroll-snap (animated-box 안 보임)');
-                        }
-                    });
-                },
-                {
-                    // root: null (기본값은 뷰포트). 여기서는 scrollContainer를 지정합니다.
-                    root: scrollContainer, 
-                    // animatedBox가 root(scrollContainer)의 상단 경계에 닿을 때 (0% 보일 때) 콜백 실행
-                    threshold: 0 
-                }
-            );
-
-            // animatedBox 관찰 시작
-            observer.observe(animatedBox);
-
-            // 페이지 로드 시 초기 상태를 설정합니다.
-            // observer.observe()는 관찰 시작 시 바로 한 번 콜백을 실행하므로,
-            // 별도의 초기화 로직이 필요 없습니다.
-        });*/
+        
     </script>
 </body>
 </html>
