@@ -24,7 +24,7 @@
             overflow-y: scroll; /* 스크롤 가능하게 설정 */
             scroll-timeline-name: --my-scroll-timeline;
             scroll-timeline-axis: y;
-            /* scroll-snap-type: y proximity; */
+            scroll-snap-type: y proximity;
         }
 
         .scroll-container.scroll-snap {
@@ -44,8 +44,8 @@
             z-index: 100;
             animation: headerChange linear forwards;
             animation-timeline: --my-scroll-timeline;
-            animation-range-start: 0;
-            animation-range-end: calc(300px - 56px);
+            animation-range-start: calc(300px - 56px);
+            animation-range-end: calc(400px - 56px);
             padding: 0 6px;
         }
 
@@ -70,8 +70,8 @@
             transform-origin: 0% 50%;
             animation: headerH1Change linear forwards;
             animation-timeline: --my-scroll-timeline;
-            animation-range-start: 0;
-            animation-range-end: calc(300px - 56px);
+            animation-range-start: calc(300px - 56px);
+            animation-range-end: calc(400px - 56px);
         }
 
         @keyframes headerH1Change {
@@ -171,6 +171,20 @@
             position: relative;
         }
 
+        .map-section .snap-point {
+            height: 50%;
+            scroll-snap-stop: always;
+        }
+        
+        .map-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
         .map {
             width: 100%;
             height: 100%;
@@ -238,8 +252,12 @@
             <h1>페이지 타이틀</h1>
         </header>
         <section class="map-section">
-            <div class="map">
-                <img src="@sample_map.png">
+            <div class="snap-point"></div>
+            <div class="snap-point"></div>
+            <div class="map-container">
+                <div class="map">
+                    <img src="@sample_map.png">
+                </div>
             </div>
         </section>
         <div class="snap-point"></div>
@@ -287,7 +305,7 @@
             handleScrollLive();
         }*/
 
-        document.addEventListener('DOMContentLoaded', () => {
+        /*document.addEventListener('DOMContentLoaded', () => {
             const scrollContainer = document.querySelector('.scroll-container');
             const animatedBox = document.querySelector('.animated-box');
 
@@ -330,7 +348,7 @@
             // 페이지 로드 시 초기 상태를 설정합니다.
             // observer.observe()는 관찰 시작 시 바로 한 번 콜백을 실행하므로,
             // 별도의 초기화 로직이 필요 없습니다.
-        });
+        });*/
     </script>
 </body>
 </html>
