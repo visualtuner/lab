@@ -172,7 +172,7 @@
         .list-section {
             width: 100%;
             height: calc(100% - 72px);
-            padding: 32px 20px 0;
+            padding: 32px 0 0;
             position: relative;
             background: #fff;
             scroll-snap-align: start;
@@ -183,12 +183,12 @@
         .list-section:before {
             content: '';
             display: block;
-            width: 48px;
+            width: 40px;
             height: 4px;
             border-radius: 2px;
-            background: #aaa;
+            background: #d9dbdc;
             position: absolute;
-            top: 10px;
+            top: 12px;
             left: 50%;
             transform: translateX(-50%);
         }
@@ -201,8 +201,8 @@
             padding: 0;
             font-size: 14px;
             line-height: 24px;
-            padding-left: 32px;
-            padding-bottom: 24px;
+            padding: 24px 20px;
+            padding-left: 40px;
             animation: listHeightAnim linear forwards;
             animation-timeline: --my-scroll-timeline;
             animation-range-start: 0;
@@ -211,11 +211,9 @@
 
         @keyframes listHeightAnim {
             0% {
-                background: #ddd;
                 height: calc(100% - (360px - 72px));
             }
             100% {
-                background: #fff;
                 height: 100%;
             }
         }
@@ -227,7 +225,7 @@
             <div class="btn">
                 <span class="material-symbols-outlined">arrow_back</span>
             </div>
-            <h1>페이지 타이틀</h1>
+            <h1>매장 상세보기</h1>
         </header>
         <section class="map-section">
             <div class="snap-point"></div>
