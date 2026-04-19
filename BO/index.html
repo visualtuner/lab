@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+    <title>BO</title>
+
+    <style>
+        *, *:before, *:after { box-sizing: border-box; }
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'NotoSansKR', 'Malgun Gothic', sans-serif;
+            padding: 0;
+            margin: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            overflow: auto;
+            font-size: 14px;
+            font-weight: 400;
+            color: #2a3138;
+            background: #fff;
+            word-break: keep-all;
+            position: relative;
+            padding: 0;
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            font-size: 12px;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        table th {
+            background: #efefef;
+            border: 1px solid #cdcdcd;
+            padding: 5px 10px;
+        }
+
+        table td {
+            border: 1px solid #cdcdcd;
+            padding: 5px 10px;
+        }
+
+
+
+
+
+        /* static-root/css/common/contents.css 에 추가 */
+        /* 뱃지 시뮬레이터 start */
+        .badge-simulator {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-start;
+            font-size: 12px;
+            gap: 16px;
+        }
+
+        .badge-simulator.disabled {
+            opacity: 0.3;
+            pointer-events: none !important;
+        }
+
+        .badge-preview {
+            flex: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #FE6A2B, #EA5507);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 500;
+            line-height: 12px;
+            text-align: center;
+            letter-spacing: -0.5px;
+            overflow: hidden;
+        }
+
+        .badge-preview-controls {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .badge-preview-controls .preview-input-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .badge-preview-controls label {
+            display: inline-block;
+            width: 32px;
+            text-align: right;
+        }
+
+        .badge-preview-controls input {
+            appearance: none;
+            width: 40px;
+            height: 20px;
+            margin-left: -4px;
+        }
+
+        .badge-preview-controls select {
+            width: 40px;
+            height: 20px;
+            margin-left: -4px;
+        }
+        /* 뱃지 시뮬레이터 end */
+    </style>
+</head>
+
+<body>
+    <table>
+        <colgroup>
+            <col style="width:17%;">
+            <col style="width:35%;">
+            <col style="width:15%;">
+            <col style="width:*;">
+        </colgroup>
+        <tr>
+            <th>이벤트 badge 문구</th>
+            <td> <!-- 기존 colspan="3" 삭제 -->
+                <input class="inputtxt w90p" type="text" name="evtBadgeNm" id="evtBadgeNm" maxlength="15" value="기존<br>저장값">
+                <div class="help_dsc01 ">
+                    <span class="ico_que">badge문구 줄바꿈이 필요한 경우 '한국&lt;br&gt;FESTA' 형태로 &lt;br&gt; 태그 입력해 주세요.</span>
+                </div>
+            </td>
+
+            <!-- 추가 -->
+            <th>badge 디자인</th>
+            <td>
+                <div class="badge-simulator disabled">
+                    <div id="mainBadgePreview" class="badge-preview"></div>
+                    <div class="badge-preview-controls">
+                        <div class="preview-input-wrap">
+                            <label>색상1</label>
+                            <input type="color" id="mainStart" value="#FE6A2B"> <!-- 기존 설정 색상값 있으면 세팅 -->
+                        </div>
+                        <div class="preview-input-wrap">
+                            <label>색상2</label>
+                            <input type="color" id="mainEnd" value="#EA5507"> <!-- 기존 설정 색상값 있으면 세팅 -->
+                        </div>
+                        <div class="preview-input-wrap">
+                            <label>방향</label>
+                            <select id="mainAngle">
+                                <option value="180deg" selected>↓</option> <!-- 기존 설정 방향값 있으면 세팅 -->
+                                <option value="135deg">↘</option>
+                                <option value="225deg">↙</option>
+                                <option value="90deg">→</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+        <!-- 추가 -->
+        <tr>
+            <th>이벤트 sub badge 문구</th>
+            <td>
+                <input class="inputtxt w90p" type="text" name="evtSubBadgeNm" id="evtSubBadgeNm" maxlength="15">
+                <div class="help_dsc01 ">
+                    <span class="ico_que">badge문구 줄바꿈이 필요한 경우 '한국&lt;br&gt;FESTA' 형태로 &lt;br&gt; 태그 입력해 주세요.</span>
+                </div>
+            </td>
+            
+            <th>sub badge 디자인</th>
+            <td>
+                <div class="badge-simulator disabled">
+                    <div id="subBadgePreview" class="badge-preview"></div>
+                    <div class="badge-preview-controls">
+                        <div class="preview-input-wrap">
+                            <label>색상1</label>
+                            <input type="color" id="subStart" value="#FE6A2B"> <!-- 기존 설정 색상값 있으면 세팅 -->
+                        </div>
+                        <div class="preview-input-wrap">
+                            <label>색상2</label>
+                            <input type="color" id="subEnd" value="#EA5507"> <!-- 기존 설정 색상값 있으면 세팅 -->
+                        </div>
+                        <div class="preview-input-wrap">
+                            <label>방향</label>
+                            <select id="subAngle">
+                                <option value="180deg" selected>↓</option> <!-- 기존 설정 방향값 있으면 세팅 -->
+                                <option value="135deg">↘</option>
+                                <option value="225deg">↙</option>
+                                <option value="90deg">→</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+        
+
+    <script>
+        function setupSimulator(prefix, textInputId) {
+            const startColor = document.getElementById(`${prefix}Start`);
+            const endColor = document.getElementById(`${prefix}End`);
+            const angle = document.getElementById(`${prefix}Angle`);
+            const preview = document.getElementById(`${prefix}BadgePreview`);
+            const textInput = document.getElementById(textInputId);
+            const container = preview.closest('.badge-simulator');
+
+            // 그라데이션 업데이트
+            function updateGradient() {
+                preview.style.background = `linear-gradient(${angle.value}, ${startColor.value}, ${endColor.value})`;
+            }
+
+            // 텍스트 업데이트 및 활성화 상태 제어
+            function updateStatus() {
+                const hasValue = textInput.value.trim().length > 0;
+                
+                // 1. 텍스트 반영
+                preview.innerHTML = textInput.value || '';
+                
+                // 2. 입력값이 있으면 disabled 제거, 없으면 추가
+                if (hasValue) {
+                    container.classList.remove('disabled');
+                } else {
+                    container.classList.add('disabled');
+                }
+            }
+
+            // 이벤트 리스너 등록
+            startColor.addEventListener('input', updateGradient);
+            endColor.addEventListener('input', updateGradient);
+            angle.addEventListener('change', updateGradient);
+            // 텍스트 입력 시 상태 업데이트 함수 호출
+            textInput.addEventListener('input', updateStatus);
+
+            // 초기 실행 시 상태 체크 (페이지 로드 시 값이 있을 수도 있으므로)
+            updateStatus();
+            updateGradient();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            setupSimulator('main', 'evtBadgeNm');
+            setupSimulator('sub', 'evtSubBadgeNm');
+        });
+    </script>
+</body>
+</html>

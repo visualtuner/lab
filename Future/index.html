@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+        <title>Future HTML/CSS Example</title>
+        <link rel="stylesheet" type="text/css" href="../css/font/NotoSansKR/NotoSansKR.css">
+        <link rel="stylesheet" type="text/css" href="../css/font/LineIcons/LineIcons.css">
+    </head>
+
+    <style>
+        *, *:before, *:after { box-sizing: border-box; }
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'NotoSansKR', 'Malgun Gothic', sans-serif;
+            padding: 0;
+            margin: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            overflow: auto;
+            font-size: 14px;
+            font-weight: 400;
+            color: #2a3138;
+            background: #fff;
+            word-break: keep-all;
+            position: relative;
+            overflow-scrolling: touch;
+            padding: 0;
+            margin: 0;
+        }
+
+        .accordion {
+            width: 480px;
+            height: auto;
+            display: block;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+
+        details {
+            width: 100%;
+            height: auto;
+            padding: 0;
+            margin: 0;
+        }
+        
+        details summary {
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 10px;
+            list-style: none;
+            user-select: none;
+        }
+
+        details summary::marker {
+            display: none !important;
+            font-size: 24px;
+            color: #666;
+            position: absolute;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        }
+
+        details ~ section {
+            display: block;
+            width: 100%;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        details[open] ~ section {
+            display: block;
+            height: calc-size(auto, size);
+            transition: all 0.3s ease;
+        }
+    </style>
+
+    <body>
+        <div class="accordion">
+            <details name="accordion">
+                <summary>Future HTML/CSS Features1</summary>
+            </details>
+        
+            <section>
+                <p>This is a sample page to demonstrate future HTML/CSS features.</p>
+                <p>The content here can be expanded to include various elements and styles as needed.</p>
+            </section>
+        </div>
+        
+        <div class="accordion">
+            <details name="accordion">
+                <summary>Future HTML/CSS Features2</summary>
+            </details>
+        
+            <section>
+                <p>This is a sample page to demonstrate future HTML/CSS features.</p>
+                <p>The content here can be expanded to include various elements and styles as needed.</p>
+            </section>
+        </div>
+    </body>
+</html>
