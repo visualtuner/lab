@@ -4,9 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
-        <title>Search Field Example</title>
+        <title>T'Bot Greeting</title>
         <link rel="stylesheet" type="text/css" href="../css/font/NotoSansKR/NotoSansKR.css">
-        <link rel="stylesheet" type="text/css" href="../css/font/LineIcons/LineIcons.css">
     </head>
 
     <style>
@@ -45,14 +44,25 @@
 
 
 
-        .ai-metaphor {
+        /* AI상담 시작 상단 스타일 start */
+        .t-bot-greeting {
+            width: 100%;
+            height: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .t-bot-greeting .metaphor {
             position: relative;
             width: 144px;
             height: 144px;
             overflow: hidden;
         }
 
-        .ai-metaphor-cover {
+        .t-bot-greeting .metaphor-cover {
             position: relative;
             width: 100%;
             height: 100%;
@@ -60,7 +70,7 @@
             pointer-events: none;
         }
 
-        .ai-metaphor-bg {
+        .t-bot-greeting .metaphor-bg {
             position: absolute;
             width: 66.666%;
             height: 66.666%;
@@ -73,31 +83,17 @@
             
         }
 
-        /* .ai-metaphor-bg:before {
-            content: '';
-            display: block;
-            width: 50%;
-            height: 30%;
-            border-radius: 50%;
-            position: absolute;
-            top: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
-            z-index: 1;
-        } */
-
-        .color-blobs-wrap {
+        .t-bot-greeting .metaphor-bg .color-blobs-wrap {
             position: absolute;
             width: 100%;
             height: 100%;
             filter: blur(16px);
             transform: scale(1.2);
             transform-origin: 40% 50%;
-            animation: ai-pulse 1s infinite ease-in-out, ai-rotate 5s infinite ease-in-out;
+            animation: metaphor-pulse 1s infinite ease-in-out, metaphor-rotate 5s infinite ease-in-out;
         }
 
-        .color-blob {
+        .t-bot-greeting .metaphor-bg .color-blob {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -110,7 +106,7 @@
             mix-blend-mode: multiply;
         }
 
-        .color-blob:after {
+        .t-bot-greeting .metaphor-bg .color-blob:after {
             content: '';
             display: block;
             width: 84px;
@@ -122,32 +118,32 @@
             transform: translate(-50%, -50%);
         }
 
-        .color-blob.pink { transform: rotate(0deg); }
-        .color-blob.blue { transform: rotate(120deg); }
-        .color-blob.yellow { transform: rotate(240deg); }
+        .t-bot-greeting .metaphor-bg .color-blob.pink { transform: rotate(0deg); }
+        .t-bot-greeting .metaphor-bg .color-blob.blue { transform: rotate(120deg); }
+        .t-bot-greeting .metaphor-bg .color-blob.yellow { transform: rotate(240deg); }
 
-        .color-blob.pink:after { background-color: #FFB2BE; animation: ai-blob-pink-scale 8s infinite ease-in-out; }
-        .color-blob.blue:after { background-color: #B7FEFF; animation: ai-blob-blue-scale 8s infinite ease-in-out; }
-        .color-blob.yellow:after { background-color: #fff5cf; animation: ai-blob-yellow-scale 8s infinite ease-in-out; }
+        .t-bot-greeting .metaphor-bg .color-blob.pink:after { background-color: #FFB2BE; animation: metaphor-blob-pink-scale 8s infinite ease-in-out; }
+        .t-bot-greeting .metaphor-bg .color-blob.blue:after { background-color: #B7FEFF; animation: metaphor-blob-blue-scale 8s infinite ease-in-out; }
+        .t-bot-greeting .metaphor-bg .color-blob.yellow:after { background-color: #fff5cf; animation: metaphor-blob-yellow-scale 8s infinite ease-in-out; }
 
-        @keyframes ai-pulse {
+        @keyframes metaphor-pulse {
             0%, 100% { transform: scale(1.2); }
             50% { transform: scale(1.6); }
         }
 
-        @keyframes ai-rotate {
+        @keyframes metaphor-rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        @keyframes ai-blob-pink-scale {
+        @keyframes metaphor-blob-pink-scale {
             0% { transform: translate(-50%, -50%) scale(1); }
             16.5% { transform: translate(-50%, -50%) scale(1.8); z-index: 1; }
             33% { transform: translate(-50%, -50%) scale(1); z-index: 0; }
             100% { transform: translate(-50%, -50%) scale(1); }
         }
 
-        @keyframes ai-blob-blue-scale {
+        @keyframes metaphor-blob-blue-scale {
             0% { transform: translate(-50%, -50%) scale(1); }
             33% { transform: translate(-50%, -50%) scale(1); }
             49.5% { transform: translate(-50%, -50%) scale(1.8); z-index: 1; }
@@ -155,22 +151,34 @@
             100% { transform: translate(-50%, -50%) scale(1); }
         }
 
-        @keyframes ai-blob-yellow-scale {
+        @keyframes metaphor-blob-yellow-scale {
             0% { transform: translate(-50%, -50%) scale(1); }
             66% { transform: translate(-50%, -50%) scale(1); }
             82.5% { transform: translate(-50%, -50%) scale(1.8); z-index: 1; }
             100% { transform: translate(-50%, -50%) scale(1); z-index: 0; }
         }
 
-        .ai-welcome-message {
+        .t-bot-greeting .message {
+            text-align: center;
+            margin:0;
+        }
+
+        .t-bot-greeting .message .greeting-message {
+            text-align: center;
+            margin:0;
+            font-size:16px;
+            font-weight:300;
+            color: #2a3138;
+        }
+
+        .t-bot-greeting .message .help-message {
             margin-top: 24px;
         }
 
-        .ai-welcome-message span {
+        .t-bot-greeting .message .help-message span {
             font-size: 24px;
             font-weight: 500;
             letter-spacing: -1px;
-            /* background: linear-gradient(90deg, #00B3C5, #32FFB7); */
             background: linear-gradient(
                 120deg,
                 #00B3C5,
@@ -178,55 +186,46 @@
                 #00B3C5,
                 #32FFB7
             );
-            
-            /* 배경 크기를 가로로 길게 늘려야 움직일 공간이 생깁니다 */
             background-size: 300% 100%;
-            
-            /* 배경을 글자 모양대로 자르기 (핵심) */
             -webkit-background-clip: text;
             background-clip: text;
-            
-            /* 글자 자체 색상은 투명하게 만들어 배경이 보이게 함 */
             color: transparent;
-            
-            /* 애니메이션: 호흡을 길게 가져가며 아주 부드럽게 */
             animation: wave-text 8s ease-in-out infinite;
-            
-            /* 텍스트가 여러 줄일 경우를 대비 */
             display: inline-block;
         }
 
         @keyframes wave-text {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
+        /* AI상담 시작 상단 스타일 end */
     </style>
 
     <body>
-        
-        <div class="ai-metaphor">
-            <div class="ai-metaphor-bg">
-                <div class="color-blobs-wrap">
-                    <div class="color-blob pink"></div>
-                    <div class="color-blob blue"></div>
-                    <div class="color-blob yellow"></div>
+        <!-- AI상담 시작 상단 마크업 start -->
+        <div class="t-bot-greeting">
+            <div class="metaphor">
+                <div class="metaphor-bg">
+                    <div class="color-blobs-wrap">
+                        <div class="color-blob pink"></div>
+                        <div class="color-blob blue"></div>
+                        <div class="color-blob yellow"></div>
+                    </div>
+                </div>
+                
+                <img src="tbot_metaphor_cover.png" class="metaphor-cover" alt="T'Bot metaphor frame">
+            </div>
+
+            <div class="message">
+                <p class="greeting-message"><em style="font-weight:600; font-style:normal;">김한국</em>님, 어서오세요.<br/>오랜만에 방문해 주셨네요.</p>
+
+                <div class="help-message">
+                    <span>오늘은 무엇을 도와드릴까요?</span>
                 </div>
             </div>
-            
-            <img src="ai_metaphor_cover.png" class="ai-metaphor-cover" alt="ai metaphor frame">
         </div>
-
-        <p style="text-align:center; margin:0; font-size:16px; font-weight:300;"><em style="font-weight:600; font-style:normal;">김한국</em>님, 어서오세요.<br/>오랜만에 방문해 주셨네요.</p>
-
-        <div class="ai-welcome-message">
-            <span>오늘은 무엇을 도와드릴까요?</span>
-        </div>
+        <!-- AI상담 시작 상단 마크업 end -->
+        
     </body>
 </html>
