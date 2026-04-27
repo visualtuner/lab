@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover">
+    <style>
+        :root {
+            --bg-color: #2a3138;
+        }
+
+        body {
+            
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            box-sizing: border-box;
+            width: 100%;
+            height: 60px;
+            padding: 0 8px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            background-color: var(--bg-color);
+            position: fixed;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="ai-util-icon">
+            <div class="ai-util-icon-inner">
+                <svg id="ai-util-icon-svg" width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" style="transition: width 0.6s cubic-bezier(0.645, 0.045, 0.355, 1.000);">
+                    <defs>
+                        <linearGradient id="ai-util-icon-border-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#81FFF0" />
+                            <stop offset="24%" stop-color="#CE6BFF" />
+                            <stop offset="56%" stop-color="#FF1770" />
+                            <stop offset="100%" stop-color="#6DFF60" />
+                            <animateTransform attributeName="gradientTransform" type="rotate" from="0 0.5 0.5" to="360 0.5 0.5" dur="4s" repeatCount="indefinite" />
+                        </linearGradient>
+                        <clipPath id="ai-util-icon-text-clip">
+                            <path id="ai-util-icon-clip-path" d="M12 0.5H12C18.35 0.5 23.5 5.65 23.5 12L23.5 12L23.5 12L23.5 12C23.5 12 23.5 12 23.5 12C23.5 12 23.5 12 23.5 12L23.5 12C23.5 12 23.5 12 23.5 12V12C23.5 12 23.5 12 23.5 12C23.5 18.35 18.35 23.5 12 23.5H12C5.65 23.5 0.5 18.35 0.5 12C0.5 5.65 5.65 0.5 12 0.5Z" style="transition: d 0.6s cubic-bezier(0.645, 0.045, 0.355, 1.000);" />
+                        </clipPath>
+                    </defs>
+                    <path id="ai-util-icon-main-path" 
+                        d="M12 0.5H12C18.35 0.5 23.5 5.65 23.5 12L23.5 12L23.5 12L23.5 12C23.5 12 23.5 12 23.5 12C23.5 12 23.5 12 23.5 12L23.5 12C23.5 12 23.5 12 23.5 12V12C23.5 12 23.5 12 23.5 12C23.5 18.35 18.35 23.5 12 23.5H12C5.65 23.5 0.5 18.35 0.5 12C0.5 5.65 5.65 0.5 12 0.5Z"
+                        fill="#000" 
+                        stroke="url(#ai-util-icon-border-grad)" 
+                        stroke-width="1"
+                        style="transition: d 0.6s cubic-bezier(0.645, 0.045, 0.355, 1.000);"
+                    />
+                    <g id="ai-util-icon-symbol-group" style="transform: translate(5px, 5px) rotate(0deg); transform-origin: 7px 7px; transition: transform 0.6s cubic-bezier(0.645, 0.045, 0.355, 1.000);">
+                        <path d="M4.55654 3.04784L5.22632 1.2347C5.83521 -0.411566 8.16479 -0.411566 8.77368 1.2347L9.44346 3.04784C9.7028 3.74694 10.2531 4.29945 10.9522 4.55654L12.7653 5.22632C14.4116 5.83521 14.4116 8.16479 12.7653 8.77368L10.9522 9.44346C10.2531 9.7028 9.70055 10.2531 9.44346 10.9522L8.77368 12.7653C8.16479 14.4116 5.83521 14.4116 5.22632 12.7653L4.55654 10.9522C4.2972 10.2531 3.74694 9.70055 3.04784 9.44346L1.2347 8.77368C-0.411566 8.16479 -0.411566 5.83521 1.2347 5.22632L3.04784 4.55654C3.74694 4.2972 4.29945 3.74694 4.55654 3.04784Z" fill="white"/>
+                    </g>
+                    <g clip-path="url(#ai-util-icon-text-clip)">
+                    <text id="ai-util-icon-text" x="22" y="15.5" fill="white" font-size="11" font-weight="bold" font-family="sans-serif" 
+                        style="opacity: 0; transform: translateX(-10px); transition: all 0.6s cubic-bezier(0.645, 0.045, 0.355, 1.000); pointer-events: none; text-anchor: start; user-select: none;"></text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+<style>
+    .ai-util-icon {
+        width: 24px;
+        height: 24px;
+        display: inline-flex; 
+        justify-content: flex-end;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .ai-util-icon-inner {
+        display: inline-flex; 
+        justify-content: flex-end;
+    }
+
+</style>
+
+<script>
+    (function() {
+        const aiUtilIconMessages = [
+            "내 이름은 T'Bot이야~",
+            "이래봬도 AI라구!",
+            "뭘 할 수 있냐구?",
+            "궁금하면 눌러봐~!"
+        ];
+        let currentAiUtilIconMessageIndex = 0;
+
+        // 자동 애니메이션 설정
+        const cycleInterval = 8000; // 전체 반복 주기: 몇 초마다 한 번씩 펼쳐질지 (밀리초)
+        const stayDuration = 4000;  // 확장 유지 시간: 펼쳐진 상태로 머무는 시간 (밀리초)
+
+        function getDynamicPath(w, isExpand) {
+            const d = w - 96;
+            const r = (x) => +(x + d).toFixed(4);
+            
+            if (!isExpand) {
+                // 원형 24x24 상태 (왼쪽 반원 + 직선 길이 0 + 접혀있는 우측 스파클)
+                return `M12 0.5H12C18.35 0.5 23.5 5.65 23.5 12L23.5 12L23.5 12L23.5 12C23.5 12 23.5 12 23.5 12C23.5 12 23.5 12 23.5 12L23.5 12C23.5 12 23.5 12 23.5 12V12C23.5 12 23.5 12 23.5 12C23.5 18.35 18.35 23.5 12 23.5H12C5.65 23.5 0.5 18.35 0.5 12C0.5 5.65 5.65 0.5 12 0.5Z`;
+            }
+            // 가변 폭(w)에 맞춰 동적으로 계산된 확장 상태 패스
+            return `M12 0.5` +
+                `H${r(81.9268)}` +
+                `C${r(85.0178)} 0.5 ${r(87.8156)} 1.7156 ${r(89.8838)} 3.7002` +
+                `L${r(90.1953)} 4 L${r(90.5371)} 3.7344 L${r(91.835)} 2.7236` +
+                `C${r(93.3148)} 1.5947 ${r(94.5676)} 1.3609 ${r(95.3555)} 1.3555` +
+                `C${r(95.0901)} 1.6757 ${r(94.8595)} 2.021 ${r(94.6572)} 2.3721` +
+                `L${r(94.4209)} 2.8076` +
+                `C${r(93.7028)} 4.215 ${r(93.4023)} 5.7834 ${r(93.4023)} 7.3281` +
+                `V11.4844` +
+                `C${r(93.4078)} 11.6598 ${r(93.4131)} 11.8264 ${r(93.4131)} 11.9971` +
+                `C${r(93.4131)} 18.346 ${r(88.265)} 23.494 ${r(81.916)} 23.4941` +
+                `H12` +
+                `C5.65 23.494 0.5 18.346 0.5 12` +
+                `C0.5 5.65 5.65 0.5 12 0.5Z`;
+        }
+
+        const aiUtilIconSvgElem = document.getElementById('ai-util-icon-svg');
+        const aiUtilIconPathElem = document.getElementById('ai-util-icon-main-path');
+        const aiUtilIconClipPathElem = document.getElementById('ai-util-icon-clip-path');
+        const aiUtilIconSymbolElem = document.getElementById('ai-util-icon-symbol-group');
+        const aiUtilIconTextElem = document.getElementById('ai-util-icon-text');
+
+        // 초기화
+        const initPath = getDynamicPath(24, false);
+        aiUtilIconPathElem.setAttribute('d', initPath);
+        aiUtilIconClipPathElem.setAttribute('d', initPath);
+
+        function expandMenu() {
+            // 텍스트 변경 (배열을 순환하며 보여줌)
+            aiUtilIconTextElem.textContent = aiUtilIconMessages[currentAiUtilIconMessageIndex];
+            currentAiUtilIconMessageIndex = (currentAiUtilIconMessageIndex + 1) % aiUtilIconMessages.length;
+
+            // 텍스트 실제 폭 측정 후 타겟 넓이 지정
+            const textWidth = aiUtilIconTextElem.getComputedTextLength();
+            const targetWidth = Math.ceil(22 + textWidth + 12);
+            
+            const targetPath = getDynamicPath(targetWidth, true);
+            aiUtilIconSvgElem.style.width = targetWidth + 'px';
+            aiUtilIconPathElem.setAttribute('d', targetPath);
+            aiUtilIconClipPathElem.setAttribute('d', targetPath);
+            
+            aiUtilIconTextElem.style.opacity = "1";
+            aiUtilIconTextElem.style.transform = "translateX(0)";
+            aiUtilIconSymbolElem.style.transform = "translate(5px, 5px) rotate(-380deg)";
+
+            // 머무는 시간(stayDuration) 이후에 닫기 애니메이션 실행
+            setTimeout(collapseMenu, stayDuration);
+        }
+
+        function collapseMenu() {
+            aiUtilIconSvgElem.style.width = "24px";
+            aiUtilIconPathElem.setAttribute('d', initPath);
+            aiUtilIconClipPathElem.setAttribute('d', initPath);
+            
+            aiUtilIconTextElem.style.opacity = "0";
+            aiUtilIconTextElem.style.transform = "translateX(-16px)";
+            aiUtilIconSymbolElem.style.transform = "translate(5px, 5px) rotate(0deg)";
+
+            // 완전히 닫혀있는 시간(cycleInterval - stayDuration) 대기 후 다시 열기
+            setTimeout(expandMenu, cycleInterval - stayDuration);
+        }
+
+        // 첫 실행 (페이지 로드 후 1초 뒤 시작)
+        setTimeout(expandMenu, 1000);
+    })();
+</script>
+
+</body>
+</html>
