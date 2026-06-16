@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, viewport-fit=cover, interactive-widget=resizes-content">
+        <title>FAQ Item</title>
+        <link rel="stylesheet" type="text/css" href="../css/font/NotoSansKR/NotoSansKR.css">
+        <link rel="stylesheet" type="text/css" href="../css/font/LineIcons/LineIcons.css">
+        
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    </head>
+
+    <style>
+        *, *:before, *:after { box-sizing: border-box; }
+        :root {
+            interpolate-size: allow-keywords;
+        }
+        html {
+            width: 100%;
+            height: 100%;
+            font-family: 'NotoSansKR', 'Malgun Gothic', sans-serif;
+            padding: 0;
+            margin: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            width: 100%;
+            height: auto;
+            min-height: 100%;
+            overflow: auto;
+            font-size: 14px;
+            font-weight: 400;
+            color: #2a3138;
+            background: #fff;
+            word-break: keep-all;
+            position: relative;
+            overflow-scrolling: touch;
+            padding: 0;
+            margin: 0;
+            /* display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center; */
+            min-height: 100vh;
+        }
+
+        .faq-item {
+            appearance: none;
+            display: block;
+            width: 100%;
+            height: auto;
+            position: relative;
+            border-bottom: 1px solid #d9dbdc;
+        }
+
+        .faq-item * { user-select: none; }
+
+        .faq-item summary {
+            width: 100%;
+            height: auto;
+            padding: 16px;
+            padding-right: 36px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2a3138;
+            cursor: pointer;
+            user-select: none;
+            list-style: none !important;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            border: none;
+        }
+
+        .faq-item summary:active {
+            background: #f9f9fa;
+        }
+
+        .faq-item summary::after {
+            content: '\e915';
+            font-family: 'LineIcons';
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+            line-height: 20px;
+            text-align: center;
+            transform: translateY(-50%) rotate(0deg);
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item[open] summary::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .faq-item .answer-area {
+            width: 100%;
+            height: 0px !important;
+            padding: 0 12px;
+            font-size: 14px;
+            color: #2a3138;
+            overflow: hidden;
+            position: relative;
+            content-visibility: auto;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item[open] .answer-area {
+            display: block;
+            padding: 0 12px 16px;
+            height: auto !important;
+        }
+        
+        .faq-item .answer-area p {
+            margin: 0;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f2f2f7;
+        }
+
+
+
+
+
+        .accordion-item {
+            appearance: none;
+            display: block;
+            width: 100%;
+            height: auto;
+            position: relative;
+            border-bottom: 1px solid #d9dbdc;
+        }
+
+        .accordion-item * { user-select: none; }
+
+        .accordion-item .question-area {
+            width: 100%;
+            height: auto;
+            padding: 16px;
+            padding-right: 36px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2a3138;
+            cursor: pointer;
+            user-select: none;
+            list-style: none !important;
+            position: relative;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            border: none;
+        }
+
+        .accordion-item .question-area:active {
+            background: #f9f9fa;
+        }
+
+        .accordion-item .question-area::after {
+            content: '\e915';
+            font-family: 'LineIcons';
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            right: 16px;
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+            line-height: 20px;
+            text-align: center;
+            transform: translateY(-50%) rotate(0deg);
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-item[aria-expanded="true"] .question-area::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .accordion-item .answer-area {
+            width: 100%;
+            height: 0px;
+            padding: 0 12px;
+            font-size: 14px;
+            color: #2a3138;
+            overflow: hidden;
+            position: relative;
+            content-visibility: auto;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-item[aria-expanded="true"] .answer-area {
+            display: block;
+            padding: 0 12px 16px;
+            height: auto;
+        }
+        
+        .accordion-item .answer-area p {
+            margin: 0;
+            padding: 12px;
+            border-radius: 8px;
+            background: #f2f2f7;
+        }
+    </style>
+
+    <body>
+        <details class="faq-item">
+            <summary>Q. 서비스 이용 요금은 얼마인가요?</summary>
+            <div class="answer-area">
+                <p>기본 플랜은 무료이며, 프로 플랜은 월 10,000원입니다. 기본 플랜은 무료이며, 프로 플랜은 월 10,000원입니다.</p>
+            </div>
+        </details>
+        
+        <details class="faq-item">
+            <summary>Q. 서비스 이용 요금은 얼마인가요?</summary>
+            <div class="answer-area">
+                <p>기본 플랜은 무료이며, 프로 플랜은 월 10,000원입니다. 10,000원입니다.</p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>Q. 서비스 이용 요금은 얼마인가요?</summary>
+            <div class="answer-area">
+                <p>기본 플랜은 무료이며, 기본 플랜은 무료이며, 프로 플랜은 월 10,000원입니다.</p>
+            </div>
+        </details>
+
+        <hr style="border: none; border-top: 8px solid #d9dbdc;">
+
+        <div class="accordion-item" aria-expanded="false" onclick="$(this).attr('aria-expanded', $(this).attr('aria-expanded') === 'true' ? 'false' : 'true');">
+            <div class="question-area">Q. 서비스 이용 요금은 얼마인가요?</div>
+            <div class="answer-area">
+                <p>기본 플랜은 무료이며, 기본 플랜은 무료이며, 프로 플랜은 월 10,000원입니다.</p>
+            </div>
+        </div>
+        <div class="accordion-item" aria-expanded="false" onclick="$(this).attr('aria-expanded', $(this).attr('aria-expanded') === 'true' ? 'false' : 'true');">
+            <div class="question-area">Q. 서비스 이용 요금은 얼마인가요?</div>
+            <div class="answer-area">
+                <p>기본 플랜은 무료이며, 기본 플랜은 무료이며, 프로 플랜은 월 10,000원입니다.</p>
+            </div>
+        </div>
+
+        <hr style="border: none; border-top: 8px solid #d9dbdc;">
+
+        <textarea type="text" style="width: 100%; field-sizing: content; min-height:1lh; max-height:5lh;" ></textarea>
+    </body>
+</html>
